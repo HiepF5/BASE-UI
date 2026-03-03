@@ -1,0 +1,102 @@
+{
+  "$schema": "https://example.com/ai-builder.schema.json",
+  "name": "Personal AI Builder",
+  "description": "AI Builder cá nhân cho NestJS + Vite React với Planner, Executor, Tools, Skills.",
+  "backend": {
+    "root": "backend",
+    "aiModulePath": "backend/src/ai/ai.module.ts"
+  },
+  "frontend": {
+    "root": "frontend"
+  },
+  "skills": [
+    {
+      "id": "codegen.nest.crud",
+      "group": "code-generation",
+      "name": "NestJS CRUD Generator",
+      "file": "backend/src/ai/skills/code-generation/nest-codegen.skill.ts"
+    },
+    {
+      "id": "codegen.react.page",
+      "group": "code-generation",
+      "name": "React Page Generator",
+      "file": "backend/src/ai/skills/code-generation/react-codegen.skill.ts"
+    },
+    {
+      "id": "codegen.react.form",
+      "group": "code-generation",
+      "name": "React Form Generator",
+      "file": "backend/src/ai/skills/code-generation/form-codegen.skill.ts"
+    },
+    {
+      "id": "project.analyzer",
+      "group": "project-understanding",
+      "name": "Project Analyzer",
+      "file": "backend/src/ai/skills/project-understanding/project-analyzer.skill.ts"
+    },
+    {
+      "id": "fs.apply-change",
+      "group": "filesystem",
+      "name": "Apply File Changes",
+      "file": "backend/src/ai/skills/filesystem/apply-file-change.skill.ts"
+    },
+    {
+      "id": "refactor.ast",
+      "group": "ast-refactor",
+      "name": "AST Refactor",
+      "file": "backend/src/ai/skills/ast-refactor/ast-refactor.skill.ts"
+    },
+    {
+      "id": "schema.ui-generator",
+      "group": "schema-aware",
+      "name": "Schema Aware UI Generator",
+      "file": "backend/src/ai/skills/schema-aware/schema-ui-generator.skill.ts"
+    },
+    {
+      "id": "planning.generic",
+      "group": "planning",
+      "name": "Generic Planner",
+      "file": "backend/src/ai/skills/planning/planning.skill.ts"
+    },
+    {
+      "id": "devops.generator",
+      "group": "devops",
+      "name": "DevOps Config Generator",
+      "file": "backend/src/ai/skills/devops/devops-generator.skill.ts"
+    },
+    {
+      "id": "debug.nest",
+      "group": "debug",
+      "name": "NestJS Debugger",
+      "file": "backend/src/ai/skills/debug/nest-debug.skill.ts"
+    }
+  ],
+  "tools": [
+    {
+      "id": "tool.file",
+      "name": "File Tool",
+      "file": "backend/src/ai/tools/file/file.tool.ts"
+    },
+    {
+      "id": "tool.git",
+      "name": "Git Tool",
+      "file": "backend/src/ai/tools/git/git.tool.ts"
+    },
+    {
+      "id": "tool.exec",
+      "name": "Exec Tool",
+      "file": "backend/src/ai/tools/exec/exec.tool.ts"
+    },
+    {
+      "id": "tool.schema",
+      "name": "Schema Tool",
+      "file": "backend/src/ai/tools/schema/schema.tool.ts"
+    },
+    {
+      "id": "tool.test",
+      "name": "Test Tool",
+      "file": "backend/src/ai/tools/test/test.tool.ts"
+    }
+  ]
+}
+
