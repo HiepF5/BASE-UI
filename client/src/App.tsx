@@ -21,6 +21,14 @@ const AiChatPanel = lazy(() =>
 const LoginPage = lazy(() =>
   import('./modules/auth/LoginPage').then((m) => ({ default: m.LoginPage })),
 );
+const TokenShowcasePage = lazy(() =>
+  import('./modules/showcase/TokenShowcasePage').then((m) => ({ default: m.TokenShowcasePage })),
+);
+const ComponentShowcasePage = lazy(() =>
+  import('./modules/showcase/ComponentShowcasePage').then((m) => ({
+    default: m.ComponentShowcasePage,
+  })),
+);
 
 function PageLoader() {
   return (
@@ -49,6 +57,8 @@ export function App() {
             <Route path="connections" element={<ConnectionsPage />} />
             <Route path="crud/:connectionId/:entity" element={<DynamicCrudPage />} />
             <Route path="ai" element={<AiChatPanel />} />
+            <Route path="showcase/tokens" element={<TokenShowcasePage />} />
+            <Route path="showcase/components" element={<ComponentShowcasePage />} />
           </Route>
         </Routes>
       </Suspense>

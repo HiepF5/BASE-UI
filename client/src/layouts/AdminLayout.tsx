@@ -21,6 +21,8 @@ export function AdminLayout() {
     { to: '/dashboard', label: 'Dashboard', icon: '📊' },
     { to: '/connections', label: 'Connections', icon: '🔌' },
     { to: '/ai', label: 'AI Builder', icon: '🤖' },
+    { to: '/showcase/tokens', label: 'Tokens', icon: '🎨' },
+    { to: '/showcase/components', label: 'Components', icon: '🧩' },
   ];
 
   return (
@@ -75,17 +77,10 @@ export function AdminLayout() {
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Header */}
         <header className="h-14 bg-white border-b flex items-center justify-between px-6">
-          <div className="text-sm text-neutral-500">
-            Metadata-Driven Admin Platform
-          </div>
+          <div className="text-sm text-neutral-500">Metadata-Driven Admin Platform</div>
           <div className="flex items-center gap-4">
-            {user && (
-              <span className="text-sm text-neutral-600">{user.username}</span>
-            )}
-            <button
-              onClick={handleLogout}
-              className="text-sm text-neutral-500 hover:text-red-600"
-            >
+            {user && <span className="text-sm text-neutral-600">{user.username}</span>}
+            <button onClick={handleLogout} className="text-sm text-neutral-500 hover:text-red-600">
               Logout
             </button>
           </div>

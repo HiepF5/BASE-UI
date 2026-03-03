@@ -75,21 +75,21 @@ Build BASE UI component library
 
 ## Week 1 – Tokens + Foundation
 
-- [ ] Color system
+- [x] Color system
 
-- [ ] Spacing scale
+- [x] Spacing scale
 
-- [ ] Typography
+- [x] Typography
 
-- [ ] Shadow scale
+- [x] Shadow scale
 
-- [ ] Border radius
+- [x] Border radius
 
-- [ ] Theme (light/dark)
+- [x] Theme (light/dark)
 
-- [ ] CSS variables setup
+- [x] CSS variables setup
 
-- [ ] Tailwind config override
+- [x] Tailwind config override
 
 ---
 
@@ -97,27 +97,27 @@ Build BASE UI component library
 
 ### Form
 
-- [ ] Input
-- [ ] Select
-- [ ] MultiSelect
-- [ ] Checkbox
-- [ ] Radio
-- [ ] DatePicker
-- [ ] Switch
+- [x] Input
+- [x] Select
+- [x] MultiSelect
+- [x] Checkbox
+- [x] Radio
+- [x] DatePicker
+- [x] Switch
 
 ### Layout
 
-- [ ] Stack
-- [ ] Flex
-- [ ] Grid
-- [ ] Container
+- [x] Stack
+- [x] Flex
+- [x] Grid
+- [x] Container
 
 ### Feedback
 
-- [ ] Button (variant system)
-- [ ] Spinner
-- [ ] Alert
-- [ ] Toast
+- [x] Button (variant system)
+- [x] Spinner
+- [x] Alert
+- [x] Toast
 
 ---
 
