@@ -69,6 +69,18 @@
       "group": "debug",
       "name": "NestJS Debugger",
       "file": "backend/src/ai/skills/debug/nest-debug.skill.ts"
+    },
+    {
+      "id": "frontend.ai-chat",
+      "group": "frontend",
+      "name": "Frontend AI Chat Orchestrator",
+      "file": "frontend/src/ai/skills/ai-chat.skill.ts"
+    },
+    {
+      "id": "frontend.ui-preview",
+      "group": "frontend",
+      "name": "Frontend UI Preview Skill",
+      "file": "frontend/src/ai/skills/ui-preview.skill.ts"
     }
   ],
   "tools": [
@@ -96,6 +108,16 @@
       "id": "tool.test",
       "name": "Test Tool",
       "file": "backend/src/ai/tools/test/test.tool.ts"
+    },
+    {
+      "id": "frontend.tool.ai-client",
+      "name": "Frontend AI Client Tool",
+      "file": "frontend/src/ai/tools/ai-client.tool.ts"
+    },
+    {
+      "id": "frontend.tool.ui-state",
+      "name": "Frontend UI State Tool",
+      "file": "frontend/src/ai/tools/ui-state.tool.ts"
     }
   ]
 }
