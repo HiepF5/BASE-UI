@@ -14,6 +14,7 @@ export default defineConfig({
       '@stores': path.resolve(__dirname, './src/stores'),
       '@config': path.resolve(__dirname, './src/config'),
       '@types': path.resolve(__dirname, './src/types'),
+      '@layouts': path.resolve(__dirname, './src/layouts'),
     },
   },
   server: {
@@ -24,5 +25,9 @@ export default defineConfig({
         changeOrigin: true,
       },
     },
+  },
+  build: {
+    outDir: 'dist',
+    sourcemap: true,
   },
 });

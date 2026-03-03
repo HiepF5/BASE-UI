@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { BaseButton } from './BaseButton';
 import type { ColumnConfig, FilterCondition, FilterGroup, FilterOperator } from '../../types';
-import { cn } from '../../core/utils';
 
 // ============================================================
 // BaseFilterBar - Quick filter + advanced filter builder
@@ -13,7 +12,12 @@ export interface BaseFilterBarProps {
   searchValue?: string;
 }
 
-export function BaseFilterBar({ columns, onFilter, onSearch, searchValue = '' }: BaseFilterBarProps) {
+export function BaseFilterBar({
+  columns,
+  onFilter,
+  onSearch,
+  searchValue = '',
+}: BaseFilterBarProps) {
   const filterableColumns = columns.filter((col) => col.filterable);
   const [conditions, setConditions] = useState<FilterCondition[]>([]);
   const [showAdvanced, setShowAdvanced] = useState(false);
@@ -70,11 +74,7 @@ export function BaseFilterBar({ columns, onFilter, onSearch, searchValue = '' }:
           onChange={(e) => onSearch(e.target.value)}
           className="flex-1 border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
         />
-        <BaseButton
-          variant="outline"
-          size="sm"
-          onClick={() => setShowAdvanced(!showAdvanced)}
-        >
+        <BaseButton variant="outline" size="sm" onClick={() => setShowAdvanced(!showAdvanced)}>
           {showAdvanced ? 'Hide Filters' : 'Filters'}
         </BaseButton>
       </div>
@@ -98,7 +98,9 @@ export function BaseFilterBar({ columns, onFilter, onSearch, searchValue = '' }:
 
               <select
                 value={cond.operator}
-                onChange={(e) => updateCondition(idx, { operator: e.target.value as FilterOperator })}
+                onChange={(e) =>
+                  updateCondition(idx, { operator: e.target.value as FilterOperator })
+                }
                 className="border rounded px-2 py-1.5 text-sm"
               >
                 {operatorOptions.map((op) => (

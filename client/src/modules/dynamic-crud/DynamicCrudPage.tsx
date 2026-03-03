@@ -23,19 +23,25 @@ export function DynamicCrudPage({ config }: DynamicCrudPageProps) {
   }>();
   const entity = config?.name || routeEntity || '';
 
-  // Table state (Zustand)
+  // Table state (Zustand) – scoped per entity
   const tableStore = useTableStore();
+  const entityState = tableStore.getState();
+
+  // Activate entity on mount / change
+  React.useEffect(() => {
+    if (entity) tableStore.setActiveEntity(entity);
+  }, [entity]);
 
   // Schema
   const { data: schema, isLoading: schemaLoading } = useSchema(connectionId, entity);
 
   // CRUD hook (React Query)
   const crud = useCrud(connectionId, entity, {
-    page: tableStore.page,
-    limit: tableStore.limit,
-    sort: tableStore.sort,
-    filter: tableStore.filter || undefined,
-    search: tableStore.search,
+    page: entityState.page,
+    limit: entityState.limit,
+    sort: entityState.sort,
+    filter: entityState.filter || undefined,
+    search: entityState.search,
   });
 
   // Modal state
@@ -103,15 +109,15 @@ export function DynamicCrudPage({ config }: DynamicCrudPageProps) {
   }, [deleteConfirm, crud]);
 
   const handleBulkDelete = useCallback(async () => {
-    if (tableStore.selectedRows.length === 0) return;
+    if (entityState.selectedRows.length === 0) return;
     try {
-      await crud.bulkDelete(tableStore.selectedRows);
-      toast.success(`Deleted ${tableStore.selectedRows.length} items`);
+      await crud.bulkDelete(entityState.selectedRows);
+      toast.success(`Deleted ${entityState.selectedRows.length} items`);
       tableStore.clearSelection();
     } catch (err: any) {
       toast.error('Bulk delete failed');
     }
-  }, [tableStore.selectedRows, crud]);
+  }, [entityState.selectedRows, crud]);
 
   if (schemaLoading) {
     return <div className="p-6 text-neutral-400">Loading schema...</div>;
@@ -123,9 +129,9 @@ export function DynamicCrudPage({ config }: DynamicCrudPageProps) {
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold capitalize">{entity.replace(/_/g, ' ')}</h1>
         <div className="flex gap-2">
-          {tableStore.selectedRows.length > 0 && (
+          {entityState.selectedRows.length > 0 && (
             <BaseButton variant="danger" onClick={handleBulkDelete}>
-              Delete ({tableStore.selectedRows.length})
+              Delete ({entityState.selectedRows.length})
             </BaseButton>
           )}
           <BaseButton onClick={handleCreate}>+ Create</BaseButton>
@@ -137,7 +143,7 @@ export function DynamicCrudPage({ config }: DynamicCrudPageProps) {
         columns={columns}
         onFilter={tableStore.setFilter}
         onSearch={tableStore.setSearch}
-        searchValue={tableStore.search}
+        searchValue={entityState.search}
       />
 
       {/* Table */}
@@ -145,10 +151,10 @@ export function DynamicCrudPage({ config }: DynamicCrudPageProps) {
         columns={columns}
         data={crud.data}
         total={crud.total}
-        page={tableStore.page}
-        limit={tableStore.limit}
-        sort={tableStore.sort}
-        selectedRows={tableStore.selectedRows}
+        page={entityState.page}
+        limit={entityState.limit}
+        sort={entityState.sort}
+        selectedRows={entityState.selectedRows}
         loading={crud.isLoading}
         onPageChange={tableStore.setPage}
         onLimitChange={tableStore.setLimit}

@@ -1,4 +1,5 @@
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios from 'axios';
 
 // ============================================================
 // API Client - Centralized HTTP client with interceptors
@@ -17,7 +18,17 @@ class ApiClient {
 
     // Request interceptor - attach JWT
     this.client.interceptors.request.use((config) => {
-      const token = localStorage.getItem('access_token');
+      // Read token from zustand persisted state (key: auth-storage)
+      let token: string | null = null;
+      try {
+        const raw = localStorage.getItem('auth-storage');
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          token = parsed?.state?.token ?? null;
+        }
+      } catch {
+        // ignore parse errors
+      }
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       }
@@ -29,7 +40,8 @@ class ApiClient {
       (response) => response,
       (error) => {
         if (error.response?.status === 401) {
-          localStorage.removeItem('access_token');
+          // Clear persisted auth state
+          localStorage.removeItem('auth-storage');
           window.location.href = '/login';
         }
         return Promise.reject(error);

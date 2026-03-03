@@ -1,0 +1,57 @@
+{
+  "name": "base-ui",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Base UI – Admin Core Platform with Dynamic CRUD Engine",
+  "scripts": {
+    "dev": "pnpm --filter admin-platform-client dev",
+    "dev:server": "pnpm --filter base-ui-server start:dev",
+    "dev:all": "pnpm --filter admin-platform-client dev & pnpm --filter base-ui-server start:dev",
+    "build": "pnpm --filter admin-platform-client build",
+    "preview": "pnpm --filter admin-platform-client preview",
+    "lint": "eslint . --ext .ts,.tsx --report-unused-disable-directives --max-warnings 0",
+    "lint:fix": "eslint . --ext .ts,.tsx --fix",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,css,md}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,css,md}\"",
+    "type-check": "pnpm -r type-check",
+    "clean": "pnpm -r exec rm -rf node_modules dist .turbo",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,css,md}": [
+      "prettier --write"
+    ]
+  },
+  "keywords": [
+    "admin",
+    "crud",
+    "dynamic-ui",
+    "react",
+    "monorepo"
+  ],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=9.0.0"
+  },
+  "packageManager": "pnpm@9.12.2",
+  "devDependencies": {
+    "@commitlint/cli": "^19.5.0",
+    "@commitlint/config-conventional": "^19.5.0",
+    "@typescript-eslint/eslint-plugin": "^7.18.0",
+    "@typescript-eslint/parser": "^7.18.0",
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "eslint-plugin-react-refresh": "^0.4.12",
+    "husky": "^9.1.6",
+    "lint-staged": "^15.2.10",
+    "prettier": "^3.3.3",
+    "typescript": "^5.6.2"
+  }
+}

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { apiClient } from '../../core/api/apiClient';
 import { useUIStore } from '../../stores/uiStore';
@@ -24,9 +25,9 @@ export function DashboardPage() {
           <p className="text-neutral-500 mb-4">
             No active database connection. Go to Connections to set up one.
           </p>
-          <a href="/connections" className="text-primary-600 hover:underline">
+          <Link to="/connections" className="text-primary-600 hover:underline">
             → Manage Connections
-          </a>
+          </Link>
         </div>
       ) : (
         <>
@@ -44,18 +45,16 @@ export function DashboardPage() {
             </div>
             <div className="divide-y">
               {tables.map((table) => (
-                <a
+                <Link
                   key={table}
-                  href={`/crud/${activeConnection}/${table}`}
+                  to={`/crud/${activeConnection}/${table}`}
                   className="block px-6 py-3 hover:bg-neutral-50 transition-colors"
                 >
                   <span className="text-sm font-medium">{table}</span>
-                </a>
+                </Link>
               ))}
               {tables.length === 0 && (
-                <div className="px-6 py-8 text-center text-neutral-400">
-                  No tables found
-                </div>
+                <div className="px-6 py-8 text-center text-neutral-400">No tables found</div>
               )}
             </div>
           </div>
