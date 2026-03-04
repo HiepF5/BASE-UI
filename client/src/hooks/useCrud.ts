@@ -1,7 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { createCrudService } from '../core/api/crudService';
-import { queryKeys } from '../core/query';
-import { optimisticUpdate, optimisticDelete, optimisticBulkDelete } from '../core/query';
+import { queryKeys, optimisticUpdate, optimisticDelete, optimisticBulkDelete } from '../core/query';
 import type { PaginatedResult, QueryOptions } from '../types';
 
 // ============================================================
@@ -75,7 +74,7 @@ export function useCrud<T = Record<string, unknown>>(
         include: options?.include,
       }),
     staleTime: options?.staleTime ?? 30_000,
-    enabled: options?.enabled !== false && !!entity,
+    enabled: options?.enabled !== false && Boolean(entity),
     placeholderData: (prev) => prev, // Keep previous data while fetching
   });
 

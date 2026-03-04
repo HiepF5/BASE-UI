@@ -1,11 +1,12 @@
 import React from 'react';
-import type {
-  ConditionGroupProps,
-  FilterGroupNode,
-  FilterConditionNode,
-  FilterNode,
+import {
+  createEmptyCondition,
+  createEmptyGroup,
+  type ConditionGroupProps,
+  type FilterGroupNode,
+  type FilterConditionNode,
+  type FilterNode,
 } from '../../core/query-builder';
-import { createEmptyCondition, createEmptyGroup } from '../../core/query-builder';
 import { ConditionRow } from './ConditionRow';
 
 // ============================================================
@@ -31,7 +32,7 @@ const BADGE_COLORS = [
   'bg-purple-100 text-purple-700 hover:bg-purple-200',
 ];
 
-export function ConditionGroup({
+export const ConditionGroup = React.memo(function ConditionGroup({
   group,
   fields,
   onChange,
@@ -161,4 +162,6 @@ export function ConditionGroup({
       })}
     </div>
   );
-}
+});
+
+ConditionGroup.displayName = 'ConditionGroup';

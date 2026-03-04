@@ -74,7 +74,7 @@ export function RelationInlineTable({
     parentId,
     foreignKey,
     connectionId,
-    enabled: !!parentId && !!relation,
+    enabled: Boolean(parentId) && Boolean(relation),
   });
 
   // Load child entity's own relation options
@@ -166,7 +166,7 @@ export function RelationInlineTable({
       }
 
       // Number formatting
-      if (col.type === 'number' && val != null) {
+      if (col.type === 'number' && val !== null && val !== undefined) {
         return Number(val).toLocaleString();
       }
 
@@ -321,7 +321,7 @@ export function RelationInlineTable({
 
       {/* ─── Edit Modal ─────────────────────────────────── */}
       <BaseModal
-        open={!!editingRow}
+        open={Boolean(editingRow)}
         onClose={handleCloseEdit}
         title={`Edit ${childSchema?.label || childEntity}`}
         size="lg"
@@ -343,7 +343,7 @@ export function RelationInlineTable({
 
       {/* ─── Delete Confirm ─────────────────────────────── */}
       <BaseModal
-        open={!!deletingRow}
+        open={Boolean(deletingRow)}
         onClose={handleCloseDelete}
         title="Confirm Delete"
         size="sm"

@@ -50,20 +50,24 @@ export function inferFieldTypeByName(columnName: string, baseType: FieldType): F
 
   const name = columnName.toLowerCase();
   if (name === 'email' || name.endsWith('_email') || name.startsWith('email_')) return 'email';
-  if (name === 'password' || name.endsWith('_password') || name === 'password_hash')
+  if (name === 'password' || name.endsWith('_password') || name === 'password_hash') {
     return 'password';
-  if (name === 'url' || name === 'website' || name.endsWith('_url') || name.startsWith('url_'))
+  }
+  if (name === 'url' || name === 'website' || name.endsWith('_url') || name.startsWith('url_')) {
     return 'url';
-  if (name === 'phone' || name === 'tel' || name.endsWith('_phone') || name.endsWith('_tel'))
+  }
+  if (name === 'phone' || name === 'tel' || name.endsWith('_phone') || name.endsWith('_tel')) {
     return 'phone';
+  }
   if (
     name === 'description' ||
     name === 'content' ||
     name === 'body' ||
     name === 'bio' ||
     name === 'notes'
-  )
+  ) {
     return 'textarea';
+  }
 
   return baseType;
 }

@@ -1,10 +1,12 @@
 import React, { useMemo } from 'react';
-import type { QueryBuilderProps, FilterGroupNode, QueryField } from '../../core/query-builder';
 import {
   createEmptyGroup,
   countConditions,
   astToSQLPreview,
   validateAST,
+  type QueryBuilderProps,
+  type FilterGroupNode,
+  type QueryField,
 } from '../../core/query-builder';
 import { ConditionGroup } from './ConditionGroup';
 

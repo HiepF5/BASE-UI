@@ -68,7 +68,7 @@ export const BaseSelect = React.forwardRef<HTMLSelectElement, BaseSelectProps>(
             ref={ref}
             id={selectId}
             className={cn(selectVariants({ size, variant: resolvedVariant }), className)}
-            aria-invalid={!!error}
+            aria-invalid={Boolean(error)}
             {...props}
           >
             {placeholder && (

@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useRef, useEffect, createContext, useContext } from 'react';
-import { cva, type VariantProps } from 'class-variance-authority';
+import { cva } from 'class-variance-authority';
 import { cn } from '../../core/utils';
 
 // ============================================================

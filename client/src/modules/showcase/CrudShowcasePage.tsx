@@ -388,9 +388,9 @@ export function CrudShowcasePage() {
       items.sort((a, b) => {
         const va = a[s.field];
         const vb = b[s.field];
-        if (va == null && vb == null) return 0;
-        if (va == null) return 1;
-        if (vb == null) return -1;
+        if ((va === null || va === undefined) && (vb === null || vb === undefined)) return 0;
+        if (va === null || va === undefined) return 1;
+        if (vb === null || vb === undefined) return -1;
         const cmp = typeof va === 'string' ? va.localeCompare(vb) : Number(va) - Number(vb);
         return s.direction === 'desc' ? -cmp : cmp;
       });
@@ -578,7 +578,7 @@ export function CrudShowcasePage() {
       {/* ─── Edit Modal ──────────────────────────────────────── */}
       {schema && (
         <DynamicEditModal
-          open={!!editingRow}
+          open={Boolean(editingRow)}
           onClose={() => setEditingRow(null)}
           schema={schema}
           data={editingRow}
@@ -590,7 +590,7 @@ export function CrudShowcasePage() {
 
       {/* ─── Delete Confirm ──────────────────────────────────── */}
       <DeleteConfirmDialog
-        open={!!deletingRow}
+        open={Boolean(deletingRow)}
         onClose={() => setDeletingRow(null)}
         onConfirm={handleDelete}
         loading={loading}

@@ -29,7 +29,7 @@ export interface BasePaginationProps {
   onLimitChange?: (limit: number) => void;
 }
 
-export function BasePagination({
+export const BasePagination = React.memo(function BasePagination({
   page,
   limit,
   total,
@@ -159,4 +159,6 @@ export function BasePagination({
       </div>
     </div>
   );
-}
+});
+
+BasePagination.displayName = 'BasePagination';

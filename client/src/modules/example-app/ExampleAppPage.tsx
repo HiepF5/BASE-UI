@@ -4,16 +4,18 @@ import { BaseButton, BaseModal } from '../../components/base';
 import { QueryBuilder } from '../../components/query-builder';
 import { schemaRegistry } from '../../config/schema.config';
 import type { EntitySchema } from '../../core/metadata/schema.types';
-import type { FilterGroupNode, QueryField } from '../../core/query-builder';
 import {
   createEmptyGroup,
   resolveQueryFields,
   countConditions,
   astToFlatFilter,
   astToSQLPreview,
+  type FilterGroupNode,
+  type QueryField,
 } from '../../core/query-builder';
 import type { SortOption, FilterGroup } from '../../types';
 import toast from 'react-hot-toast';
+import { logger } from '../../core/utils';
 
 // ============================================================
 // ExampleAppPage – Phase 4: Example App
@@ -219,7 +221,9 @@ export default function ExampleAppPage() {
     if (search) {
       const lowerSearch = search.toLowerCase();
       result = result.filter((row) =>
-        Object.values(row).some((v) => v != null && String(v).toLowerCase().includes(lowerSearch)),
+        Object.values(row).some(
+          (v) => v !== null && v !== undefined && String(v).toLowerCase().includes(lowerSearch),
+        ),
       );
     }
 
@@ -229,8 +233,8 @@ export default function ExampleAppPage() {
       result.sort((a, b) => {
         const aVal = a[field];
         const bVal = b[field];
-        if (aVal == null) return 1;
-        if (bVal == null) return -1;
+        if (aVal === null || aVal === undefined) return 1;
+        if (bVal === null || bVal === undefined) return -1;
         const cmp = String(aVal).localeCompare(String(bVal), undefined, { numeric: true });
         return direction === 'asc' ? cmp : -cmp;
       });
@@ -319,7 +323,7 @@ export default function ExampleAppPage() {
     (data: Record<string, any>) => {
       toast.success(`${schema?.label ?? 'Record'} created (mock)`);
       setCreateOpen(false);
-      console.log('[ExampleApp] Create:', data);
+      logger.info('[ExampleApp] Create:', data);
     },
     [schema],
   );
@@ -329,7 +333,7 @@ export default function ExampleAppPage() {
     (data: Record<string, any>) => {
       toast.success(`${schema?.label ?? 'Record'} updated (mock)`);
       setEditingRow(null);
-      console.log('[ExampleApp] Edit:', data);
+      logger.info('[ExampleApp] Edit:', data);
     },
     [schema],
   );
@@ -597,7 +601,7 @@ export default function ExampleAppPage() {
 
       {/* ─── Edit Modal (Relation inline edit in edit mode) ── */}
       <BaseModal
-        open={!!editingRow}
+        open={Boolean(editingRow)}
         onClose={() => setEditingRow(null)}
         title={`Edit ${schema.label}`}
         size="lg"
@@ -620,7 +624,7 @@ export default function ExampleAppPage() {
 
       {/* ─── Delete Confirm ── */}
       <BaseModal
-        open={!!deleteRow}
+        open={Boolean(deleteRow)}
         onClose={() => setDeleteRow(null)}
         title={`Delete ${schema.label}`}
       >

@@ -81,7 +81,7 @@ export function RelationMultiSelect({
     queryKey: [...queryKeys.relation.search(connectionId, targetEntity ?? '', debouncedSearch)],
     queryFn: () =>
       searchRelationOptions(connectionId, targetEntity!, displayField, debouncedSearch),
-    enabled: !!targetEntity && debouncedSearch.length >= 2 && isOpen,
+    enabled: Boolean(targetEntity) && debouncedSearch.length >= 2 && isOpen,
     staleTime: 60_000,
   });
 

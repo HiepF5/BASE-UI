@@ -38,6 +38,10 @@ export function debounce<T extends (...args: any[]) => any>(
   };
 }
 
+// Structured logger (Phase 5 – Hardening)
+export { logger } from './logger';
+export type { LogLevel, LogEntry } from './logger';
+
 /** Build query string from QueryOptions */
 export function buildQueryString(params: Record<string, any>): string {
   const searchParams = new URLSearchParams();

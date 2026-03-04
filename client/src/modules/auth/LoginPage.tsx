@@ -22,7 +22,7 @@ export function LoginPage() {
   const from = (location.state as any)?.from?.pathname || '/dashboard';
   React.useEffect(() => {
     if (isAuthenticated) navigate(from, { replace: true });
-  }, [isAuthenticated]);
+  }, [isAuthenticated, from, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

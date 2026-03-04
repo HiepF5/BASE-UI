@@ -24,7 +24,7 @@ export interface RelationSchema {
 export interface TableSchema {
   tableName: string;
   columns: ColumnSchema[];
-  relations: RelationSchema[];
+  relations?: RelationSchema[];
   primaryKey: string[];
 }
 

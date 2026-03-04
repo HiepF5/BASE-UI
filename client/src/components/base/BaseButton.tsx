@@ -38,7 +38,7 @@ export interface BaseButtonProps
   loading?: boolean;
 }
 
-export function BaseButton({
+export const BaseButton = React.memo(function BaseButton({
   className,
   variant,
   size,
@@ -73,4 +73,6 @@ export function BaseButton({
       {children}
     </button>
   );
-}
+});
+
+BaseButton.displayName = 'BaseButton';

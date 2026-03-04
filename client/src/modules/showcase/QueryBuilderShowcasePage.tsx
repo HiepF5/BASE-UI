@@ -1,7 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { QueryBuilder } from '../../components/query-builder';
 import { schemaRegistry } from '../../config/schema.config';
-import type { FilterGroupNode, QueryField } from '../../core/query-builder';
 import {
   createEmptyGroup,
   resolveQueryFields,
@@ -10,6 +9,8 @@ import {
   countConditions,
   getMaxDepth,
   validateAST,
+  type FilterGroupNode,
+  type QueryField,
 } from '../../core/query-builder';
 
 // ============================================================

@@ -266,26 +266,26 @@ export const OrderModule = {
 
 ---
 
-# 🔴 PHASE 5 – HARDENING (1–2 tuần)
+# � PHASE 5 – HARDENING (1–2 tuần)
 
 ## Performance
 
-- [ ] Memo optimization
-- [ ] Virtual table
-- [ ] Code splitting
+- [x] Memo optimization
+- [x] Virtual table
+- [x] Code splitting
 
 ## DX (Developer Experience)
 
-- [ ] CLI generator
-- [ ] Template config
-- [ ] Error boundary
-- [ ] Logging strategy
+- [x] CLI generator
+- [x] Template config
+- [x] Error boundary
+- [x] Logging strategy
 
 ## Quality
 
-- [ ] Unit test core engine
-- [ ] Integration test CRUD flow
-- [ ] Lint strict mode
+- [x] Unit test core engine
+- [x] Integration test CRUD flow
+- [x] Lint strict mode
 
 ---
 

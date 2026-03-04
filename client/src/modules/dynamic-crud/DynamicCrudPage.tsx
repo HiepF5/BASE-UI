@@ -188,7 +188,7 @@ export function DynamicCrudPage({ entityName, connectionId }: DynamicCrudPagePro
 
       {/* ─── Edit Modal ─────────────────────────────────────── */}
       <DynamicEditModal
-        open={!!editingRow}
+        open={Boolean(editingRow)}
         onClose={handleCloseEdit}
         schema={engine.schema}
         data={editingRow}
@@ -200,7 +200,7 @@ export function DynamicCrudPage({ entityName, connectionId }: DynamicCrudPagePro
 
       {/* ─── Delete Confirm ─────────────────────────────────── */}
       <DeleteConfirmDialog
-        open={!!deletingRow}
+        open={Boolean(deletingRow)}
         onClose={handleCloseDelete}
         onConfirm={handleConfirmDelete}
         loading={engine.crud.isDeleting}

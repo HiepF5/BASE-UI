@@ -39,6 +39,10 @@ export {
 export { FieldRenderer, DynamicForm, DynamicTable } from './dynamic';
 export type { FieldRendererProps, DynamicFormProps, DynamicTableProps } from './dynamic';
 
+// Error handling (Phase 5 – Hardening)
+export { ErrorBoundary, ModuleErrorBoundary } from './error/ErrorBoundary';
+export type { ErrorBoundaryProps, ModuleErrorBoundaryProps } from './error/ErrorBoundary';
+
 // Relation components (Phase 3 – Relation + Nested CRUD)
 export { RelationSelect, RelationMultiSelect, RelationInlineTable } from './relation';
 export type {

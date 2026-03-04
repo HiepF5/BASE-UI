@@ -76,3 +76,7 @@ export type {
   DropdownDivider,
   DropdownMenuEntry,
 } from './BaseDropdown';
+
+// ── Virtual Table (Phase 5 – Performance) ───────────────────
+export { BaseVirtualTable } from './BaseVirtualTable';
+export type { BaseVirtualTableProps, VirtualCellRenderer } from './BaseVirtualTable';

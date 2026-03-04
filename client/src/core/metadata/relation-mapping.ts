@@ -51,7 +51,7 @@ export function buildRelationSearchEndpoint(
 
 /** Check if field is a relation field */
 export function isRelationField(field: FieldSchema): boolean {
-  return field.type === 'relation' && !!field.relation;
+  return field.type === 'relation' && Boolean(field.relation);
 }
 
 /** Get all relation fields from entity schema fields */

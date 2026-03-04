@@ -75,7 +75,7 @@ export const BaseInput = React.forwardRef<HTMLInputElement, BaseInputProps>(
               rightIcon && 'pr-10',
               className,
             )}
-            aria-invalid={!!error}
+            aria-invalid={Boolean(error)}
             aria-describedby={error ? `${inputId}-error` : hint ? `${inputId}-hint` : undefined}
             {...props}
           />

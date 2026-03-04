@@ -310,11 +310,4 @@ Bạn sẽ có:
 
 ---
 
-Nếu bạn muốn, mình có thể:
-
-- Thiết kế luôn **Information Architecture (IA) tree**
-- Hoặc vẽ chi tiết **Flow User Journey**
-- Hoặc define **MVP subset để ship bản 1 trong 4 tuần**
-
-Mình muốn đi theo hướng:
-A) Platform internal enterprise
+Platform internal enterprise

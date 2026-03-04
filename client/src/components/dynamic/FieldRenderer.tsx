@@ -34,7 +34,7 @@ export interface FieldRendererProps {
   connectionId?: string;
 }
 
-export function FieldRenderer({
+export const FieldRenderer = React.memo(function FieldRenderer({
   field,
   register,
   control,
@@ -395,6 +395,6 @@ export function FieldRenderer({
         />
       );
   }
-}
+});
 
 FieldRenderer.displayName = 'FieldRenderer';

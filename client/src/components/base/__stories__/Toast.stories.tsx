@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { ToastProvider, useToast } from '..';
-import { BaseButton } from '..';
+import { ToastProvider, useToast, BaseButton } from '..';
 
 const meta: Meta = {
   title: 'Base/Feedback/Toast',

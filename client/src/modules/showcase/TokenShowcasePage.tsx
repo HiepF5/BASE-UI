@@ -86,7 +86,7 @@ function ColorSwatch({ shade, prefix }: { shade: number; prefix: string }) {
 
 /* ── Main Component ───────────────────────────────────────── */
 export function TokenShowcasePage() {
-  const { theme, resolvedTheme, setTheme, isDark, cycleTheme } = useTheme();
+  const { theme, resolvedTheme, setTheme } = useTheme();
 
   return (
     <div className="space-y-8 max-w-6xl">

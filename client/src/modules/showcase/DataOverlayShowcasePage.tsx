@@ -748,7 +748,7 @@ function ComposedExample() {
 
       {/* Edit Drawer */}
       <BaseDrawer
-        open={!!editDrawer}
+        open={Boolean(editDrawer)}
         onClose={() => setEditDrawer(null)}
         title={`Edit: ${editDrawer?.name ?? ''}`}
         placement="right"
@@ -780,7 +780,7 @@ function ComposedExample() {
 
       {/* Delete Confirm Modal */}
       <BaseModal
-        open={!!deleteModal}
+        open={Boolean(deleteModal)}
         onClose={() => setDeleteModal(null)}
         title="Confirm Delete"
         size="sm"

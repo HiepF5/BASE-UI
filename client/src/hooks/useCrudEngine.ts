@@ -1,9 +1,8 @@
 import { useCallback, useEffect, useMemo } from 'react';
-import { useCrud } from './useCrud';
+import { useCrud, type UseCrudReturn } from './useCrud';
 import { useEntitySchema, useRelationOptions } from './useEntitySchema';
 import { useTableStore } from '../stores/tableStore';
 import type { EntitySchema } from '../core/metadata/schema.types';
-import type { UseCrudReturn } from './useCrud';
 import type { SortOption, FilterGroup } from '../types';
 
 // ============================================================

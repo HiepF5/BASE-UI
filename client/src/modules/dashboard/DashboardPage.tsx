@@ -13,7 +13,7 @@ export function DashboardPage() {
   const { data: tables = [] } = useQuery<string[]>({
     queryKey: ['tables', activeConnection],
     queryFn: () => apiClient.get(`/schema/${activeConnection}/tables`),
-    enabled: !!activeConnection,
+    enabled: Boolean(activeConnection),
   });
 
   return (

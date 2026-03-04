@@ -1,14 +1,12 @@
 import React, { useMemo } from 'react';
-import type {
-  ConditionRowProps,
-  FilterOperator,
-  QueryField,
-  OperatorDef,
-} from '../../core/query-builder';
 import {
   getOperatorsForType,
   getDefaultOperator,
   operatorRequiresValue,
+  type ConditionRowProps,
+  type FilterOperator,
+  type QueryField,
+  type OperatorDef,
 } from '../../core/query-builder';
 
 // ============================================================
@@ -17,7 +15,7 @@ import {
 // Phase 3 – Query Builder: ConditionRow + Relation field support
 // ============================================================
 
-export function ConditionRow({
+export const ConditionRow = React.memo(function ConditionRow({
   condition,
   fields,
   onChange,
@@ -132,7 +130,7 @@ export function ConditionRow({
       </button>
     </div>
   );
-}
+});
 
 // ── Value Input (renders different input types based on field type + operator) ──
 
@@ -329,6 +327,8 @@ function ValueInput({ condition, field, operator, onChange, disabled }: ValueInp
     />
   );
 }
+
+ConditionRow.displayName = 'ConditionRow';
 
 // Shared input class
 const inputClass = `border border-neutral-300 rounded-md px-2.5 py-1.5 text-sm bg-white

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { cn } from '../../core/utils';
 
 // ============================================================
@@ -49,7 +49,7 @@ export const BaseDatePicker = React.forwardRef<HTMLInputElement, BaseDatePickerP
             sizeClasses[size],
             className,
           )}
-          aria-invalid={!!error}
+          aria-invalid={Boolean(error)}
           {...props}
         />
 

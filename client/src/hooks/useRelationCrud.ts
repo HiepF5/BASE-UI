@@ -79,7 +79,7 @@ export function useRelationCrud<T = Record<string, unknown>>(
         },
       }),
     staleTime: 30_000,
-    enabled: enabled && !!parentId && !!childEntity,
+    enabled: enabled && Boolean(parentId) && Boolean(childEntity),
   });
 
   // ─── Create (auto-inject FK) ───────────────────────────

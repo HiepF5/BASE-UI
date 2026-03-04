@@ -86,7 +86,7 @@ export function RelationSelect({
     queryKey: [...queryKeys.relation.search(connectionId, targetEntity ?? '', debouncedSearch)],
     queryFn: () =>
       searchRelationOptions(connectionId, targetEntity!, displayField, debouncedSearch),
-    enabled: !!targetEntity && debouncedSearch.length >= 2 && isOpen,
+    enabled: Boolean(targetEntity) && debouncedSearch.length >= 2 && isOpen,
     staleTime: 60_000,
   });
 
@@ -106,7 +106,7 @@ export function RelationSelect({
 
   // Get selected display label
   const selectedLabel = useMemo(() => {
-    if (value == null) return '';
+    if (value === null || value === undefined) return '';
     const found = preloadedOptions.find((o) => String(o.value) === String(value));
     if (found) return found.label;
     const fromSearch = searchResults?.find((o) => String(o.value) === String(value));
@@ -260,7 +260,7 @@ export function RelationSelect({
                 />
               </svg>
             )}
-            {value != null && !disabled && (
+            {value !== null && value !== undefined && !disabled && (
               <button
                 type="button"
                 onClick={handleClear}

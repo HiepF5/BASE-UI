@@ -55,7 +55,7 @@ export function useEntitySchema(
     queryKey: queryKeys.schema.entity(connectionId, entity),
     queryFn: () => apiClient.get(`/schema/${connectionId}/${entity}`),
     staleTime: 5 * 60 * 1000,
-    enabled: shouldFetch && !!entity,
+    enabled: shouldFetch && Boolean(entity),
   });
 
   // 3. Merge: static config wins, cache next, API fills gaps
@@ -85,7 +85,7 @@ export function useEntitySchema(
     schema,
     isLoading: shouldFetch ? isLoading : false,
     error: error as Error | null,
-    isStatic: !!staticSchema,
+    isStatic: Boolean(staticSchema),
   };
 }
 
@@ -128,7 +128,7 @@ export function useRelationOptions(
             `/crud/${connectionId}/${rel.target}?limit=${limit}`,
           ),
         staleTime: 2 * 60 * 1000,
-        enabled: !!connectionId,
+        enabled: Boolean(connectionId),
       };
     }),
   });

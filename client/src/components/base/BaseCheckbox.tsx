@@ -38,7 +38,7 @@ export const BaseCheckbox = React.forwardRef<HTMLInputElement, BaseCheckboxProps
     React.useEffect(() => {
       const el = (ref as React.RefObject<HTMLInputElement>)?.current || innerRef.current;
       if (el) {
-        el.indeterminate = !!indeterminate;
+        el.indeterminate = Boolean(indeterminate);
       }
     }, [indeterminate, ref]);
 
@@ -61,7 +61,7 @@ export const BaseCheckbox = React.forwardRef<HTMLInputElement, BaseCheckboxProps
               'focus:ring-2 focus:ring-primary-500 focus:ring-offset-1',
               error && 'border-danger',
             )}
-            aria-invalid={!!error}
+            aria-invalid={Boolean(error)}
             {...props}
           />
           {(label || description) && (

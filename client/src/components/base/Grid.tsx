@@ -87,9 +87,11 @@ export function Grid({
         smCols && smColsMap[smCols],
         mdCols && mdColsMap[mdCols],
         lgCols && lgColsMap[lgCols],
-        gapX != null ? `gap-x-${gapX}` : null,
-        gapY != null ? `gap-y-${gapY}` : null,
-        gapX == null && gapY == null ? `gap-${gap}` : null,
+        gapX !== null && gapX !== undefined ? `gap-x-${gapX}` : null,
+        gapY !== null && gapY !== undefined ? `gap-y-${gapY}` : null,
+        (gapX === null || gapX === undefined) && (gapY === null || gapY === undefined)
+          ? `gap-${gap}`
+          : null,
         className,
       )}
       {...props}
