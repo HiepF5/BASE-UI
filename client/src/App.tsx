@@ -60,6 +60,19 @@ const GenericFormShowcasePage = lazy(() =>
   })),
 );
 const ExampleAppPage = lazy(() => import('./modules/example-app/ExampleAppPage'));
+const BieuLaiSuatPage = lazy(() =>
+  import('./modules/showcase/BieuLaiSuatPage').then((m) => ({ default: m.BieuLaiSuatPage })),
+);
+const RelationNestedCrudPage = lazy(() =>
+  import('./modules/showcase/RelationNestedCrudPage').then((m) => ({
+    default: m.RelationNestedCrudPage,
+  })),
+);
+const SettingsPage = lazy(() => import('./modules/showcase/SettingsPage'));
+const ConfigPreviewPage = lazy(() => import('./modules/showcase/ConfigPreviewPage'));
+const CommandPalettePage = lazy(() => import('./modules/showcase/CommandPalettePage'));
+const ActivityLogPage = lazy(() => import('./modules/showcase/ActivityLogPage'));
+const ScreenPermissionPage = lazy(() => import('./modules/showcase/ScreenPermissionPage'));
 
 function PageLoader() {
   return (
@@ -97,6 +110,13 @@ export function App() {
             <Route path="showcase/generic-list" element={<GenericListShowcasePage />} />
             <Route path="showcase/generic-form" element={<GenericFormShowcasePage />} />
             <Route path="example-app" element={<ExampleAppPage />} />
+            <Route path="showcase/bieu-lai-suat" element={<BieuLaiSuatPage />} />
+            <Route path="showcase/relation-nested-crud" element={<RelationNestedCrudPage />} />
+            <Route path="showcase/settings" element={<SettingsPage />} />
+            <Route path="showcase/config-preview" element={<ConfigPreviewPage />} />
+            <Route path="showcase/command-palette" element={<CommandPalettePage />} />
+            <Route path="showcase/activity-log" element={<ActivityLogPage />} />
+            <Route path="showcase/screen-permissions" element={<ScreenPermissionPage />} />
           </Route>
         </Routes>
       </Suspense>

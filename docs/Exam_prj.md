@@ -36,10 +36,10 @@ Làm nền cho toàn bộ platform.
 
 ## Checklist
 
-- [ ] Layout config driven
-- [ ] Menu render từ metadata
-- [ ] Permission-aware menu
-- [ ] Dark/Light mode
+- [x] Layout config driven
+- [x] Menu render từ metadata
+- [x] Permission-aware menu
+- [x] Dark/Light mode
 
 ---
 
@@ -182,10 +182,10 @@ Ví dụ: Order
 
 ## Feature
 
-- [ ] Inline row add
-- [ ] Inline validation
-- [ ] Nested transaction
-- [ ] Optimistic update
+- [x] Inline row add
+- [x] Inline validation
+- [x] Nested transaction
+- [x] Optimistic update
 
 ---
 
@@ -203,11 +203,11 @@ Ví dụ: Order
 
 ## Bắt buộc
 
-- [ ] Condition row
-- [ ] AND/OR group
-- [ ] Nested group
-- [ ] Relation field select
-- [ ] Operator mapping
+- [x] Condition row
+- [x] AND/OR group
+- [x] Nested group
+- [x] Relation field select
+- [x] Operator mapping
 
 ## AST Example
 
@@ -242,16 +242,16 @@ Ví dụ: Order
 
 ## Modules
 
-- User management
-- Role/Permission
-- Feature flag
-- System config
+- [x] User management
+- [x] Role/Permission
+- [x] Feature flag
+- [x] System config
 
 ## Engine cần support
 
-- Permission guard
-- Route guard
-- Dynamic role-based field hide/show
+- [x] Permission guard
+- [x] Route guard
+- [x] Dynamic role-based field hide/show
 
 ---
 
@@ -263,10 +263,10 @@ Ví dụ: Order
 
 Cho dev/user:
 
-- Edit JSON config
-- Live preview render
-- Validate schema
-- Export config
+- [x] Edit JSON config
+- [x] Live preview render
+- [x] Validate schema
+- [x] Export config
 
 Giống “low-code lite mode”
 
@@ -293,15 +293,27 @@ Mình đề xuất thêm 2 màn hình nữa:
 
 ### 1️⃣ Command Palette Screen
 
-- Global search module
-- Quick create
-- Navigate entity
+- [x] Global search module — Fuzzy search across pages, entities, fields, actions
+- [x] Quick create — Create cards for every entity with create permission
+- [x] Navigate entity — Entity browser with field inspector, CRUD permissions, quick jump
 
 ### 2️⃣ Activity Log Screen
 
-- System audit
-- Change history
-- Diff viewer
+- [x] System audit — Filterable timeline with 7 action types, 3 severity levels, search, CSV export
+- [x] Change history — Per-record revision timeline with field-level diffs
+- [x] Diff viewer — Side-by-side old/new value comparison with color highlighting
+
+### 3️⃣ Screen Permission Matrix
+
+- [x] Screen-level permission matrix — Role × Screen × CRUD grid, auto-discovered from layoutConfig
+- [x] Per-screen CRUD granularity — Separate Create/Read/Update/Delete toggles per screen per role
+- [x] Role management — Admin (full) / Editor (R+C+U) / Viewer (R) following security_rules.md
+- [x] Bulk actions — Toggle all CRUD for a screen, or toggle one CRUD across all screens
+- [x] Permission simulation — Switch role & preview accessible screens with action badges
+- [x] Role comparison — Side-by-side 3-role × 4-CRUD matrix across all screens
+- [x] Change audit — Track every permission toggle with timestamp, user, rollback support
+- [x] Export / Import — JSON config export of full permission matrix
+- [x] Admin-only edit guard — Non-admin users see read-only matrix
 
 ---
 
@@ -319,3 +331,5 @@ Bạn sẽ có:
 ---
 
 Platform internal enterprise
+
+và thêm màn hình phân quyền cho từng màn hình, mỗi màn hình lại phân quyền CRUD cho từng màn.Đọc đám bảo theo rule , doc , tạo example trên giao diện, đánh dấu theo checklist đã hoàn thành.
