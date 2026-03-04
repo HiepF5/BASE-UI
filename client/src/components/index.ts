@@ -34,3 +34,7 @@ export {
   BasePopover,
   BaseDropdown,
 } from './base';
+
+// Dynamic components (Week 4 – Metadata Engine)
+export { FieldRenderer, DynamicForm, DynamicTable } from './dynamic';
+export type { FieldRendererProps, DynamicFormProps, DynamicTableProps } from './dynamic';

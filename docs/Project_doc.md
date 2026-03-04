@@ -151,19 +151,19 @@ Cho phép render UI từ metadata
 
 ## Week 4 – Metadata Engine
 
-- [ ] Define schema format
+- [x] Define schema format
 
-- [ ] Field type mapping
+- [x] Field type mapping
 
-- [ ] Relation mapping
+- [x] Relation mapping
 
-- [ ] Validation config
+- [x] Validation config
 
-- [ ] FieldRenderer component
+- [x] FieldRenderer component
 
-- [ ] DynamicForm component
+- [x] DynamicForm component
 
-- [ ] DynamicTable component
+- [x] DynamicTable component
 
 ---
 
