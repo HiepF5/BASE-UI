@@ -24,6 +24,8 @@ export function AdminLayout() {
     { to: '/showcase/tokens', label: 'Tokens', icon: '🎨' },
     { to: '/showcase/components', label: 'Components', icon: '🧩' },
     { to: '/showcase/data-overlay', label: 'Data & Overlay', icon: '📊' },
+    { to: '/showcase/metadata', label: 'Metadata', icon: '🏗️' },
+    { to: '/showcase/crud', label: 'CRUD Engine', icon: '⚡' },
   ];
 
   return (

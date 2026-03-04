@@ -1,62 +1,172 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { apiClient } from '../core/api/apiClient';
+import { createCrudService } from '../core/api/crudService';
 import type { PaginatedResult, QueryOptions } from '../types';
-import { buildQueryString } from '../core/utils';
 
 // ============================================================
 // useCrud - Generic CRUD hook (React Query)
+// Enhanced: optimistic updates, better error typing, typed service
+// Follows State Management rules: React Query for server state
 // ============================================================
-export function useCrud<T = any>(connectionId: string, entity: string, options?: QueryOptions) {
+
+/** CRUD hook options */
+interface UseCrudOptions extends QueryOptions {
+  /** Disable auto-fetching the list */
+  enabled?: boolean;
+  /** Override default stale time (ms) */
+  staleTime?: number;
+}
+
+/** CRUD hook return type */
+export interface UseCrudReturn<T> {
+  // ─── List ───────────────
+  data: T[];
+  total: number;
+  isLoading: boolean;
+  isFetching: boolean;
+  error: Error | null;
+  refetch: () => void;
+  // ─── Single ─────────────
+  getOne: (id: string | number) => Promise<T>;
+  // ─── Mutations ──────────
+  create: (data: Partial<T>) => Promise<T>;
+  update: (params: { id: string | number; data: Partial<T> }) => Promise<T>;
+  remove: (id: string | number) => Promise<void>;
+  bulkDelete: (ids: Array<string | number>) => Promise<void>;
+  // ─── Mutation States ────
+  isCreating: boolean;
+  isUpdating: boolean;
+  isDeleting: boolean;
+  isBulkDeleting: boolean;
+  // ─── Mutation Errors ────
+  createError: Error | null;
+  updateError: Error | null;
+  deleteError: Error | null;
+  // ─── Reset mutation states ──
+  resetCreate: () => void;
+  resetUpdate: () => void;
+  resetDelete: () => void;
+}
+
+export function useCrud<T = Record<string, unknown>>(
+  connectionId: string,
+  entity: string,
+  options?: UseCrudOptions,
+): UseCrudReturn<T> {
   const queryClient = useQueryClient();
-  const queryKey = ['crud', connectionId, entity, options];
+  const service = createCrudService<T>(connectionId, entity);
 
-  const qs = options ? buildQueryString({
-    page: options.page,
-    limit: options.limit,
-    sort: options.sort,
-    filter: options.filter,
-    search: options.search,
-    include: options.include,
-  }) : '';
+  // ─── Query keys ─────────────────────────────────────────
+  const listKey = ['crud', connectionId, entity, options] as const;
+  const baseKey = ['crud', connectionId, entity] as const;
 
+  // ─── List query ─────────────────────────────────────────
   const listQuery = useQuery<PaginatedResult<T>>({
-    queryKey,
+    queryKey: listKey,
     queryFn: () =>
-      apiClient.get(`/crud/${connectionId}/${entity}${qs ? `?${qs}` : ''}`),
+      service.list({
+        page: options?.page,
+        limit: options?.limit,
+        sort: options?.sort,
+        filter: options?.filter,
+        search: options?.search,
+        include: options?.include,
+      }),
+    staleTime: options?.staleTime ?? 30_000,
+    enabled: options?.enabled !== false && !!entity,
+    placeholderData: (prev) => prev, // Keep previous data while fetching
   });
 
-  const getOne = (id: string) =>
-    apiClient.get<T>(`/crud/${connectionId}/${entity}/${id}`);
+  // ─── Get one (imperative) ───────────────────────────────
+  const getOne = (id: string | number) => service.getOne(id);
 
+  // ─── Create mutation ────────────────────────────────────
   const createMutation = useMutation({
-    mutationFn: (data: Partial<T>) =>
-      apiClient.post(`/crud/${connectionId}/${entity}`, data),
+    mutationFn: (data: Partial<T>) => service.create(data),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['crud', connectionId, entity] });
+      queryClient.invalidateQueries({ queryKey: baseKey });
     },
   });
 
+  // ─── Update mutation (with optimistic update) ───────────
   const updateMutation = useMutation({
-    mutationFn: ({ id, data }: { id: string; data: Partial<T> }) =>
-      apiClient.put(`/crud/${connectionId}/${entity}/${id}`, data),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['crud', connectionId, entity] });
+    mutationFn: ({ id, data }: { id: string | number; data: Partial<T> }) =>
+      service.update(id, data),
+    onMutate: async ({ id, data }) => {
+      await queryClient.cancelQueries({ queryKey: baseKey });
+      const previousData = queryClient.getQueryData<PaginatedResult<T>>(listKey);
+
+      if (previousData) {
+        queryClient.setQueryData<PaginatedResult<T>>(listKey, {
+          ...previousData,
+          data: previousData.data.map((item) =>
+            (item as Record<string, unknown>).id === id ? { ...item, ...data } : item,
+          ) as T[],
+        });
+      }
+      return { previousData };
+    },
+    onError: (_err, _vars, context) => {
+      if (context?.previousData) {
+        queryClient.setQueryData(listKey, context.previousData);
+      }
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: baseKey });
     },
   });
 
+  // ─── Delete mutation (with optimistic update) ───────────
   const deleteMutation = useMutation({
-    mutationFn: (id: string) =>
-      apiClient.delete(`/crud/${connectionId}/${entity}/${id}`),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['crud', connectionId, entity] });
+    mutationFn: (id: string | number) => service.remove(id),
+    onMutate: async (id) => {
+      await queryClient.cancelQueries({ queryKey: baseKey });
+      const previousData = queryClient.getQueryData<PaginatedResult<T>>(listKey);
+
+      if (previousData) {
+        queryClient.setQueryData<PaginatedResult<T>>(listKey, {
+          ...previousData,
+          data: previousData.data.filter((item) => (item as Record<string, unknown>).id !== id),
+          total: previousData.total - 1,
+        });
+      }
+      return { previousData };
+    },
+    onError: (_err, _id, context) => {
+      if (context?.previousData) {
+        queryClient.setQueryData(listKey, context.previousData);
+      }
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: baseKey });
     },
   });
 
+  // ─── Bulk delete mutation ───────────────────────────────
   const bulkDeleteMutation = useMutation({
-    mutationFn: (ids: string[]) =>
-      apiClient.post(`/crud/${connectionId}/${entity}/bulk-delete`, { ids }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['crud', connectionId, entity] });
+    mutationFn: (ids: Array<string | number>) => service.bulkDelete(ids),
+    onMutate: async (ids) => {
+      await queryClient.cancelQueries({ queryKey: baseKey });
+      const previousData = queryClient.getQueryData<PaginatedResult<T>>(listKey);
+
+      if (previousData) {
+        const idSet = new Set(ids.map(String));
+        queryClient.setQueryData<PaginatedResult<T>>(listKey, {
+          ...previousData,
+          data: previousData.data.filter(
+            (item) => !idSet.has(String((item as Record<string, unknown>).id)),
+          ),
+          total: previousData.total - ids.length,
+        });
+      }
+      return { previousData };
+    },
+    onError: (_err, _ids, context) => {
+      if (context?.previousData) {
+        queryClient.setQueryData(listKey, context.previousData);
+      }
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: baseKey });
     },
   });
 
@@ -65,8 +175,11 @@ export function useCrud<T = any>(connectionId: string, entity: string, options?:
     data: listQuery.data?.data ?? [],
     total: listQuery.data?.total ?? 0,
     isLoading: listQuery.isLoading,
-    error: listQuery.error,
-    refetch: listQuery.refetch,
+    isFetching: listQuery.isFetching,
+    error: listQuery.error as Error | null,
+    refetch: () => {
+      listQuery.refetch();
+    },
     // Single
     getOne,
     // Mutations
@@ -74,9 +187,18 @@ export function useCrud<T = any>(connectionId: string, entity: string, options?:
     update: updateMutation.mutateAsync,
     remove: deleteMutation.mutateAsync,
     bulkDelete: bulkDeleteMutation.mutateAsync,
-    // States
+    // Mutation states
     isCreating: createMutation.isPending,
     isUpdating: updateMutation.isPending,
     isDeleting: deleteMutation.isPending,
+    isBulkDeleting: bulkDeleteMutation.isPending,
+    // Mutation errors
+    createError: createMutation.error as Error | null,
+    updateError: updateMutation.error as Error | null,
+    deleteError: deleteMutation.error as Error | null,
+    // Reset
+    resetCreate: createMutation.reset,
+    resetUpdate: updateMutation.reset,
+    resetDelete: deleteMutation.reset,
   };
 }

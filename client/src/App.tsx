@@ -39,6 +39,11 @@ const MetadataShowcasePage = lazy(() =>
     default: m.MetadataShowcasePage,
   })),
 );
+const CrudShowcasePage = lazy(() =>
+  import('./modules/showcase/CrudShowcasePage').then((m) => ({
+    default: m.CrudShowcasePage,
+  })),
+);
 
 function PageLoader() {
   return (
@@ -71,6 +76,7 @@ export function App() {
             <Route path="showcase/components" element={<ComponentShowcasePage />} />
             <Route path="showcase/data-overlay" element={<DataOverlayShowcasePage />} />
             <Route path="showcase/metadata" element={<MetadataShowcasePage />} />
+            <Route path="showcase/crud" element={<CrudShowcasePage />} />
           </Route>
         </Routes>
       </Suspense>

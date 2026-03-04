@@ -1,213 +1,223 @@
 import React, { useState, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
-import { useCrud } from '../../hooks/useCrud';
-import { useSchema } from '../../hooks/useSchema';
-import { useTableStore } from '../../stores/tableStore';
-import { BaseTable, BaseForm, BaseModal, BaseFilterBar, BaseButton } from '../../components/base';
-import type { ColumnConfig } from '../../types';
+import { useCrudEngine } from '../../hooks/useCrudEngine';
+import { DynamicListView } from './DynamicListView';
+import { DynamicCreateModal } from './DynamicCreateModal';
+import { DynamicEditModal } from './DynamicEditModal';
+import { DeleteConfirmDialog } from './DeleteConfirmDialog';
+import { BaseSpinner } from '../../components/base';
 import toast from 'react-hot-toast';
 
 // ============================================================
-// DynamicCrudPage - Metadata-driven CRUD page
-// Reads schema → renders table + form dynamically
+// DynamicCrudPage - Full metadata-driven CRUD page
+// Composes: DynamicListView + DynamicCreateModal + DynamicEditModal
+//           + DeleteConfirmDialog
+// Uses: useCrudEngine (orchestrator hook)
+// Pattern: Smart page (modules/) composes base components
 // ============================================================
 
-interface DynamicCrudPageProps {
-  config?: { name: string; label: string };
+export interface DynamicCrudPageProps {
+  /** Static entity name (alternative to route param) */
+  entityName?: string;
+  /** Connection ID override */
+  connectionId?: string;
 }
 
-export function DynamicCrudPage({ config }: DynamicCrudPageProps) {
-  const { connectionId = 'default', entity: routeEntity } = useParams<{
+export function DynamicCrudPage({ entityName, connectionId }: DynamicCrudPageProps) {
+  const { connectionId: routeConnectionId, entity: routeEntity } = useParams<{
     connectionId: string;
     entity: string;
   }>();
-  const entity = config?.name || routeEntity || '';
 
-  // Table state (Zustand) – scoped per entity
-  const tableStore = useTableStore();
-  const entityState = tableStore.getState();
+  const entity = entityName || routeEntity || '';
+  const connId = connectionId || routeConnectionId || 'default';
 
-  // Activate entity on mount / change
-  React.useEffect(() => {
-    if (entity) tableStore.setActiveEntity(entity);
-  }, [entity]);
+  // ─── CRUD Engine (orchestrator) ─────────────────────────
+  const engine = useCrudEngine(entity, { connectionId: connId });
 
-  // Schema
-  const { data: schema, isLoading: schemaLoading } = useSchema(connectionId, entity);
+  // ─── Modal states ───────────────────────────────────────
+  const [createOpen, setCreateOpen] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [editingRow, setEditingRow] = useState<Record<string, any> | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [deletingRow, setDeletingRow] = useState<Record<string, any> | null>(null);
+  const [bulkDeleteOpen, setBulkDeleteOpen] = useState(false);
 
-  // CRUD hook (React Query)
-  const crud = useCrud(connectionId, entity, {
-    page: entityState.page,
-    limit: entityState.limit,
-    sort: entityState.sort,
-    filter: entityState.filter || undefined,
-    search: entityState.search,
-  });
+  // ─── Handlers ───────────────────────────────────────────
 
-  // Modal state
-  const [modalOpen, setModalOpen] = useState(false);
-  const [editingRow, setEditingRow] = useState<any>(null);
-  const [deleteConfirm, setDeleteConfirm] = useState<any>(null);
+  const handleCreate = useCallback(() => setCreateOpen(true), []);
+  const handleCloseCreate = useCallback(() => setCreateOpen(false), []);
 
-  // Derive columns from schema
-  const columns: ColumnConfig[] = React.useMemo(() => {
-    if (!schema?.columns) return [];
-    return schema.columns.map((col) => ({
-      name: col.name,
-      label: col.name.charAt(0).toUpperCase() + col.name.slice(1).replace(/_/g, ' '),
-      type: mapColumnType(col.type),
-      visible: true,
-      sortable: true,
-      filterable: !col.isPrimary,
-      editable: !col.isPrimary,
-      required: !col.nullable && !col.isPrimary,
-    }));
-  }, [schema]);
-
-  // Handlers
-  const handleCreate = useCallback(() => {
-    setEditingRow(null);
-    setModalOpen(true);
-  }, []);
-
-  const handleEdit = useCallback((row: any) => {
+  const handleEdit = useCallback((row: Record<string, unknown>) => {
     setEditingRow(row);
-    setModalOpen(true);
   }, []);
+  const handleCloseEdit = useCallback(() => setEditingRow(null), []);
 
-  const handleDelete = useCallback((row: any) => {
-    setDeleteConfirm(row);
+  const handleDelete = useCallback((row: Record<string, unknown>) => {
+    setDeletingRow(row);
   }, []);
+  const handleCloseDelete = useCallback(() => setDeletingRow(null), []);
 
-  const handleSubmit = useCallback(
+  const handleBulkDelete = useCallback(() => setBulkDeleteOpen(true), []);
+  const handleCloseBulkDelete = useCallback(() => setBulkDeleteOpen(false), []);
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleCreateSubmit = useCallback(
     async (data: Record<string, any>) => {
       try {
-        if (editingRow) {
-          await crud.update({ id: editingRow.id, data });
-          toast.success('Updated successfully');
-        } else {
-          await crud.create(data);
-          toast.success('Created successfully');
-        }
-        setModalOpen(false);
-      } catch (err: any) {
-        toast.error(err?.response?.data?.message || 'Operation failed');
+        await engine.crud.create(data);
+        toast.success(`${engine.entityLabel} created successfully`);
+        setCreateOpen(false);
+      } catch (err: unknown) {
+        const message = err instanceof Error ? err.message : 'Create failed';
+        toast.error(message);
       }
     },
-    [editingRow, crud],
+    [engine.crud, engine.entityLabel],
+  );
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleEditSubmit = useCallback(
+    async (data: Record<string, any>) => {
+      if (!editingRow) return;
+      const pk = engine.schema?.primaryKey || 'id';
+      const id = editingRow[pk];
+      try {
+        await engine.crud.update({ id, data });
+        toast.success(`${engine.entityLabel} updated successfully`);
+        setEditingRow(null);
+      } catch (err: unknown) {
+        const message = err instanceof Error ? err.message : 'Update failed';
+        toast.error(message);
+      }
+    },
+    [editingRow, engine.crud, engine.entityLabel, engine.schema],
   );
 
   const handleConfirmDelete = useCallback(async () => {
-    if (!deleteConfirm) return;
+    if (!deletingRow) return;
+    const pk = engine.schema?.primaryKey || 'id';
+    const id = deletingRow[pk];
     try {
-      await crud.remove(deleteConfirm.id);
-      toast.success('Deleted successfully');
-      setDeleteConfirm(null);
-    } catch (err: any) {
-      toast.error(err?.response?.data?.message || 'Delete failed');
+      await engine.crud.remove(id);
+      toast.success(`${engine.entityLabel} deleted successfully`);
+      setDeletingRow(null);
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Delete failed';
+      toast.error(message);
     }
-  }, [deleteConfirm, crud]);
+  }, [deletingRow, engine.crud, engine.entityLabel, engine.schema]);
 
-  const handleBulkDelete = useCallback(async () => {
-    if (entityState.selectedRows.length === 0) return;
+  const handleConfirmBulkDelete = useCallback(async () => {
     try {
-      await crud.bulkDelete(entityState.selectedRows);
-      toast.success(`Deleted ${entityState.selectedRows.length} items`);
-      tableStore.clearSelection();
-    } catch (err: any) {
-      toast.error('Bulk delete failed');
+      await engine.crud.bulkDelete(engine.selectedRows);
+      toast.success(`Deleted ${engine.selectedRows.length} ${engine.entityLabel.toLowerCase()}(s)`);
+      engine.clearSelection();
+      setBulkDeleteOpen(false);
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Bulk delete failed';
+      toast.error(message);
     }
-  }, [entityState.selectedRows, crud]);
+  }, [engine]);
 
-  if (schemaLoading) {
-    return <div className="p-6 text-neutral-400">Loading schema...</div>;
+  const handleRefresh = useCallback(() => {
+    engine.crud.refetch();
+  }, [engine.crud]);
+
+  // ─── Loading state for schema ───────────────────────────
+  if (engine.schemaLoading) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <BaseSpinner size="lg" />
+      </div>
+    );
+  }
+
+  // ─── Error state ────────────────────────────────────────
+  if (engine.schemaError || !engine.schema) {
+    return (
+      <div className="p-6 text-center">
+        <p className="text-danger text-lg mb-2">Failed to load schema</p>
+        <p className="text-text-muted text-sm">
+          {engine.schemaError?.message || `Entity "${entity}" not found in schema registry.`}
+        </p>
+      </div>
+    );
   }
 
   return (
-    <div className="space-y-4">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold capitalize">{entity.replace(/_/g, ' ')}</h1>
-        <div className="flex gap-2">
-          {entityState.selectedRows.length > 0 && (
-            <BaseButton variant="danger" onClick={handleBulkDelete}>
-              Delete ({entityState.selectedRows.length})
-            </BaseButton>
-          )}
-          <BaseButton onClick={handleCreate}>+ Create</BaseButton>
-        </div>
-      </div>
-
-      {/* Filter Bar */}
-      <BaseFilterBar
-        columns={columns}
-        onFilter={tableStore.setFilter}
-        onSearch={tableStore.setSearch}
-        searchValue={entityState.search}
-      />
-
-      {/* Table */}
-      <BaseTable
-        columns={columns}
-        data={crud.data}
-        total={crud.total}
-        page={entityState.page}
-        limit={entityState.limit}
-        sort={entityState.sort}
-        selectedRows={entityState.selectedRows}
-        loading={crud.isLoading}
-        onPageChange={tableStore.setPage}
-        onLimitChange={tableStore.setLimit}
-        onSort={tableStore.setSort}
-        onRowSelect={tableStore.setSelectedRows}
+    <>
+      {/* ─── List View ──────────────────────────────────────── */}
+      <DynamicListView
+        schema={engine.schema}
+        data={engine.crud.data as Record<string, unknown>[]}
+        total={engine.crud.total}
+        page={engine.page}
+        limit={engine.limit}
+        sort={engine.sort}
+        selectedRows={engine.selectedRows}
+        search={engine.search}
+        loading={engine.crud.isLoading}
+        isFetching={engine.crud.isFetching}
+        canCreate={engine.canCreate}
+        canUpdate={engine.canUpdate}
+        canDelete={engine.canDelete}
+        onPageChange={engine.setPage}
+        onLimitChange={engine.setLimit}
+        onSort={engine.setSort}
+        onFilter={engine.setFilter}
+        onSearch={engine.setSearch}
+        onRowSelect={engine.setSelectedRows}
+        onCreate={handleCreate}
         onEdit={handleEdit}
         onDelete={handleDelete}
+        onBulkDelete={handleBulkDelete}
+        onRefresh={handleRefresh}
       />
 
-      {/* Create/Edit Modal */}
-      <BaseModal
-        open={modalOpen}
-        onClose={() => setModalOpen(false)}
-        title={editingRow ? `Edit ${entity}` : `Create ${entity}`}
-        size="lg"
-      >
-        <BaseForm
-          columns={columns}
-          defaultValues={editingRow || {}}
-          onSubmit={handleSubmit}
-          onCancel={() => setModalOpen(false)}
-          loading={crud.isCreating || crud.isUpdating}
-          mode={editingRow ? 'edit' : 'create'}
-        />
-      </BaseModal>
+      {/* ─── Create Modal ───────────────────────────────────── */}
+      <DynamicCreateModal
+        open={createOpen}
+        onClose={handleCloseCreate}
+        schema={engine.schema}
+        onSubmit={handleCreateSubmit}
+        loading={engine.crud.isCreating}
+        relationOptions={engine.relationOptions}
+        relationLoading={engine.relationLoading}
+      />
 
-      {/* Delete Confirm Modal */}
-      <BaseModal
-        open={!!deleteConfirm}
-        onClose={() => setDeleteConfirm(null)}
-        title="Confirm Delete"
-        size="sm"
-      >
-        <p className="mb-4">Are you sure you want to delete this record?</p>
-        <div className="flex justify-end gap-2">
-          <BaseButton variant="secondary" onClick={() => setDeleteConfirm(null)}>
-            Cancel
-          </BaseButton>
-          <BaseButton variant="danger" onClick={handleConfirmDelete} loading={crud.isDeleting}>
-            Delete
-          </BaseButton>
-        </div>
-      </BaseModal>
-    </div>
+      {/* ─── Edit Modal ─────────────────────────────────────── */}
+      <DynamicEditModal
+        open={!!editingRow}
+        onClose={handleCloseEdit}
+        schema={engine.schema}
+        data={editingRow}
+        onSubmit={handleEditSubmit}
+        loading={engine.crud.isUpdating}
+        relationOptions={engine.relationOptions}
+        relationLoading={engine.relationLoading}
+      />
+
+      {/* ─── Delete Confirm ─────────────────────────────────── */}
+      <DeleteConfirmDialog
+        open={!!deletingRow}
+        onClose={handleCloseDelete}
+        onConfirm={handleConfirmDelete}
+        loading={engine.crud.isDeleting}
+        entityLabel={engine.entityLabel.toLowerCase()}
+      />
+
+      {/* ─── Bulk Delete Confirm ────────────────────────────── */}
+      <DeleteConfirmDialog
+        open={bulkDeleteOpen}
+        onClose={handleCloseBulkDelete}
+        onConfirm={handleConfirmBulkDelete}
+        loading={engine.crud.isBulkDeleting}
+        entityLabel={engine.entityLabel.toLowerCase()}
+        count={engine.selectedRows.length}
+      />
+    </>
   );
 }
 
-function mapColumnType(dbType: string): ColumnConfig['type'] {
-  const t = dbType.toLowerCase();
-  if (t.includes('int') || t.includes('numeric') || t.includes('float') || t.includes('decimal'))
-    return 'number';
-  if (t.includes('bool')) return 'boolean';
-  if (t.includes('date') || t.includes('timestamp')) return 'date';
-  if (t.includes('text')) return 'textarea';
-  return 'text';
-}
+DynamicCrudPage.displayName = 'DynamicCrudPage';

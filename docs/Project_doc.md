@@ -169,12 +169,12 @@ Cho phép render UI từ metadata
 
 ## Week 5 – CRUD Engine
 
-- [ ] Base API client
-- [ ] React Query integration
-- [ ] Dynamic list page
-- [ ] Dynamic create page
-- [ ] Dynamic edit page
-- [ ] Dynamic delete confirm
+- [x] Base API client
+- [x] React Query integration
+- [x] Dynamic list page
+- [x] Dynamic create page
+- [x] Dynamic edit page
+- [x] Dynamic delete confirm
 
 ---
 
