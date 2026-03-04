@@ -54,6 +54,8 @@ const RelationShowcasePage = lazy(() =>
     default: m.RelationShowcasePage,
   })),
 );
+const QueryBuilderShowcasePage = lazy(() => import('./modules/showcase/QueryBuilderShowcasePage'));
+const ExampleAppPage = lazy(() => import('./modules/example-app/ExampleAppPage'));
 
 function PageLoader() {
   return (
@@ -89,6 +91,8 @@ export function App() {
             <Route path="showcase/crud" element={<CrudShowcasePage />} />
             <Route path="showcase/state" element={<StateShowcasePage />} />
             <Route path="showcase/relation" element={<RelationShowcasePage />} />
+            <Route path="showcase/query-builder" element={<QueryBuilderShowcasePage />} />
+            <Route path="example-app" element={<ExampleAppPage />} />
           </Route>
         </Routes>
       </Suspense>

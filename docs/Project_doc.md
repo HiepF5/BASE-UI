@@ -208,16 +208,16 @@ Enterprise-level capability
 
 ## Query Builder
 
-- [ ] AST format
-- [ ] ConditionRow
-- [ ] ConditionGroup
-- [ ] Nested AND/OR
-- [ ] Relation field support
-- [ ] Backend parser adapter
+- [x] AST format
+- [x] ConditionRow
+- [x] ConditionGroup
+- [x] Nested AND/OR
+- [x] Relation field support
+- [x] Backend parser adapter
 
 ---
 
-# 🟡 PHASE 4 – EXAMPLE APP (1–2 tuần)
+# � PHASE 4 – EXAMPLE APP (1–2 tuần)
 
 ## 🎯 Goal:
 
@@ -227,10 +227,10 @@ User chỉ cần config JSON để có hệ thống
 
 ## Example modules
 
-- [ ] User
-- [ ] Order
-- [ ] OrderItem
-- [ ] Category (self relation)
+- [x] User
+- [x] Order
+- [x] OrderItem
+- [x] Category (self relation)
 
 ---
 
@@ -258,11 +258,11 @@ export const OrderModule = {
 
 ## Example features
 
-- [ ] CRUD auto render
-- [ ] Filter auto render
-- [ ] Relation inline edit
-- [ ] Saved filter
-- [ ] Pagination
+- [x] CRUD auto render
+- [x] Filter auto render
+- [x] Relation inline edit
+- [x] Saved filter
+- [x] Pagination
 
 ---
 

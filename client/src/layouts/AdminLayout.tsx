@@ -28,6 +28,8 @@ export function AdminLayout() {
     { to: '/showcase/crud', label: 'CRUD Engine', icon: '⚡' },
     { to: '/showcase/state', label: 'State Mgmt', icon: '🏗️' },
     { to: '/showcase/relation', label: 'Relations', icon: '🔗' },
+    { to: '/showcase/query-builder', label: 'Query Builder', icon: '🔍' },
+    { to: '/example-app', label: 'Example App', icon: '📋' },
   ];
 
   return (

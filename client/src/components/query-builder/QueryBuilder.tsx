@@ -1,206 +1,103 @@
-import React, { useState } from 'react';
-import { BaseButton } from '../base/BaseButton';
-import type { ColumnConfig, FilterCondition, FilterGroup, FilterOperator } from '../../types';
+import React, { useMemo } from 'react';
+import type { QueryBuilderProps, FilterGroupNode, QueryField } from '../../core/query-builder';
+import {
+  createEmptyGroup,
+  countConditions,
+  astToSQLPreview,
+  validateAST,
+} from '../../core/query-builder';
+import { ConditionGroup } from './ConditionGroup';
 
 // ============================================================
-// QueryBuilder - Advanced visual query builder
-// Supports nested AND/OR groups
+// QueryBuilder - Production visual query builder
+// Supports: typed AST, metadata-driven operators, nested AND/OR,
+// relation field dot-paths, SQL preview, validation
+// Phase 3 – Query Builder
 // ============================================================
 
-interface QueryBuilderProps {
-  columns: ColumnConfig[];
-  value: FilterGroup;
-  onChange: (filter: FilterGroup) => void;
-}
+export function QueryBuilder({
+  fields = [],
+  value,
+  onChange,
+  maxDepth = 3,
+  disabled = false,
+  compact = false,
+  showPreview = false,
+  className = '',
+}: QueryBuilderProps) {
+  // Stats for display
+  const conditionCount = useMemo(() => countConditions(value), [value]);
+  const validation = useMemo(() => validateAST(value, fields), [value, fields]);
 
-export function QueryBuilder({ columns, value, onChange }: QueryBuilderProps) {
-  const filterableColumns = columns.filter((c) => c.filterable);
-
-  return (
-    <div className="border rounded-lg p-4 bg-neutral-50">
-      <div className="flex items-center gap-2 mb-3">
-        <span className="text-sm font-medium">Query Builder</span>
-      </div>
-      <ConditionGroup
-        group={value}
-        columns={filterableColumns}
-        onChange={onChange}
-        depth={0}
-      />
-    </div>
+  // SQL preview
+  const sqlPreview = useMemo(
+    () => (showPreview ? astToSQLPreview(value) : ''),
+    [showPreview, value],
   );
-}
 
-// ---- Condition Group (recursive) ----
-
-interface ConditionGroupProps {
-  group: FilterGroup;
-  columns: ColumnConfig[];
-  onChange: (group: FilterGroup) => void;
-  depth: number;
-}
-
-function ConditionGroup({ group, columns, onChange, depth }: ConditionGroupProps) {
-  const toggleLogic = () => {
-    onChange({ ...group, logic: group.logic === 'AND' ? 'OR' : 'AND' });
-  };
-
-  const addCondition = () => {
-    const first = columns[0];
-    if (!first) return;
-    onChange({
-      ...group,
-      conditions: [
-        ...group.conditions,
-        { field: first.name, operator: 'eq' as FilterOperator, value: '' },
-      ],
-    });
-  };
-
-  const addGroup = () => {
-    onChange({
-      ...group,
-      conditions: [
-        ...group.conditions,
-        { logic: 'AND', conditions: [] } as FilterGroup,
-      ],
-    });
-  };
-
-  const removeAt = (index: number) => {
-    onChange({
-      ...group,
-      conditions: group.conditions.filter((_, i) => i !== index),
-    });
-  };
-
-  const updateAt = (index: number, updated: FilterCondition | FilterGroup) => {
-    onChange({
-      ...group,
-      conditions: group.conditions.map((c, i) => (i === index ? updated : c)),
-    });
+  // ── Clear all conditions ──
+  const handleClear = () => {
+    onChange(createEmptyGroup(value.operator));
   };
 
   return (
-    <div
-      className={`space-y-2 ${depth > 0 ? 'ml-4 pl-4 border-l-2 border-primary-200' : ''}`}
-    >
-      <div className="flex items-center gap-2">
-        <button
-          onClick={toggleLogic}
-          className="text-xs font-bold px-2 py-1 rounded bg-primary-100 text-primary-700 hover:bg-primary-200"
-        >
-          {group.logic}
-        </button>
-        <BaseButton size="sm" variant="ghost" onClick={addCondition}>
-          + Condition
-        </BaseButton>
-        {depth < 3 && (
-          <BaseButton size="sm" variant="ghost" onClick={addGroup}>
-            + Group
-          </BaseButton>
+    <div className={`border border-neutral-200 rounded-lg bg-neutral-50 ${className}`}>
+      {/* ── Header ── */}
+      <div
+        className={`flex items-center justify-between gap-3 border-b border-neutral-200 ${compact ? 'px-3 py-2' : 'px-4 py-3'}`}
+      >
+        <div className="flex items-center gap-2">
+          <span className="text-sm font-semibold text-neutral-700">Query Builder</span>
+          {conditionCount > 0 && (
+            <span className="text-xs bg-primary-100 text-primary-700 px-1.5 py-0.5 rounded-full font-medium">
+              {conditionCount} condition{conditionCount !== 1 ? 's' : ''}
+            </span>
+          )}
+          {!validation.valid && conditionCount > 0 && (
+            <span className="text-xs text-amber-600" title={validation.errors.join('\n')}>
+              ⚠ {validation.errors.length} issue{validation.errors.length !== 1 ? 's' : ''}
+            </span>
+          )}
+        </div>
+
+        {conditionCount > 0 && !disabled && (
+          <button
+            onClick={handleClear}
+            className="text-xs text-neutral-500 hover:text-red-500 transition-colors"
+          >
+            Clear All
+          </button>
         )}
       </div>
 
-      {group.conditions.map((cond, idx) => {
-        if ('logic' in cond) {
-          return (
-            <div key={idx} className="relative">
-              <button
-                onClick={() => removeAt(idx)}
-                className="absolute -left-2 top-0 text-red-400 hover:text-red-600 text-sm"
-              >
-                ×
-              </button>
-              <ConditionGroup
-                group={cond as FilterGroup}
-                columns={columns}
-                onChange={(g) => updateAt(idx, g)}
-                depth={depth + 1}
-              />
-            </div>
-          );
-        }
-
-        return (
-          <ConditionRow
-            key={idx}
-            condition={cond as FilterCondition}
-            columns={columns}
-            onChange={(c) => updateAt(idx, c)}
-            onRemove={() => removeAt(idx)}
-          />
-        );
-      })}
-    </div>
-  );
-}
-
-// ---- Single Condition Row ----
-
-interface ConditionRowProps {
-  condition: FilterCondition;
-  columns: ColumnConfig[];
-  onChange: (condition: FilterCondition) => void;
-  onRemove: () => void;
-}
-
-const OPERATORS: Array<{ label: string; value: FilterOperator }> = [
-  { label: '=', value: 'eq' },
-  { label: '≠', value: 'neq' },
-  { label: '>', value: 'gt' },
-  { label: '>=', value: 'gte' },
-  { label: '<', value: 'lt' },
-  { label: '<=', value: 'lte' },
-  { label: 'Contains', value: 'like' },
-  { label: 'In', value: 'in' },
-  { label: 'Between', value: 'between' },
-  { label: 'Is Null', value: 'isNull' },
-  { label: 'Is Not Null', value: 'isNotNull' },
-];
-
-function ConditionRow({ condition, columns, onChange, onRemove }: ConditionRowProps) {
-  const noValueOps: FilterOperator[] = ['isNull', 'isNotNull'];
-
-  return (
-    <div className="flex items-center gap-2">
-      <select
-        value={condition.field}
-        onChange={(e) => onChange({ ...condition, field: e.target.value })}
-        className="border rounded px-2 py-1.5 text-sm min-w-[120px]"
-      >
-        {columns.map((col) => (
-          <option key={col.name} value={col.name}>
-            {col.label}
-          </option>
-        ))}
-      </select>
-
-      <select
-        value={condition.operator}
-        onChange={(e) => onChange({ ...condition, operator: e.target.value as FilterOperator })}
-        className="border rounded px-2 py-1.5 text-sm"
-      >
-        {OPERATORS.map((op) => (
-          <option key={op.value} value={op.value}>
-            {op.label}
-          </option>
-        ))}
-      </select>
-
-      {!noValueOps.includes(condition.operator) && (
-        <input
-          type="text"
-          value={condition.value ?? ''}
-          onChange={(e) => onChange({ ...condition, value: e.target.value })}
-          className="flex-1 border rounded px-2 py-1.5 text-sm"
-          placeholder="Value"
+      {/* ── Builder Body ── */}
+      <div className={compact ? 'p-3' : 'p-4'}>
+        <ConditionGroup
+          group={value}
+          fields={fields}
+          onChange={onChange}
+          depth={0}
+          maxDepth={maxDepth}
+          disabled={disabled}
         />
-      )}
+      </div>
 
-      <button onClick={onRemove} className="text-red-400 hover:text-red-600 text-lg">
-        ×
-      </button>
+      {/* ── SQL Preview (optional) ── */}
+      {showPreview && conditionCount > 0 && (
+        <div className="border-t border-neutral-200 px-4 py-2 bg-neutral-100 rounded-b-lg">
+          <div className="flex items-center gap-2">
+            <span className="text-[10px] font-medium text-neutral-500 uppercase tracking-wider">
+              Preview
+            </span>
+          </div>
+          <code className="text-xs text-neutral-600 font-mono block mt-1 break-all">
+            WHERE {sqlPreview}
+          </code>
+        </div>
+      )}
     </div>
   );
 }
+
+// ── Re-export helpers for convenience ──
+export type { QueryBuilderProps, FilterGroupNode, QueryField };

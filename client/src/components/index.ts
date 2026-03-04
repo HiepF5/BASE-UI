@@ -1,5 +1,5 @@
 export { PrivateRoute } from './auth/PrivateRoute';
-export { QueryBuilder } from './query-builder';
+export { QueryBuilder, ConditionGroup, ConditionRow } from './query-builder';
 
 // Base components
 export {
