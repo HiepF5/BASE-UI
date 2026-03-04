@@ -77,6 +77,16 @@ export type {
   DropdownMenuEntry,
 } from './BaseDropdown';
 
+// ── Table Controls (Generic List Page) ──────────────────────
+export { ColumnVisibilityDropdown } from './ColumnVisibilityDropdown';
+export type { ColumnVisibilityDropdownProps } from './ColumnVisibilityDropdown';
+
+export { DensitySwitch } from './DensitySwitch';
+export type { DensitySwitchProps, TableDensity } from './DensitySwitch';
+
+export { SavedFilters } from './SavedFilters';
+export type { SavedFiltersProps, SavedFilter } from './SavedFilters';
+
 // ── Virtual Table (Phase 5 – Performance) ───────────────────
 export { BaseVirtualTable } from './BaseVirtualTable';
 export type { BaseVirtualTableProps, VirtualCellRenderer } from './BaseVirtualTable';

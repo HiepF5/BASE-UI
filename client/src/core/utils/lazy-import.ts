@@ -48,8 +48,6 @@ export function preloadModule(factory: () => Promise<unknown>): void {
  */
 export const routeModules: Record<string, () => Promise<unknown>> = {
   dashboard: () => import('../../modules/dashboard/DashboardPage'),
-  connections: () => import('../../modules/connections/ConnectionsPage'),
-  ai: () => import('../../modules/ai-chat/AiChatPanel'),
   'example-app': () => import('../../modules/example-app/ExampleAppPage'),
   'showcase/tokens': () => import('../../modules/showcase/TokenShowcasePage'),
   'showcase/components': () => import('../../modules/showcase/ComponentShowcasePage'),

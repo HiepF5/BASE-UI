@@ -19,8 +19,6 @@ export function AdminLayout() {
 
   const navItems = [
     { to: '/dashboard', label: 'Dashboard', icon: '📊' },
-    { to: '/connections', label: 'Connections', icon: '🔌' },
-    { to: '/ai', label: 'AI Builder', icon: '🤖' },
     { to: '/showcase/tokens', label: 'Tokens', icon: '🎨' },
     { to: '/showcase/components', label: 'Components', icon: '🧩' },
     { to: '/showcase/data-overlay', label: 'Data & Overlay', icon: '📊' },
@@ -29,6 +27,8 @@ export function AdminLayout() {
     { to: '/showcase/state', label: 'State Mgmt', icon: '🏗️' },
     { to: '/showcase/relation', label: 'Relations', icon: '🔗' },
     { to: '/showcase/query-builder', label: 'Query Builder', icon: '🔍' },
+    { to: '/showcase/generic-list', label: 'Generic List', icon: '📋' },
+    { to: '/showcase/generic-form', label: 'Generic Form', icon: '📝' },
     { to: '/example-app', label: 'Example App', icon: '📋' },
   ];
 

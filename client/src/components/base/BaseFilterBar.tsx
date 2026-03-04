@@ -113,7 +113,7 @@ export function BaseFilterBar({
               {cond.operator !== 'isNull' && cond.operator !== 'isNotNull' && (
                 <input
                   type="text"
-                  value={cond.value}
+                  value={String(cond.value ?? '')}
                   onChange={(e) => updateCondition(idx, { value: e.target.value })}
                   className="flex-1 border rounded px-2 py-1.5 text-sm"
                   placeholder="Value"

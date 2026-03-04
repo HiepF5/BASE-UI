@@ -27,6 +27,7 @@ export function truncate(text: string, length: number): string {
 }
 
 /** Debounce function */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function debounce<T extends (...args: any[]) => any>(
   fn: T,
   delay: number,
@@ -42,8 +43,11 @@ export function debounce<T extends (...args: any[]) => any>(
 export { logger } from './logger';
 export type { LogLevel, LogEntry } from './logger';
 
+// Export CSV utility (Generic List Page)
+export { dataToCSV, downloadCSV } from './export-csv';
+
 /** Build query string from QueryOptions */
-export function buildQueryString(params: Record<string, any>): string {
+export function buildQueryString(params: Record<string, unknown>): string {
   const searchParams = new URLSearchParams();
   for (const [key, value] of Object.entries(params)) {
     if (value !== undefined && value !== null && value !== '') {

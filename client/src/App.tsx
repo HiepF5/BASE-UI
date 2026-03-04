@@ -12,12 +12,6 @@ const DashboardPage = lazy(() =>
 const DynamicCrudPage = lazy(() =>
   import('./modules/dynamic-crud/DynamicCrudPage').then((m) => ({ default: m.DynamicCrudPage })),
 );
-const ConnectionsPage = lazy(() =>
-  import('./modules/connections/ConnectionsPage').then((m) => ({ default: m.ConnectionsPage })),
-);
-const AiChatPanel = lazy(() =>
-  import('./modules/ai-chat/AiChatPanel').then((m) => ({ default: m.AiChatPanel })),
-);
 const LoginPage = lazy(() =>
   import('./modules/auth/LoginPage').then((m) => ({ default: m.LoginPage })),
 );
@@ -55,6 +49,16 @@ const RelationShowcasePage = lazy(() =>
   })),
 );
 const QueryBuilderShowcasePage = lazy(() => import('./modules/showcase/QueryBuilderShowcasePage'));
+const GenericListShowcasePage = lazy(() =>
+  import('./modules/showcase/GenericListShowcasePage').then((m) => ({
+    default: m.GenericListShowcasePage,
+  })),
+);
+const GenericFormShowcasePage = lazy(() =>
+  import('./modules/showcase/GenericFormShowcasePage').then((m) => ({
+    default: m.GenericFormShowcasePage,
+  })),
+);
 const ExampleAppPage = lazy(() => import('./modules/example-app/ExampleAppPage'));
 
 function PageLoader() {
@@ -81,9 +85,7 @@ export function App() {
           >
             <Route index element={<Navigate to="/dashboard" replace />} />
             <Route path="dashboard" element={<DashboardPage />} />
-            <Route path="connections" element={<ConnectionsPage />} />
             <Route path="crud/:connectionId/:entity" element={<DynamicCrudPage />} />
-            <Route path="ai" element={<AiChatPanel />} />
             <Route path="showcase/tokens" element={<TokenShowcasePage />} />
             <Route path="showcase/components" element={<ComponentShowcasePage />} />
             <Route path="showcase/data-overlay" element={<DataOverlayShowcasePage />} />
@@ -92,6 +94,8 @@ export function App() {
             <Route path="showcase/state" element={<StateShowcasePage />} />
             <Route path="showcase/relation" element={<RelationShowcasePage />} />
             <Route path="showcase/query-builder" element={<QueryBuilderShowcasePage />} />
+            <Route path="showcase/generic-list" element={<GenericListShowcasePage />} />
+            <Route path="showcase/generic-form" element={<GenericFormShowcasePage />} />
             <Route path="example-app" element={<ExampleAppPage />} />
           </Route>
         </Routes>

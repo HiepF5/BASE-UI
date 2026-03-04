@@ -124,7 +124,7 @@ queryKeys.relation.options(…) → ${JSON.stringify(queryKeys.relation.options(
 // ─── 2. Zustand Stores Demo ──────────────────────────────────
 
 function ZustandStoresDemo() {
-  const { sidebarOpen, theme, resolvedTheme, activeModal, activeConnection } = useUIStore();
+  const { sidebarOpen, theme, resolvedTheme, activeModal } = useUIStore();
   const { isAuthenticated, user } = useAuthStore();
   const tableStore = useTableStore();
 
@@ -133,7 +133,6 @@ function ZustandStoresDemo() {
     theme,
     resolvedTheme,
     activeModal: activeModal ?? 'none',
-    activeConnection: activeConnection ?? 'none',
   };
 
   const authState = {

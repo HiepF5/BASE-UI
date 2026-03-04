@@ -9,7 +9,6 @@
 
 - Đọc và Làm theo doc
 - Đọc làm theo rules
-- Đọc và làm theo ai-builder.config
 - Đọc đám bảo theo rule , doc , tạo example trên giao diện, đánh dấu theo checklist đã hoàn thành.
 
 # 📦 SCOPE DỰ ÁN

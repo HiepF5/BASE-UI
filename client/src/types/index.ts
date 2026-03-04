@@ -29,7 +29,7 @@ export interface TableSchema {
 }
 
 /** Pagination result wrapper */
-export interface PaginatedResult<T = any> {
+export interface PaginatedResult<T = unknown> {
   data: T[];
   total: number;
   page: number;
@@ -55,7 +55,7 @@ export type FilterOperator =
 export interface FilterCondition {
   field: string;
   operator: FilterOperator;
-  value: any;
+  value: unknown;
 }
 
 /** Filter group (AND/OR) */
@@ -122,15 +122,4 @@ export interface RelationConfig {
   type: 'ONE_TO_MANY' | 'MANY_TO_ONE' | 'MANY_TO_MANY';
   targetEntity: string;
   displayField: string;
-}
-
-/** DB Connection */
-export interface ConnectionInfo {
-  id: string;
-  name: string;
-  type: 'postgres' | 'mysql' | 'oracle';
-  host: string;
-  port: number;
-  database: string;
-  status: 'connected' | 'disconnected' | 'error';
 }

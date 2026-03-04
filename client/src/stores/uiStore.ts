@@ -18,9 +18,6 @@ interface UIState {
   openModal: (name: string, data?: unknown) => void;
   closeModal: () => void;
 
-  activeConnection: string | null;
-  setActiveConnection: (id: string | null) => void;
-
   /** Theme preference: 'light' | 'dark' | 'system' */
   theme: Theme;
   /** Resolved effective theme (always 'light' or 'dark') */
@@ -65,9 +62,6 @@ export const useUIStore = create<UIState>()(
       openModal: (name, data = null) =>
         set({ activeModal: name, modalData: data }, false, 'openModal'),
       closeModal: () => set({ activeModal: null, modalData: null }, false, 'closeModal'),
-
-      activeConnection: null,
-      setActiveConnection: (id) => set({ activeConnection: id }, false, 'setActiveConnection'),
 
       theme: initialTheme,
       resolvedTheme: initialResolved,

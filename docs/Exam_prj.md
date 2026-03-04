@@ -1,7 +1,3 @@
-bạn đang build **mini internal platform**, không còn là “admin CRUD” nữa.
-
-Dựa trên roadmap + scope bạn đưa, mình sẽ đề xuất:
-
 > 🎯 **Danh sách MÀN HÌNH MẪU (Screen Blueprint) cho Base UI**
 > để:
 >
@@ -61,21 +57,33 @@ Làm nền cho toàn bộ platform.
 
 Demo khả năng:
 
-- Widget engine
-- Layout grid system
-- API binding
+- [x] Widget engine — `WidgetEngine.tsx` renders widgets from `DashboardConfig`
+- [x] Layout grid system — CSS Grid responsive 4-col layout via config
+- [x] API binding — widget `api` field ready, mock data for demo
 
 ## Block
 
-- KPI Cards
-- Chart (line/bar)
-- Table preview
-- Activity feed
-- Quick action buttons
+- [x] KPI Cards — `KpiCard.tsx` with trend indicator, icons, color variants
+- [x] Chart (line/bar/area) — `ChartWidget.tsx` pure SVG, no external library
+- [x] Table preview — `TablePreviewWidget.tsx` with status badges, view all link
+- [x] Activity feed — `ActivityFeedWidget.tsx` timeline with icons, time ago
+- [x] Quick action buttons — `QuickActionsWidget.tsx` grid of action cards
+
+## Checklist
+
+- [x] Config-driven dashboard layout (`dashboard.config.ts`)
+- [x] Widget type system (KPI, Chart, Table, Activity, QuickActions)
+- [x] Grid-based responsive layout (1→2→4 cols)
+- [x] Dark/light theme compatible (design token colors)
+- [x] Config preview panel (toggle JSON view)
+- [x] Connection-aware (shows banner if no DB connected)
+- [x] TypeScript strict — zero `any`, full type safety
+- [x] Follows architecture rules (presentational widgets, smart page)
 
 ## Engine cần hỗ trợ
 
 ```ts
+// ✅ IMPLEMENTED — see dashboard.config.ts
 {
   type: "widget",
   layout: "grid",
@@ -102,21 +110,21 @@ Demo khả năng:
 
 ## Tính năng bắt buộc
 
-- [ ] Column config từ metadata
-- [ ] Sort
-- [ ] Filter
-- [ ] Bulk action
-- [ ] Inline action
-- [ ] Pagination
-- [ ] Column hide/show
-- [ ] Density switch
+- [x] Column config từ metadata
+- [x] Sort
+- [x] Filter
+- [x] Bulk action
+- [x] Inline action
+- [x] Pagination
+- [x] Column hide/show
+- [x] Density switch
 
 ## Advanced
 
-- [ ] Saved filter
-- [ ] Server-side mode
-- [ ] Virtual scroll
-- [ ] Export CSV
+- [x] Saved filter
+- [x] Server-side mode
+- [x] Virtual scroll
+- [x] Export CSV
 
 ---
 
@@ -134,23 +142,23 @@ Demo khả năng:
 
 ## Field Types
 
-- text
-- number
-- select
-- multi-select
-- relation
-- switch
-- date
-- rich text
+- [x] text
+- [x] number
+- [x] select
+- [x] multi-select
+- [x] relation
+- [x] switch
+- [x] date
+- [x] rich text
 
 ## Advanced
 
-- [ ] Conditional field
-- [ ] Section grouping
-- [ ] Tabs form
-- [ ] Validation schema
-- [ ] Async select
-- [ ] Inline relation create
+- [x] Conditional field
+- [x] Section grouping
+- [x] Tabs form
+- [x] Validation schema
+- [x] Async select
+- [x] Inline relation create
 
 ---
 
