@@ -1,10 +1,13 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { createCrudService } from '../core/api/crudService';
+import { queryKeys } from '../core/query';
+import { optimisticUpdate, optimisticDelete, optimisticBulkDelete } from '../core/query';
 import type { PaginatedResult, QueryOptions } from '../types';
 
 // ============================================================
 // useCrud - Generic CRUD hook (React Query)
-// Enhanced: optimistic updates, better error typing, typed service
+// Production: centralized query keys, reusable optimistic helpers,
+//   typed service, proper error typing.
 // Follows State Management rules: React Query for server state
 // ============================================================
 
@@ -55,9 +58,9 @@ export function useCrud<T = Record<string, unknown>>(
   const queryClient = useQueryClient();
   const service = createCrudService<T>(connectionId, entity);
 
-  // ─── Query keys ─────────────────────────────────────────
-  const listKey = ['crud', connectionId, entity, options] as const;
-  const baseKey = ['crud', connectionId, entity] as const;
+  // ─── Query keys (via factory) ───────────────────────────
+  const listKey = queryKeys.crud.list(connectionId, entity, options);
+  const baseKey = queryKeys.crud.entity(connectionId, entity);
 
   // ─── List query ─────────────────────────────────────────
   const listQuery = useQuery<PaginatedResult<T>>({
@@ -83,91 +86,33 @@ export function useCrud<T = Record<string, unknown>>(
   const createMutation = useMutation({
     mutationFn: (data: Partial<T>) => service.create(data),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: baseKey });
+      queryClient.invalidateQueries({ queryKey: [...baseKey] });
     },
   });
 
-  // ─── Update mutation (with optimistic update) ───────────
+  // ─── Update mutation (optimistic) ──────────────────────
+  const updateOptimistic = optimisticUpdate<T>(queryClient, listKey, baseKey);
+
   const updateMutation = useMutation({
     mutationFn: ({ id, data }: { id: string | number; data: Partial<T> }) =>
       service.update(id, data),
-    onMutate: async ({ id, data }) => {
-      await queryClient.cancelQueries({ queryKey: baseKey });
-      const previousData = queryClient.getQueryData<PaginatedResult<T>>(listKey);
-
-      if (previousData) {
-        queryClient.setQueryData<PaginatedResult<T>>(listKey, {
-          ...previousData,
-          data: previousData.data.map((item) =>
-            (item as Record<string, unknown>).id === id ? { ...item, ...data } : item,
-          ) as T[],
-        });
-      }
-      return { previousData };
-    },
-    onError: (_err, _vars, context) => {
-      if (context?.previousData) {
-        queryClient.setQueryData(listKey, context.previousData);
-      }
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: baseKey });
-    },
+    ...updateOptimistic,
   });
 
-  // ─── Delete mutation (with optimistic update) ───────────
+  // ─── Delete mutation (optimistic) ──────────────────────
+  const deleteOptimistic = optimisticDelete<T>(queryClient, listKey, baseKey);
+
   const deleteMutation = useMutation({
     mutationFn: (id: string | number) => service.remove(id),
-    onMutate: async (id) => {
-      await queryClient.cancelQueries({ queryKey: baseKey });
-      const previousData = queryClient.getQueryData<PaginatedResult<T>>(listKey);
-
-      if (previousData) {
-        queryClient.setQueryData<PaginatedResult<T>>(listKey, {
-          ...previousData,
-          data: previousData.data.filter((item) => (item as Record<string, unknown>).id !== id),
-          total: previousData.total - 1,
-        });
-      }
-      return { previousData };
-    },
-    onError: (_err, _id, context) => {
-      if (context?.previousData) {
-        queryClient.setQueryData(listKey, context.previousData);
-      }
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: baseKey });
-    },
+    ...deleteOptimistic,
   });
 
-  // ─── Bulk delete mutation ───────────────────────────────
+  // ─── Bulk delete mutation (optimistic) ─────────────────
+  const bulkDeleteOptimistic = optimisticBulkDelete<T>(queryClient, listKey, baseKey);
+
   const bulkDeleteMutation = useMutation({
     mutationFn: (ids: Array<string | number>) => service.bulkDelete(ids),
-    onMutate: async (ids) => {
-      await queryClient.cancelQueries({ queryKey: baseKey });
-      const previousData = queryClient.getQueryData<PaginatedResult<T>>(listKey);
-
-      if (previousData) {
-        const idSet = new Set(ids.map(String));
-        queryClient.setQueryData<PaginatedResult<T>>(listKey, {
-          ...previousData,
-          data: previousData.data.filter(
-            (item) => !idSet.has(String((item as Record<string, unknown>).id)),
-          ),
-          total: previousData.total - ids.length,
-        });
-      }
-      return { previousData };
-    },
-    onError: (_err, _ids, context) => {
-      if (context?.previousData) {
-        queryClient.setQueryData(listKey, context.previousData);
-      }
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: baseKey });
-    },
+    ...bulkDeleteOptimistic,
   });
 
   return {

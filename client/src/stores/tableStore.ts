@@ -1,9 +1,12 @@
 import { create } from 'zustand';
+import { devtools } from 'zustand/middleware';
+import { immer } from 'zustand/middleware/immer';
 import type { FilterGroup, SortOption } from '../types';
 
 // ============================================================
 // Table Store - Per-entity table state (filters, sort, pagination)
 // Uses a Map keyed by entity name so switching entities doesn't lose state
+// Production: immer + devtools middleware
 // ============================================================
 
 interface EntityTableState {
@@ -46,51 +49,71 @@ interface TableStore {
   reset: () => void;
 }
 
-export const useTableStore = create<TableStore>((set, get) => {
-  /** Helper: return current entity state (never undefined) */
-  const active = (): EntityTableState => get().entities[get().activeEntity] ?? { ...DEFAULT_STATE };
+export const useTableStore = create<TableStore>()(
+  devtools(
+    immer((set, get) => {
+      /** Helper: return current entity state (never undefined) */
+      const active = (): EntityTableState =>
+        get().entities[get().activeEntity] ?? { ...DEFAULT_STATE };
 
-  /** Helper: patch the active entity's slice */
-  const patch = (updates: Partial<EntityTableState>) => {
-    const key = get().activeEntity;
-    set((s) => ({
-      entities: {
-        ...s.entities,
-        [key]: { ...active(), ...updates },
-      },
-    }));
-  };
+      /** Helper: patch the active entity's slice using immer */
+      const patch = (updates: Partial<EntityTableState>, actionName?: string) => {
+        const key = get().activeEntity;
+        set(
+          (state) => {
+            if (!state.entities[key]) {
+              state.entities[key] = { ...DEFAULT_STATE };
+            }
+            Object.assign(state.entities[key], updates);
+          },
+          false,
+          actionName,
+        );
+      };
 
-  return {
-    activeEntity: '',
-    entities: {},
+      return {
+        activeEntity: '',
+        entities: {},
 
-    setActiveEntity: (entity) => {
-      set((s) => ({
-        activeEntity: entity,
-        entities: s.entities[entity]
-          ? s.entities
-          : { ...s.entities, [entity]: { ...DEFAULT_STATE } },
-      }));
+        setActiveEntity: (entity) => {
+          set(
+            (state) => {
+              state.activeEntity = entity;
+              if (!state.entities[entity]) {
+                state.entities[entity] = { ...DEFAULT_STATE };
+              }
+            },
+            false,
+            'setActiveEntity',
+          );
+        },
+
+        getState: () => active(),
+
+        setPage: (page) => patch({ page }, 'setPage'),
+        setLimit: (limit) => patch({ limit, page: 1 }, 'setLimit'),
+        setSort: (sort) => patch({ sort }, 'setSort'),
+        setFilter: (filter) => patch({ filter, page: 1 }, 'setFilter'),
+        setSearch: (search) => patch({ search, page: 1 }, 'setSearch'),
+        setSelectedRows: (ids) => patch({ selectedRows: ids }, 'setSelectedRows'),
+        toggleRow: (id) => {
+          const current = active();
+          patch(
+            {
+              selectedRows: current.selectedRows.includes(id)
+                ? current.selectedRows.filter((r) => r !== id)
+                : [...current.selectedRows, id],
+            },
+            'toggleRow',
+          );
+        },
+        clearSelection: () => patch({ selectedRows: [] }, 'clearSelection'),
+        reset: () => patch({ ...DEFAULT_STATE }, 'reset'),
+      };
+    }),
+    {
+      name: 'TableStore',
+      enabled: import.meta.env.DEV,
     },
-
-    getState: () => active(),
-
-    setPage: (page) => patch({ page }),
-    setLimit: (limit) => patch({ limit, page: 1 }),
-    setSort: (sort) => patch({ sort }),
-    setFilter: (filter) => patch({ filter, page: 1 }),
-    setSearch: (search) => patch({ search, page: 1 }),
-    setSelectedRows: (ids) => patch({ selectedRows: ids }),
-    toggleRow: (id) => {
-      const current = active();
-      patch({
-        selectedRows: current.selectedRows.includes(id)
-          ? current.selectedRows.filter((r) => r !== id)
-          : [...current.selectedRows, id],
-      });
-    },
-    clearSelection: () => patch({ selectedRows: [] }),
-    reset: () => patch({ ...DEFAULT_STATE }),
-  };
-});
+  ),
+);

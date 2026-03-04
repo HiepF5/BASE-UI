@@ -1,7 +1,9 @@
 import { create } from 'zustand';
+import { devtools } from 'zustand/middleware';
 
 // ============================================================
 // UI Store - Sidebar, modal, theme, global UI state
+// Production: devtools middleware, typed selectors
 // ============================================================
 
 export type Theme = 'light' | 'dark' | 'system';
@@ -51,28 +53,37 @@ const initialResolved = resolveTheme(initialTheme);
 // Apply immediately to avoid flash
 applyTheme(initialResolved);
 
-export const useUIStore = create<UIState>((set) => ({
-  sidebarOpen: true,
-  toggleSidebar: () => set((s) => ({ sidebarOpen: !s.sidebarOpen })),
-  setSidebarOpen: (open) => set({ sidebarOpen: open }),
+export const useUIStore = create<UIState>()(
+  devtools(
+    (set) => ({
+      sidebarOpen: true,
+      toggleSidebar: () => set((s) => ({ sidebarOpen: !s.sidebarOpen }), false, 'toggleSidebar'),
+      setSidebarOpen: (open) => set({ sidebarOpen: open }, false, 'setSidebarOpen'),
 
-  activeModal: null,
-  modalData: null,
-  openModal: (name, data = null) => set({ activeModal: name, modalData: data }),
-  closeModal: () => set({ activeModal: null, modalData: null }),
+      activeModal: null,
+      modalData: null,
+      openModal: (name, data = null) =>
+        set({ activeModal: name, modalData: data }, false, 'openModal'),
+      closeModal: () => set({ activeModal: null, modalData: null }, false, 'closeModal'),
 
-  activeConnection: null,
-  setActiveConnection: (id) => set({ activeConnection: id }),
+      activeConnection: null,
+      setActiveConnection: (id) => set({ activeConnection: id }, false, 'setActiveConnection'),
 
-  theme: initialTheme,
-  resolvedTheme: initialResolved,
-  setTheme: (theme) => {
-    const resolved = resolveTheme(theme);
-    localStorage.setItem('theme', theme);
-    applyTheme(resolved);
-    set({ theme, resolvedTheme: resolved });
-  },
-}));
+      theme: initialTheme,
+      resolvedTheme: initialResolved,
+      setTheme: (theme) => {
+        const resolved = resolveTheme(theme);
+        localStorage.setItem('theme', theme);
+        applyTheme(resolved);
+        set({ theme, resolvedTheme: resolved }, false, 'setTheme');
+      },
+    }),
+    {
+      name: 'UIStore',
+      enabled: import.meta.env.DEV,
+    },
+  ),
+);
 
 // Listen for system theme changes (when theme === 'system')
 if (typeof window !== 'undefined') {

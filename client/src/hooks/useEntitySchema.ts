@@ -1,8 +1,10 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useQuery, useQueries } from '@tanstack/react-query';
 import { apiClient } from '../core/api/apiClient';
 import { schemaRegistry } from '../config/schema.config';
 import { tableSchemaToEntitySchema } from '../core/metadata/field-mapping';
+import { useMetadataStore } from '../stores/metadataStore';
+import { queryKeys } from '../core/query';
 import type { EntitySchema, FieldSchema } from '../core/metadata/schema.types';
 import type { TableSchema } from '../types';
 
@@ -10,6 +12,7 @@ import type { TableSchema } from '../types';
 // useEntitySchema - Metadata Engine hook
 // Merge strategy: static config (schemaRegistry) > auto-generated (API)
 // Priority: hard-coded field overrides từ config, fallback auto-gen từ DB
+// Integration: caches resolved schema into MetadataStore (Zustand)
 // ============================================================
 
 interface UseEntitySchemaOptions {
@@ -33,27 +36,35 @@ export function useEntitySchema(
   entity: string,
   options?: UseEntitySchemaOptions,
 ): UseEntitySchemaResult {
+  const metadataStore = useMetadataStore();
+
   // 1. Check static config first
   const staticSchema = schemaRegistry[entity] || null;
 
-  // 2. Fetch from API only if no static config (or to enrich)
-  const shouldFetch = !options?.staticOnly && !staticSchema;
+  // 2. Check metadata store cache (for previously resolved API schemas)
+  const cachedSchema = metadataStore.getSchema(entity);
+
+  // 3. Fetch from API only if no static config AND not cached
+  const shouldFetch = !options?.staticOnly && !staticSchema && !cachedSchema;
 
   const {
     data: apiTableSchema,
     isLoading,
     error,
   } = useQuery<TableSchema>({
-    queryKey: ['schema', connectionId, entity],
+    queryKey: queryKeys.schema.entity(connectionId, entity),
     queryFn: () => apiClient.get(`/schema/${connectionId}/${entity}`),
     staleTime: 5 * 60 * 1000,
     enabled: shouldFetch && !!entity,
   });
 
-  // 3. Merge: static config wins, API fills gaps
+  // 3. Merge: static config wins, cache next, API fills gaps
   const schema = useMemo(() => {
     // If we have static config, use it directly
     if (staticSchema) return staticSchema;
+
+    // If cached in metadata store, use that
+    if (cachedSchema) return cachedSchema;
 
     // If API schema available, convert
     if (apiTableSchema) {
@@ -61,7 +72,14 @@ export function useEntitySchema(
     }
 
     return null;
-  }, [staticSchema, apiTableSchema]);
+  }, [staticSchema, cachedSchema, apiTableSchema]);
+
+  // 4. Cache the resolved schema in MetadataStore
+  useEffect(() => {
+    if (schema && entity && !metadataStore.hasSchema(entity)) {
+      metadataStore.setSchema(entity, schema);
+    }
+  }, [schema, entity]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return {
     schema,
@@ -104,7 +122,7 @@ export function useRelationOptions(
       const rel = field.relation!;
       const limit = rel.preloadLimit || 100;
       return {
-        queryKey: ['relation-options', connectionId, rel.target, limit],
+        queryKey: queryKeys.relation.options(connectionId, rel.target, limit),
         queryFn: () =>
           apiClient.get<Record<string, unknown>[]>(
             `/crud/${connectionId}/${rel.target}?limit=${limit}`,

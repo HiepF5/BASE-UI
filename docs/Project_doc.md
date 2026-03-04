@@ -5,11 +5,12 @@
 
 ---
 
-# Yêu cầu
+# Yêu cầu RULE bắt buộc
 
 - Đọc và Làm theo doc
 - Đọc làm theo rules
 - Đọc và làm theo ai-builder.config
+- Đọc đám bảo theo rule , doc , tạo example trên giao diện, đánh dấu theo checklist đã hoàn thành.
 
 # 📦 SCOPE DỰ ÁN
 
@@ -180,11 +181,11 @@ Cho phép render UI từ metadata
 
 ## Week 6 – State chuẩn production
 
-- [ ] React Query setup
-- [ ] Zustand store
-- [ ] Global metadata store
-- [ ] Form engine integration
-- [ ] Optimistic update
+- [x] React Query setup
+- [x] Zustand store
+- [x] Global metadata store
+- [x] Form engine integration
+- [x] Optimistic update
 
 ---
 
