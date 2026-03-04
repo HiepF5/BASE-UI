@@ -38,3 +38,11 @@ export {
 // Dynamic components (Week 4 – Metadata Engine)
 export { FieldRenderer, DynamicForm, DynamicTable } from './dynamic';
 export type { FieldRendererProps, DynamicFormProps, DynamicTableProps } from './dynamic';
+
+// Relation components (Phase 3 – Relation + Nested CRUD)
+export { RelationSelect, RelationMultiSelect, RelationInlineTable } from './relation';
+export type {
+  RelationSelectProps,
+  RelationMultiSelectProps,
+  RelationInlineTableProps,
+} from './relation';

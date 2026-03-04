@@ -49,6 +49,11 @@ const StateShowcasePage = lazy(() =>
     default: m.StateShowcasePage,
   })),
 );
+const RelationShowcasePage = lazy(() =>
+  import('./modules/showcase/RelationShowcasePage').then((m) => ({
+    default: m.RelationShowcasePage,
+  })),
+);
 
 function PageLoader() {
   return (
@@ -83,6 +88,7 @@ export function App() {
             <Route path="showcase/metadata" element={<MetadataShowcasePage />} />
             <Route path="showcase/crud" element={<CrudShowcasePage />} />
             <Route path="showcase/state" element={<StateShowcasePage />} />
+            <Route path="showcase/relation" element={<RelationShowcasePage />} />
           </Route>
         </Routes>
       </Suspense>

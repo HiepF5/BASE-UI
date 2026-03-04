@@ -199,10 +199,10 @@ Enterprise-level capability
 
 ## Relation + Nested CRUD
 
-- [ ] ManyToOne dropdown
-- [ ] OneToMany inline table
-- [ ] ManyToMany multi-select
-- [ ] Nested transaction support
+- [x] ManyToOne dropdown
+- [x] OneToMany inline table
+- [x] ManyToMany multi-select
+- [x] Nested transaction support
 
 ---
 

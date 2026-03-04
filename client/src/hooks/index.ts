@@ -6,4 +6,8 @@ export { useCrudEngine } from './useCrudEngine';
 export type { UseCrudEngineReturn } from './useCrudEngine';
 export { useFormEngine } from './useFormEngine';
 export type { UseFormEngineReturn, UseFormEngineOptions, FormMode } from './useFormEngine';
+export { useRelationCrud } from './useRelationCrud';
+export type { UseRelationCrudReturn, UseRelationCrudOptions } from './useRelationCrud';
+export { useNestedCrud } from './useNestedCrud';
+export type { UseNestedCrudReturn, NestedPayload, ChildOperation } from './useNestedCrud';
 export { useTheme } from './useTheme';

@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { BaseButton } from '../base';
 import { FieldRenderer } from './FieldRenderer';
+import { RelationInlineTable } from '../relation/RelationInlineTable';
 import type { FieldSchema, EntitySchema } from '../../core/metadata/schema.types';
 import {
   buildFormSchema,
@@ -52,6 +53,10 @@ export interface DynamicFormProps {
   footer?: React.ReactNode;
   /** Custom class */
   className?: string;
+  /** Parent record ID (for OneToMany inline tables in edit mode) */
+  parentId?: string | number | null;
+  /** Connection ID */
+  connectionId?: string;
 }
 
 export function DynamicForm({
@@ -70,6 +75,8 @@ export function DynamicForm({
   relationLoading,
   footer,
   className,
+  parentId,
+  connectionId = 'default',
 }: DynamicFormProps) {
   // ─── Derive fields from schema or props ─────────────────
   const fields = useMemo(() => {
@@ -156,17 +163,18 @@ export function DynamicForm({
         ))}
       </div>
 
-      {/* OneToMany relation placeholders */}
+      {/* OneToMany relation inline tables */}
       {oneToManyFields.length > 0 && (
         <div className="border-t border-border pt-4 space-y-4">
           <h3 className="text-sm font-semibold text-text-secondary">Related Records</h3>
           {oneToManyFields.map((field) => (
-            <div key={field.name} className="p-4 border border-border rounded-lg bg-bg-secondary">
-              <p className="text-sm font-medium text-text-secondary mb-2">{field.label}</p>
-              <p className="text-xs text-text-muted">
-                OneToMany inline editing – managed after saving the main record.
-              </p>
-            </div>
+            <RelationInlineTable
+              key={field.name}
+              field={field}
+              parentId={parentId ?? null}
+              connectionId={connectionId}
+              disabled={disabled}
+            />
           ))}
         </div>
       )}

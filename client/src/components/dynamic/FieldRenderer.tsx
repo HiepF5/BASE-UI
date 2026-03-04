@@ -1,6 +1,8 @@
 import React from 'react';
 import { Controller, type Control, type FieldErrors, type UseFormRegister } from 'react-hook-form';
 import { BaseInput, BaseSelect, BaseMultiSelect, BaseDatePicker, BaseSwitch } from '../base';
+import { RelationSelect } from '../relation/RelationSelect';
+import { RelationMultiSelect } from '../relation/RelationMultiSelect';
 import type { FieldSchema } from '../../core/metadata/schema.types';
 import { cn } from '../../core/utils';
 
@@ -28,6 +30,8 @@ export interface FieldRendererProps {
   relationOptions?: Array<{ label: string; value: string | number }>;
   /** Loading relation options */
   relationLoading?: boolean;
+  /** Connection ID for async relation search */
+  connectionId?: string;
 }
 
 export function FieldRenderer({
@@ -38,6 +42,7 @@ export function FieldRenderer({
   disabled,
   relationOptions,
   relationLoading,
+  connectionId = 'default',
 }: FieldRendererProps) {
   const error = errors[field.name];
   const errorMessage = error
@@ -297,55 +302,71 @@ export function FieldRenderer({
         />
       );
 
-    // ─── Relation (ManyToOne → Select) ─────────────────────
+    // ─── Relation (ManyToOne → RelationSelect, ManyToMany → RelationMultiSelect) ───
     case 'relation': {
       if (!field.relation) return null;
 
       const relationType = field.relation.type;
 
-      // ManyToOne / OneToOne → dropdown select
+      // ManyToOne / OneToOne → async searchable dropdown
       if (relationType === 'ManyToOne' || relationType === 'OneToOne') {
-        return (
-          <BaseSelect
-            {...register(field.name)}
-            label={field.label}
-            placeholder={relationLoading ? 'Loading...' : `Select ${field.label.toLowerCase()}`}
-            options={
-              relationOptions?.map((o) => ({
-                label: o.label,
-                value: o.value,
-              })) || []
-            }
-            error={errorMessage}
-            hint={field.helpText}
-            required={isRequired}
-            disabled={disabled || relationLoading}
-          />
-        );
-      }
-
-      // ManyToMany → multi-select
-      if (relationType === 'ManyToMany') {
         return (
           <Controller
             name={field.name}
             control={control}
             render={({ field: formField }) => (
-              <BaseMultiSelect
+              <RelationSelect
                 label={field.label}
-                placeholder={relationLoading ? 'Loading...' : `Select ${field.label.toLowerCase()}`}
+                value={formField.value}
+                onChange={formField.onChange}
                 options={
                   relationOptions?.map((o) => ({
                     label: o.label,
                     value: o.value,
                   })) || []
                 }
-                value={formField.value || []}
-                onChange={formField.onChange}
+                loading={relationLoading}
                 error={errorMessage}
                 hint={field.helpText}
                 required={isRequired}
                 disabled={disabled || relationLoading}
+                placeholder={`Select ${field.label.toLowerCase()}`}
+                targetEntity={field.relation?.target}
+                displayField={field.relation?.displayField}
+                connectionId={connectionId}
+                allowCreate={field.relation?.allowCreate}
+              />
+            )}
+          />
+        );
+      }
+
+      // ManyToMany → async searchable multi-select
+      if (relationType === 'ManyToMany') {
+        return (
+          <Controller
+            name={field.name}
+            control={control}
+            render={({ field: formField }) => (
+              <RelationMultiSelect
+                label={field.label}
+                value={formField.value || []}
+                onChange={formField.onChange}
+                options={
+                  relationOptions?.map((o) => ({
+                    label: o.label,
+                    value: o.value,
+                  })) || []
+                }
+                loading={relationLoading}
+                error={errorMessage}
+                hint={field.helpText}
+                required={isRequired}
+                disabled={disabled || relationLoading}
+                placeholder={`Select ${field.label.toLowerCase()}`}
+                targetEntity={field.relation?.target}
+                displayField={field.relation?.displayField}
+                connectionId={connectionId}
               />
             )}
           />
