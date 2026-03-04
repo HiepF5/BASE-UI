@@ -1,11 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { cn } from '../../core/utils';
 import { BaseButton } from './BaseButton';
+import { BasePagination } from './BasePagination';
 import type { ColumnConfig, SortOption } from '../../types';
 
 // ============================================================
-// BaseTable - Dynamic table with sort, select, pagination
+// BaseTable - Headless-style table with sort, select, pagination
+// Composable: uses BasePagination, pure presentational
 // ============================================================
+
+/** Custom cell renderer */
+export type CellRenderer = (value: any, row: any, col: ColumnConfig) => React.ReactNode;
+
 export interface BaseTableProps {
   columns: ColumnConfig[];
   data: any[];
@@ -16,6 +22,17 @@ export interface BaseTableProps {
   selectedRows?: string[];
   loading?: boolean;
   primaryKey?: string;
+  /** Stripe rows */
+  striped?: boolean;
+  /** Compact row spacing */
+  compact?: boolean;
+  /** Show pagination */
+  showPagination?: boolean;
+  /** Custom cell renderers by column name */
+  cellRenderers?: Record<string, CellRenderer>;
+  /** Empty state content */
+  emptyContent?: React.ReactNode;
+  className?: string;
   onPageChange: (page: number) => void;
   onLimitChange: (limit: number) => void;
   onSort?: (sort: SortOption[]) => void;
@@ -35,6 +52,12 @@ export function BaseTable({
   selectedRows = [],
   loading,
   primaryKey = 'id',
+  striped = false,
+  compact = false,
+  showPagination = true,
+  cellRenderers,
+  emptyContent,
+  className,
   onPageChange,
   onLimitChange,
   onSort,
@@ -44,7 +67,6 @@ export function BaseTable({
   onDelete,
 }: BaseTableProps) {
   const visibleColumns = columns.filter((col) => col.visible);
-  const totalPages = Math.ceil(total / limit);
 
   const handleSort = (columnName: string) => {
     if (!onSort) return;
@@ -83,11 +105,11 @@ export function BaseTable({
   };
 
   return (
-    <div className="w-full">
+    <div className={cn('w-full', className)}>
       {/* Table */}
-      <div className="overflow-x-auto border rounded-lg">
+      <div className="overflow-x-auto border border-border rounded-lg">
         <table className="w-full text-sm">
-          <thead className="bg-neutral-50 border-b">
+          <thead className="bg-bg-tertiary border-b border-border">
             <tr>
               {onRowSelect && (
                 <th className="w-10 p-3">
@@ -96,6 +118,7 @@ export function BaseTable({
                     checked={selectedRows.length === data.length && data.length > 0}
                     onChange={handleSelectAll}
                     className="rounded"
+                    aria-label="Select all rows"
                   />
                 </th>
               )}
@@ -103,36 +126,72 @@ export function BaseTable({
                 <th
                   key={col.name}
                   className={cn(
-                    'p-3 text-left font-medium text-neutral-600',
-                    col.sortable && 'cursor-pointer hover:text-neutral-900',
+                    compact ? 'px-3 py-2' : 'p-3',
+                    'text-left font-medium text-text-secondary',
+                    col.sortable && 'cursor-pointer hover:text-text select-none',
                   )}
                   style={{ width: col.width ? `${col.width}px` : undefined }}
                   onClick={() => col.sortable && handleSort(col.name)}
+                  aria-sort={
+                    sort.find((s) => s.field === col.name)?.direction === 'asc'
+                      ? 'ascending'
+                      : sort.find((s) => s.field === col.name)?.direction === 'desc'
+                        ? 'descending'
+                        : undefined
+                  }
                 >
                   <span className="flex items-center gap-1">
                     {col.label}
                     {col.sortable && (
-                      <span className="text-xs text-neutral-400">{getSortIcon(col.name)}</span>
+                      <span className="text-xs text-text-muted">{getSortIcon(col.name)}</span>
                     )}
                   </span>
                 </th>
               ))}
               {(onEdit || onDelete) && (
-                <th className="w-24 p-3 text-center font-medium text-neutral-600">Actions</th>
+                <th
+                  className={cn(
+                    compact ? 'px-3 py-2' : 'p-3',
+                    'w-24 text-center font-medium text-text-secondary',
+                  )}
+                >
+                  Actions
+                </th>
               )}
             </tr>
           </thead>
           <tbody>
             {loading ? (
               <tr>
-                <td colSpan={visibleColumns.length + 2} className="p-8 text-center text-neutral-400">
-                  Loading...
+                <td colSpan={visibleColumns.length + 2} className="p-8 text-center text-text-muted">
+                  <div className="flex items-center justify-center gap-2">
+                    <svg
+                      className="animate-spin h-5 w-5 text-primary"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      />
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                      />
+                    </svg>
+                    Loading...
+                  </div>
                 </td>
               </tr>
             ) : data.length === 0 ? (
               <tr>
-                <td colSpan={visibleColumns.length + 2} className="p-8 text-center text-neutral-400">
-                  No data
+                <td colSpan={visibleColumns.length + 2} className="p-8 text-center text-text-muted">
+                  {emptyContent || 'No data'}
                 </td>
               </tr>
             ) : (
@@ -140,8 +199,9 @@ export function BaseTable({
                 <tr
                   key={row[primaryKey] || idx}
                   className={cn(
-                    'border-b hover:bg-neutral-50 transition-colors',
+                    'border-b border-border hover:bg-bg-secondary transition-colors',
                     selectedRows.includes(row[primaryKey]) && 'bg-primary-50',
+                    striped && idx % 2 === 1 && 'bg-bg-secondary',
                     onRowClick && 'cursor-pointer',
                   )}
                   onClick={() => onRowClick?.(row)}
@@ -153,16 +213,22 @@ export function BaseTable({
                         checked={selectedRows.includes(row[primaryKey])}
                         onChange={() => handleSelectRow(row[primaryKey])}
                         className="rounded"
+                        aria-label={`Select row ${row[primaryKey]}`}
                       />
                     </td>
                   )}
                   {visibleColumns.map((col) => (
-                    <td key={col.name} className="p-3">
-                      {renderCell(row[col.name], col)}
+                    <td key={col.name} className={compact ? 'px-3 py-2' : 'p-3'}>
+                      {cellRenderers?.[col.name]
+                        ? cellRenderers[col.name](row[col.name], row, col)
+                        : renderCell(row[col.name], col)}
                     </td>
                   ))}
                   {(onEdit || onDelete) && (
-                    <td className="p-3 text-center" onClick={(e) => e.stopPropagation()}>
+                    <td
+                      className={cn(compact ? 'px-3 py-2' : 'p-3', 'text-center')}
+                      onClick={(e) => e.stopPropagation()}
+                    >
                       <div className="flex justify-center gap-1">
                         {onEdit && (
                           <BaseButton size="sm" variant="ghost" onClick={() => onEdit(row)}>
@@ -184,58 +250,37 @@ export function BaseTable({
         </table>
       </div>
 
-      {/* Pagination */}
-      <div className="flex items-center justify-between mt-4">
-        <div className="text-sm text-neutral-500">
-          Showing {(page - 1) * limit + 1}-{Math.min(page * limit, total)} of {total}
-        </div>
-        <div className="flex items-center gap-2">
-          <select
-            value={limit}
-            onChange={(e) => onLimitChange(Number(e.target.value))}
-            className="border rounded px-2 py-1 text-sm"
-          >
-            {[10, 20, 50, 100].map((n) => (
-              <option key={n} value={n}>
-                {n} / page
-              </option>
-            ))}
-          </select>
-          <BaseButton
-            size="sm"
-            variant="outline"
-            disabled={page <= 1}
-            onClick={() => onPageChange(page - 1)}
-          >
-            Prev
-          </BaseButton>
-          <span className="text-sm">
-            {page} / {totalPages}
-          </span>
-          <BaseButton
-            size="sm"
-            variant="outline"
-            disabled={page >= totalPages}
-            onClick={() => onPageChange(page + 1)}
-          >
-            Next
-          </BaseButton>
-        </div>
-      </div>
+      {/* Pagination (composed) */}
+      {showPagination && total > 0 && (
+        <BasePagination
+          page={page}
+          limit={limit}
+          total={total}
+          onPageChange={onPageChange}
+          onLimitChange={onLimitChange}
+          className="mt-4"
+        />
+      )}
     </div>
   );
 }
 
 function renderCell(value: any, col: ColumnConfig): React.ReactNode {
-  if (value === null || value === undefined) return <span className="text-neutral-300">—</span>;
+  if (value === null || value === undefined) return <span className="text-text-muted">—</span>;
 
   switch (col.type) {
     case 'boolean':
-      return value ? '✓' : '✗';
+      return (
+        <span className={value ? 'text-success' : 'text-text-muted'}>{value ? '✓' : '✗'}</span>
+      );
     case 'date':
       return new Date(value).toLocaleDateString('vi-VN');
     case 'number':
       return typeof value === 'number' ? value.toLocaleString() : value;
+    case 'select': {
+      const option = col.options?.find((o) => o.value === value);
+      return option?.label || String(value);
+    }
     default:
       return String(value).length > 100 ? String(value).slice(0, 100) + '...' : String(value);
   }

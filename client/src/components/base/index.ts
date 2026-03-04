@@ -58,3 +58,21 @@ export type { BaseAlertProps } from './BaseAlert';
 
 export { ToastProvider, useToast } from './BaseToast';
 export type { ToastItem, ToastVariant, ToastProviderProps } from './BaseToast';
+
+// ── Data & Overlay Components (Week 3) ──────────────────────
+export { BasePagination } from './BasePagination';
+export type { BasePaginationProps } from './BasePagination';
+
+export { BaseDrawer } from './BaseDrawer';
+export type { BaseDrawerProps } from './BaseDrawer';
+
+export { BasePopover } from './BasePopover';
+export type { BasePopoverProps, PopoverPlacement } from './BasePopover';
+
+export { BaseDropdown } from './BaseDropdown';
+export type {
+  BaseDropdownProps,
+  DropdownItem,
+  DropdownDivider,
+  DropdownMenuEntry,
+} from './BaseDropdown';

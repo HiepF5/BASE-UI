@@ -29,6 +29,11 @@ const ComponentShowcasePage = lazy(() =>
     default: m.ComponentShowcasePage,
   })),
 );
+const DataOverlayShowcasePage = lazy(() =>
+  import('./modules/showcase/DataOverlayShowcasePage').then((m) => ({
+    default: m.DataOverlayShowcasePage,
+  })),
+);
 
 function PageLoader() {
   return (
@@ -59,6 +64,7 @@ export function App() {
             <Route path="ai" element={<AiChatPanel />} />
             <Route path="showcase/tokens" element={<TokenShowcasePage />} />
             <Route path="showcase/components" element={<ComponentShowcasePage />} />
+            <Route path="showcase/data-overlay" element={<DataOverlayShowcasePage />} />
           </Route>
         </Routes>
       </Suspense>

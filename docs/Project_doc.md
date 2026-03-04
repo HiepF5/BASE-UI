@@ -123,21 +123,21 @@ Build BASE UI component library
 
 ## Week 3 – Data & Overlay
 
-- [ ] Table (headless)
+- [x] Table (headless)
 
-- [ ] Pagination
+- [x] Pagination
 
-- [ ] Modal
+- [x] Modal
 
-- [ ] Drawer
+- [x] Drawer
 
-- [ ] Popover
+- [x] Popover
 
-- [ ] Dropdown
+- [x] Dropdown
 
-- [ ] Storybook setup
+- [x] Storybook setup
 
-- [ ] Component documentation
+- [x] Component documentation
 
 ---
 

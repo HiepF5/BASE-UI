@@ -1,0 +1,1183 @@
+{
+  "v": 5,
+  "entries": {
+    "documentation-getting-started--docs": {
+      "id": "documentation-getting-started--docs",
+      "title": "Documentation/Getting Started",
+      "name": "Docs",
+      "importPath": "./src/components/base/__stories__/Introduction.mdx",
+      "storiesImports": [],
+      "type": "docs",
+      "tags": ["dev", "test", "unattached-mdx"]
+    },
+    "base-feedback-basealert--docs": {
+      "id": "base-feedback-basealert--docs",
+      "title": "Base/Feedback/BaseAlert",
+      "name": "Docs",
+      "importPath": "./src/components/base/__stories__/BaseAlert.stories.tsx",
+      "type": "docs",
+      "tags": ["dev", "test", "autodocs"],
+      "storiesImports": []
+    },
+    "base-feedback-basealert--info": {
+      "type": "story",
+      "id": "base-feedback-basealert--info",
+      "name": "Info",
+      "title": "Base/Feedback/BaseAlert",
+      "importPath": "./src/components/base/__stories__/BaseAlert.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-feedback-basealert--success": {
+      "type": "story",
+      "id": "base-feedback-basealert--success",
+      "name": "Success",
+      "title": "Base/Feedback/BaseAlert",
+      "importPath": "./src/components/base/__stories__/BaseAlert.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-feedback-basealert--warning": {
+      "type": "story",
+      "id": "base-feedback-basealert--warning",
+      "name": "Warning",
+      "title": "Base/Feedback/BaseAlert",
+      "importPath": "./src/components/base/__stories__/BaseAlert.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-feedback-basealert--danger": {
+      "type": "story",
+      "id": "base-feedback-basealert--danger",
+      "name": "Danger",
+      "title": "Base/Feedback/BaseAlert",
+      "importPath": "./src/components/base/__stories__/BaseAlert.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-feedback-basealert--neutral": {
+      "type": "story",
+      "id": "base-feedback-basealert--neutral",
+      "name": "Neutral",
+      "title": "Base/Feedback/BaseAlert",
+      "importPath": "./src/components/base/__stories__/BaseAlert.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-feedback-basealert--all-variants": {
+      "type": "story",
+      "id": "base-feedback-basealert--all-variants",
+      "name": "All Variants",
+      "title": "Base/Feedback/BaseAlert",
+      "importPath": "./src/components/base/__stories__/BaseAlert.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-feedback-basealert--closable": {
+      "type": "story",
+      "id": "base-feedback-basealert--closable",
+      "name": "Closable",
+      "title": "Base/Feedback/BaseAlert",
+      "importPath": "./src/components/base/__stories__/BaseAlert.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-feedback-basebutton--docs": {
+      "id": "base-feedback-basebutton--docs",
+      "title": "Base/Feedback/BaseButton",
+      "name": "Docs",
+      "importPath": "./src/components/base/__stories__/BaseButton.stories.tsx",
+      "type": "docs",
+      "tags": ["dev", "test", "autodocs"],
+      "storiesImports": []
+    },
+    "base-feedback-basebutton--primary": {
+      "type": "story",
+      "id": "base-feedback-basebutton--primary",
+      "name": "Primary",
+      "title": "Base/Feedback/BaseButton",
+      "importPath": "./src/components/base/__stories__/BaseButton.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-feedback-basebutton--secondary": {
+      "type": "story",
+      "id": "base-feedback-basebutton--secondary",
+      "name": "Secondary",
+      "title": "Base/Feedback/BaseButton",
+      "importPath": "./src/components/base/__stories__/BaseButton.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-feedback-basebutton--danger": {
+      "type": "story",
+      "id": "base-feedback-basebutton--danger",
+      "name": "Danger",
+      "title": "Base/Feedback/BaseButton",
+      "importPath": "./src/components/base/__stories__/BaseButton.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-feedback-basebutton--outline": {
+      "type": "story",
+      "id": "base-feedback-basebutton--outline",
+      "name": "Outline",
+      "title": "Base/Feedback/BaseButton",
+      "importPath": "./src/components/base/__stories__/BaseButton.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-feedback-basebutton--ghost": {
+      "type": "story",
+      "id": "base-feedback-basebutton--ghost",
+      "name": "Ghost",
+      "title": "Base/Feedback/BaseButton",
+      "importPath": "./src/components/base/__stories__/BaseButton.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-feedback-basebutton--loading": {
+      "type": "story",
+      "id": "base-feedback-basebutton--loading",
+      "name": "Loading",
+      "title": "Base/Feedback/BaseButton",
+      "importPath": "./src/components/base/__stories__/BaseButton.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-feedback-basebutton--disabled": {
+      "type": "story",
+      "id": "base-feedback-basebutton--disabled",
+      "name": "Disabled",
+      "title": "Base/Feedback/BaseButton",
+      "importPath": "./src/components/base/__stories__/BaseButton.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-feedback-basebutton--all-sizes": {
+      "type": "story",
+      "id": "base-feedback-basebutton--all-sizes",
+      "name": "All Sizes",
+      "title": "Base/Feedback/BaseButton",
+      "importPath": "./src/components/base/__stories__/BaseButton.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-feedback-basebutton--all-variants": {
+      "type": "story",
+      "id": "base-feedback-basebutton--all-variants",
+      "name": "All Variants",
+      "title": "Base/Feedback/BaseButton",
+      "importPath": "./src/components/base/__stories__/BaseButton.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-form-basecheckbox--docs": {
+      "id": "base-form-basecheckbox--docs",
+      "title": "Base/Form/BaseCheckbox",
+      "name": "Docs",
+      "importPath": "./src/components/base/__stories__/BaseCheckbox.stories.tsx",
+      "type": "docs",
+      "tags": ["dev", "test", "autodocs"],
+      "storiesImports": []
+    },
+    "base-form-basecheckbox--default": {
+      "type": "story",
+      "id": "base-form-basecheckbox--default",
+      "name": "Default",
+      "title": "Base/Form/BaseCheckbox",
+      "importPath": "./src/components/base/__stories__/BaseCheckbox.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-form-basecheckbox--with-description": {
+      "type": "story",
+      "id": "base-form-basecheckbox--with-description",
+      "name": "With Description",
+      "title": "Base/Form/BaseCheckbox",
+      "importPath": "./src/components/base/__stories__/BaseCheckbox.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-form-basecheckbox--with-error": {
+      "type": "story",
+      "id": "base-form-basecheckbox--with-error",
+      "name": "With Error",
+      "title": "Base/Form/BaseCheckbox",
+      "importPath": "./src/components/base/__stories__/BaseCheckbox.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-form-basecheckbox--indeterminate": {
+      "type": "story",
+      "id": "base-form-basecheckbox--indeterminate",
+      "name": "Indeterminate",
+      "title": "Base/Form/BaseCheckbox",
+      "importPath": "./src/components/base/__stories__/BaseCheckbox.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-form-basecheckbox--sizes": {
+      "type": "story",
+      "id": "base-form-basecheckbox--sizes",
+      "name": "Sizes",
+      "title": "Base/Form/BaseCheckbox",
+      "importPath": "./src/components/base/__stories__/BaseCheckbox.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-form-basecheckbox--interactive": {
+      "type": "story",
+      "id": "base-form-basecheckbox--interactive",
+      "name": "Interactive",
+      "title": "Base/Form/BaseCheckbox",
+      "importPath": "./src/components/base/__stories__/BaseCheckbox.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-form-basedatepicker--docs": {
+      "id": "base-form-basedatepicker--docs",
+      "title": "Base/Form/BaseDatePicker",
+      "name": "Docs",
+      "importPath": "./src/components/base/__stories__/BaseDatePicker.stories.tsx",
+      "type": "docs",
+      "tags": ["dev", "test", "autodocs"],
+      "storiesImports": []
+    },
+    "base-form-basedatepicker--date-only": {
+      "type": "story",
+      "id": "base-form-basedatepicker--date-only",
+      "name": "Date Only",
+      "title": "Base/Form/BaseDatePicker",
+      "importPath": "./src/components/base/__stories__/BaseDatePicker.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-form-basedatepicker--date-time": {
+      "type": "story",
+      "id": "base-form-basedatepicker--date-time",
+      "name": "Date Time",
+      "title": "Base/Form/BaseDatePicker",
+      "importPath": "./src/components/base/__stories__/BaseDatePicker.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-form-basedatepicker--time-only": {
+      "type": "story",
+      "id": "base-form-basedatepicker--time-only",
+      "name": "Time Only",
+      "title": "Base/Form/BaseDatePicker",
+      "importPath": "./src/components/base/__stories__/BaseDatePicker.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-form-basedatepicker--with-error": {
+      "type": "story",
+      "id": "base-form-basedatepicker--with-error",
+      "name": "With Error",
+      "title": "Base/Form/BaseDatePicker",
+      "importPath": "./src/components/base/__stories__/BaseDatePicker.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-form-basedatepicker--sizes": {
+      "type": "story",
+      "id": "base-form-basedatepicker--sizes",
+      "name": "Sizes",
+      "title": "Base/Form/BaseDatePicker",
+      "importPath": "./src/components/base/__stories__/BaseDatePicker.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-form-basedatepicker--interactive": {
+      "type": "story",
+      "id": "base-form-basedatepicker--interactive",
+      "name": "Interactive",
+      "title": "Base/Form/BaseDatePicker",
+      "importPath": "./src/components/base/__stories__/BaseDatePicker.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-overlay-basedrawer--docs": {
+      "id": "base-overlay-basedrawer--docs",
+      "title": "Base/Overlay/BaseDrawer",
+      "name": "Docs",
+      "importPath": "./src/components/base/__stories__/BaseDrawer.stories.tsx",
+      "type": "docs",
+      "tags": ["dev", "test", "autodocs"],
+      "storiesImports": []
+    },
+    "base-overlay-basedrawer--right": {
+      "type": "story",
+      "id": "base-overlay-basedrawer--right",
+      "name": "Right",
+      "title": "Base/Overlay/BaseDrawer",
+      "importPath": "./src/components/base/__stories__/BaseDrawer.stories.tsx",
+      "componentPath": "./src/components/base/BaseDrawer.tsx",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-overlay-basedrawer--left": {
+      "type": "story",
+      "id": "base-overlay-basedrawer--left",
+      "name": "Left",
+      "title": "Base/Overlay/BaseDrawer",
+      "importPath": "./src/components/base/__stories__/BaseDrawer.stories.tsx",
+      "componentPath": "./src/components/base/BaseDrawer.tsx",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-overlay-basedrawer--bottom": {
+      "type": "story",
+      "id": "base-overlay-basedrawer--bottom",
+      "name": "Bottom",
+      "title": "Base/Overlay/BaseDrawer",
+      "importPath": "./src/components/base/__stories__/BaseDrawer.stories.tsx",
+      "componentPath": "./src/components/base/BaseDrawer.tsx",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-overlay-basedrawer--with-footer": {
+      "type": "story",
+      "id": "base-overlay-basedrawer--with-footer",
+      "name": "With Footer",
+      "title": "Base/Overlay/BaseDrawer",
+      "importPath": "./src/components/base/__stories__/BaseDrawer.stories.tsx",
+      "componentPath": "./src/components/base/BaseDrawer.tsx",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-overlay-basedrawer--sizes": {
+      "type": "story",
+      "id": "base-overlay-basedrawer--sizes",
+      "name": "Sizes",
+      "title": "Base/Overlay/BaseDrawer",
+      "importPath": "./src/components/base/__stories__/BaseDrawer.stories.tsx",
+      "componentPath": "./src/components/base/BaseDrawer.tsx",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-overlay-basedropdown--docs": {
+      "id": "base-overlay-basedropdown--docs",
+      "title": "Base/Overlay/BaseDropdown",
+      "name": "Docs",
+      "importPath": "./src/components/base/__stories__/BaseDropdown.stories.tsx",
+      "type": "docs",
+      "tags": ["dev", "test", "autodocs"],
+      "storiesImports": []
+    },
+    "base-overlay-basedropdown--default": {
+      "type": "story",
+      "id": "base-overlay-basedropdown--default",
+      "name": "Default",
+      "title": "Base/Overlay/BaseDropdown",
+      "importPath": "./src/components/base/__stories__/BaseDropdown.stories.tsx",
+      "componentPath": "./src/components/base/BaseDropdown.tsx",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-overlay-basedropdown--with-icons": {
+      "type": "story",
+      "id": "base-overlay-basedropdown--with-icons",
+      "name": "With Icons",
+      "title": "Base/Overlay/BaseDropdown",
+      "importPath": "./src/components/base/__stories__/BaseDropdown.stories.tsx",
+      "componentPath": "./src/components/base/BaseDropdown.tsx",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-overlay-basedropdown--with-disabled-items": {
+      "type": "story",
+      "id": "base-overlay-basedropdown--with-disabled-items",
+      "name": "With Disabled Items",
+      "title": "Base/Overlay/BaseDropdown",
+      "importPath": "./src/components/base/__stories__/BaseDropdown.stories.tsx",
+      "componentPath": "./src/components/base/BaseDropdown.tsx",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-overlay-basedropdown--placements": {
+      "type": "story",
+      "id": "base-overlay-basedropdown--placements",
+      "name": "Placements",
+      "title": "Base/Overlay/BaseDropdown",
+      "importPath": "./src/components/base/__stories__/BaseDropdown.stories.tsx",
+      "componentPath": "./src/components/base/BaseDropdown.tsx",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-data-basefilterbar--docs": {
+      "id": "base-data-basefilterbar--docs",
+      "title": "Base/Data/BaseFilterBar",
+      "name": "Docs",
+      "importPath": "./src/components/base/__stories__/BaseFilterBar.stories.tsx",
+      "type": "docs",
+      "tags": ["dev", "test", "autodocs"],
+      "storiesImports": []
+    },
+    "base-data-basefilterbar--default": {
+      "type": "story",
+      "id": "base-data-basefilterbar--default",
+      "name": "Default",
+      "title": "Base/Data/BaseFilterBar",
+      "importPath": "./src/components/base/__stories__/BaseFilterBar.stories.tsx",
+      "componentPath": "./src/components/base/BaseFilterBar.tsx",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-data-baseform--docs": {
+      "id": "base-data-baseform--docs",
+      "title": "Base/Data/BaseForm",
+      "name": "Docs",
+      "importPath": "./src/components/base/__stories__/BaseForm.stories.tsx",
+      "type": "docs",
+      "tags": ["dev", "test", "autodocs"],
+      "storiesImports": []
+    },
+    "base-data-baseform--create-mode": {
+      "type": "story",
+      "id": "base-data-baseform--create-mode",
+      "name": "Create Mode",
+      "title": "Base/Data/BaseForm",
+      "importPath": "./src/components/base/__stories__/BaseForm.stories.tsx",
+      "componentPath": "./src/components/base/BaseForm.tsx",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-data-baseform--edit-mode": {
+      "type": "story",
+      "id": "base-data-baseform--edit-mode",
+      "name": "Edit Mode",
+      "title": "Base/Data/BaseForm",
+      "importPath": "./src/components/base/__stories__/BaseForm.stories.tsx",
+      "componentPath": "./src/components/base/BaseForm.tsx",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-data-baseform--loading": {
+      "type": "story",
+      "id": "base-data-baseform--loading",
+      "name": "Loading",
+      "title": "Base/Data/BaseForm",
+      "importPath": "./src/components/base/__stories__/BaseForm.stories.tsx",
+      "componentPath": "./src/components/base/BaseForm.tsx",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-form-baseinput--docs": {
+      "id": "base-form-baseinput--docs",
+      "title": "Base/Form/BaseInput",
+      "name": "Docs",
+      "importPath": "./src/components/base/__stories__/BaseInput.stories.tsx",
+      "type": "docs",
+      "tags": ["dev", "test", "autodocs"],
+      "storiesImports": []
+    },
+    "base-form-baseinput--default": {
+      "type": "story",
+      "id": "base-form-baseinput--default",
+      "name": "Default",
+      "title": "Base/Form/BaseInput",
+      "importPath": "./src/components/base/__stories__/BaseInput.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-form-baseinput--with-error": {
+      "type": "story",
+      "id": "base-form-baseinput--with-error",
+      "name": "With Error",
+      "title": "Base/Form/BaseInput",
+      "importPath": "./src/components/base/__stories__/BaseInput.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-form-baseinput--with-success": {
+      "type": "story",
+      "id": "base-form-baseinput--with-success",
+      "name": "With Success",
+      "title": "Base/Form/BaseInput",
+      "importPath": "./src/components/base/__stories__/BaseInput.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-form-baseinput--with-icons": {
+      "type": "story",
+      "id": "base-form-baseinput--with-icons",
+      "name": "With Icons",
+      "title": "Base/Form/BaseInput",
+      "importPath": "./src/components/base/__stories__/BaseInput.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-form-baseinput--sizes": {
+      "type": "story",
+      "id": "base-form-baseinput--sizes",
+      "name": "Sizes",
+      "title": "Base/Form/BaseInput",
+      "importPath": "./src/components/base/__stories__/BaseInput.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-form-baseinput--disabled": {
+      "type": "story",
+      "id": "base-form-baseinput--disabled",
+      "name": "Disabled",
+      "title": "Base/Form/BaseInput",
+      "importPath": "./src/components/base/__stories__/BaseInput.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-form-baseinput--interactive": {
+      "type": "story",
+      "id": "base-form-baseinput--interactive",
+      "name": "Interactive",
+      "title": "Base/Form/BaseInput",
+      "importPath": "./src/components/base/__stories__/BaseInput.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-overlay-basemodal--docs": {
+      "id": "base-overlay-basemodal--docs",
+      "title": "Base/Overlay/BaseModal",
+      "name": "Docs",
+      "importPath": "./src/components/base/__stories__/BaseModal.stories.tsx",
+      "type": "docs",
+      "tags": ["dev", "test", "autodocs"],
+      "storiesImports": []
+    },
+    "base-overlay-basemodal--default": {
+      "type": "story",
+      "id": "base-overlay-basemodal--default",
+      "name": "Default",
+      "title": "Base/Overlay/BaseModal",
+      "importPath": "./src/components/base/__stories__/BaseModal.stories.tsx",
+      "componentPath": "./src/components/base/BaseModal.tsx",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-overlay-basemodal--with-footer": {
+      "type": "story",
+      "id": "base-overlay-basemodal--with-footer",
+      "name": "With Footer",
+      "title": "Base/Overlay/BaseModal",
+      "importPath": "./src/components/base/__stories__/BaseModal.stories.tsx",
+      "componentPath": "./src/components/base/BaseModal.tsx",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-overlay-basemodal--sizes": {
+      "type": "story",
+      "id": "base-overlay-basemodal--sizes",
+      "name": "Sizes",
+      "title": "Base/Overlay/BaseModal",
+      "importPath": "./src/components/base/__stories__/BaseModal.stories.tsx",
+      "componentPath": "./src/components/base/BaseModal.tsx",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-overlay-basemodal--long-content": {
+      "type": "story",
+      "id": "base-overlay-basemodal--long-content",
+      "name": "Long Content",
+      "title": "Base/Overlay/BaseModal",
+      "importPath": "./src/components/base/__stories__/BaseModal.stories.tsx",
+      "componentPath": "./src/components/base/BaseModal.tsx",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-form-basemultiselect--docs": {
+      "id": "base-form-basemultiselect--docs",
+      "title": "Base/Form/BaseMultiSelect",
+      "name": "Docs",
+      "importPath": "./src/components/base/__stories__/BaseMultiSelect.stories.tsx",
+      "type": "docs",
+      "tags": ["dev", "test", "autodocs"],
+      "storiesImports": []
+    },
+    "base-form-basemultiselect--default": {
+      "type": "story",
+      "id": "base-form-basemultiselect--default",
+      "name": "Default",
+      "title": "Base/Form/BaseMultiSelect",
+      "importPath": "./src/components/base/__stories__/BaseMultiSelect.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-form-basemultiselect--searchable": {
+      "type": "story",
+      "id": "base-form-basemultiselect--searchable",
+      "name": "Searchable",
+      "title": "Base/Form/BaseMultiSelect",
+      "importPath": "./src/components/base/__stories__/BaseMultiSelect.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-form-basemultiselect--with-error": {
+      "type": "story",
+      "id": "base-form-basemultiselect--with-error",
+      "name": "With Error",
+      "title": "Base/Form/BaseMultiSelect",
+      "importPath": "./src/components/base/__stories__/BaseMultiSelect.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-form-basemultiselect--disabled": {
+      "type": "story",
+      "id": "base-form-basemultiselect--disabled",
+      "name": "Disabled",
+      "title": "Base/Form/BaseMultiSelect",
+      "importPath": "./src/components/base/__stories__/BaseMultiSelect.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-data-basepagination--docs": {
+      "id": "base-data-basepagination--docs",
+      "title": "Base/Data/BasePagination",
+      "name": "Docs",
+      "importPath": "./src/components/base/__stories__/BasePagination.stories.tsx",
+      "type": "docs",
+      "tags": ["dev", "test", "autodocs"],
+      "storiesImports": []
+    },
+    "base-data-basepagination--default": {
+      "type": "story",
+      "id": "base-data-basepagination--default",
+      "name": "Default",
+      "title": "Base/Data/BasePagination",
+      "importPath": "./src/components/base/__stories__/BasePagination.stories.tsx",
+      "componentPath": "./src/components/base/BasePagination.tsx",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-data-basepagination--few-pages": {
+      "type": "story",
+      "id": "base-data-basepagination--few-pages",
+      "name": "Few Pages",
+      "title": "Base/Data/BasePagination",
+      "importPath": "./src/components/base/__stories__/BasePagination.stories.tsx",
+      "componentPath": "./src/components/base/BasePagination.tsx",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-data-basepagination--many-pages": {
+      "type": "story",
+      "id": "base-data-basepagination--many-pages",
+      "name": "Many Pages",
+      "title": "Base/Data/BasePagination",
+      "importPath": "./src/components/base/__stories__/BasePagination.stories.tsx",
+      "componentPath": "./src/components/base/BasePagination.tsx",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-data-basepagination--compact": {
+      "type": "story",
+      "id": "base-data-basepagination--compact",
+      "name": "Compact",
+      "title": "Base/Data/BasePagination",
+      "importPath": "./src/components/base/__stories__/BasePagination.stories.tsx",
+      "componentPath": "./src/components/base/BasePagination.tsx",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-data-basepagination--custom-page-sizes": {
+      "type": "story",
+      "id": "base-data-basepagination--custom-page-sizes",
+      "name": "Custom Page Sizes",
+      "title": "Base/Data/BasePagination",
+      "importPath": "./src/components/base/__stories__/BasePagination.stories.tsx",
+      "componentPath": "./src/components/base/BasePagination.tsx",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-overlay-basepopover--docs": {
+      "id": "base-overlay-basepopover--docs",
+      "title": "Base/Overlay/BasePopover",
+      "name": "Docs",
+      "importPath": "./src/components/base/__stories__/BasePopover.stories.tsx",
+      "type": "docs",
+      "tags": ["dev", "test", "autodocs"],
+      "storiesImports": []
+    },
+    "base-overlay-basepopover--default": {
+      "type": "story",
+      "id": "base-overlay-basepopover--default",
+      "name": "Default",
+      "title": "Base/Overlay/BasePopover",
+      "importPath": "./src/components/base/__stories__/BasePopover.stories.tsx",
+      "componentPath": "./src/components/base/BasePopover.tsx",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-overlay-basepopover--placements": {
+      "type": "story",
+      "id": "base-overlay-basepopover--placements",
+      "name": "Placements",
+      "title": "Base/Overlay/BasePopover",
+      "importPath": "./src/components/base/__stories__/BasePopover.stories.tsx",
+      "componentPath": "./src/components/base/BasePopover.tsx",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-overlay-basepopover--custom-width": {
+      "type": "story",
+      "id": "base-overlay-basepopover--custom-width",
+      "name": "Custom Width",
+      "title": "Base/Overlay/BasePopover",
+      "importPath": "./src/components/base/__stories__/BasePopover.stories.tsx",
+      "componentPath": "./src/components/base/BasePopover.tsx",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-overlay-basepopover--rich-content": {
+      "type": "story",
+      "id": "base-overlay-basepopover--rich-content",
+      "name": "Rich Content",
+      "title": "Base/Overlay/BasePopover",
+      "importPath": "./src/components/base/__stories__/BasePopover.stories.tsx",
+      "componentPath": "./src/components/base/BasePopover.tsx",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-form-baseradiogroup--docs": {
+      "id": "base-form-baseradiogroup--docs",
+      "title": "Base/Form/BaseRadioGroup",
+      "name": "Docs",
+      "importPath": "./src/components/base/__stories__/BaseRadioGroup.stories.tsx",
+      "type": "docs",
+      "tags": ["dev", "test", "autodocs"],
+      "storiesImports": []
+    },
+    "base-form-baseradiogroup--vertical": {
+      "type": "story",
+      "id": "base-form-baseradiogroup--vertical",
+      "name": "Vertical",
+      "title": "Base/Form/BaseRadioGroup",
+      "importPath": "./src/components/base/__stories__/BaseRadioGroup.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-form-baseradiogroup--horizontal": {
+      "type": "story",
+      "id": "base-form-baseradiogroup--horizontal",
+      "name": "Horizontal",
+      "title": "Base/Form/BaseRadioGroup",
+      "importPath": "./src/components/base/__stories__/BaseRadioGroup.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-form-baseradiogroup--with-error": {
+      "type": "story",
+      "id": "base-form-baseradiogroup--with-error",
+      "name": "With Error",
+      "title": "Base/Form/BaseRadioGroup",
+      "importPath": "./src/components/base/__stories__/BaseRadioGroup.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-form-baseradiogroup--sizes": {
+      "type": "story",
+      "id": "base-form-baseradiogroup--sizes",
+      "name": "Sizes",
+      "title": "Base/Form/BaseRadioGroup",
+      "importPath": "./src/components/base/__stories__/BaseRadioGroup.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-form-baseselect--docs": {
+      "id": "base-form-baseselect--docs",
+      "title": "Base/Form/BaseSelect",
+      "name": "Docs",
+      "importPath": "./src/components/base/__stories__/BaseSelect.stories.tsx",
+      "type": "docs",
+      "tags": ["dev", "test", "autodocs"],
+      "storiesImports": []
+    },
+    "base-form-baseselect--default": {
+      "type": "story",
+      "id": "base-form-baseselect--default",
+      "name": "Default",
+      "title": "Base/Form/BaseSelect",
+      "importPath": "./src/components/base/__stories__/BaseSelect.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-form-baseselect--with-error": {
+      "type": "story",
+      "id": "base-form-baseselect--with-error",
+      "name": "With Error",
+      "title": "Base/Form/BaseSelect",
+      "importPath": "./src/components/base/__stories__/BaseSelect.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-form-baseselect--sizes": {
+      "type": "story",
+      "id": "base-form-baseselect--sizes",
+      "name": "Sizes",
+      "title": "Base/Form/BaseSelect",
+      "importPath": "./src/components/base/__stories__/BaseSelect.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-form-baseselect--interactive": {
+      "type": "story",
+      "id": "base-form-baseselect--interactive",
+      "name": "Interactive",
+      "title": "Base/Form/BaseSelect",
+      "importPath": "./src/components/base/__stories__/BaseSelect.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-feedback-basespinner--docs": {
+      "id": "base-feedback-basespinner--docs",
+      "title": "Base/Feedback/BaseSpinner",
+      "name": "Docs",
+      "importPath": "./src/components/base/__stories__/BaseSpinner.stories.tsx",
+      "type": "docs",
+      "tags": ["dev", "test", "autodocs"],
+      "storiesImports": []
+    },
+    "base-feedback-basespinner--default": {
+      "type": "story",
+      "id": "base-feedback-basespinner--default",
+      "name": "Default",
+      "title": "Base/Feedback/BaseSpinner",
+      "importPath": "./src/components/base/__stories__/BaseSpinner.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-feedback-basespinner--with-label": {
+      "type": "story",
+      "id": "base-feedback-basespinner--with-label",
+      "name": "With Label",
+      "title": "Base/Feedback/BaseSpinner",
+      "importPath": "./src/components/base/__stories__/BaseSpinner.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-feedback-basespinner--all-sizes": {
+      "type": "story",
+      "id": "base-feedback-basespinner--all-sizes",
+      "name": "All Sizes",
+      "title": "Base/Feedback/BaseSpinner",
+      "importPath": "./src/components/base/__stories__/BaseSpinner.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-feedback-basespinner--colors": {
+      "type": "story",
+      "id": "base-feedback-basespinner--colors",
+      "name": "Colors",
+      "title": "Base/Feedback/BaseSpinner",
+      "importPath": "./src/components/base/__stories__/BaseSpinner.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-feedback-basespinner--full-page-loader": {
+      "type": "story",
+      "id": "base-feedback-basespinner--full-page-loader",
+      "name": "Full Page Loader",
+      "title": "Base/Feedback/BaseSpinner",
+      "importPath": "./src/components/base/__stories__/BaseSpinner.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-form-baseswitch--docs": {
+      "id": "base-form-baseswitch--docs",
+      "title": "Base/Form/BaseSwitch",
+      "name": "Docs",
+      "importPath": "./src/components/base/__stories__/BaseSwitch.stories.tsx",
+      "type": "docs",
+      "tags": ["dev", "test", "autodocs"],
+      "storiesImports": []
+    },
+    "base-form-baseswitch--default": {
+      "type": "story",
+      "id": "base-form-baseswitch--default",
+      "name": "Default",
+      "title": "Base/Form/BaseSwitch",
+      "importPath": "./src/components/base/__stories__/BaseSwitch.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-form-baseswitch--with-description": {
+      "type": "story",
+      "id": "base-form-baseswitch--with-description",
+      "name": "With Description",
+      "title": "Base/Form/BaseSwitch",
+      "importPath": "./src/components/base/__stories__/BaseSwitch.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-form-baseswitch--sizes": {
+      "type": "story",
+      "id": "base-form-baseswitch--sizes",
+      "name": "Sizes",
+      "title": "Base/Form/BaseSwitch",
+      "importPath": "./src/components/base/__stories__/BaseSwitch.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-form-baseswitch--disabled": {
+      "type": "story",
+      "id": "base-form-baseswitch--disabled",
+      "name": "Disabled",
+      "title": "Base/Form/BaseSwitch",
+      "importPath": "./src/components/base/__stories__/BaseSwitch.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-form-baseswitch--interactive": {
+      "type": "story",
+      "id": "base-form-baseswitch--interactive",
+      "name": "Interactive",
+      "title": "Base/Form/BaseSwitch",
+      "importPath": "./src/components/base/__stories__/BaseSwitch.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-data-basetable--docs": {
+      "id": "base-data-basetable--docs",
+      "title": "Base/Data/BaseTable",
+      "name": "Docs",
+      "importPath": "./src/components/base/__stories__/BaseTable.stories.tsx",
+      "type": "docs",
+      "tags": ["dev", "test", "autodocs"],
+      "storiesImports": []
+    },
+    "base-data-basetable--default": {
+      "type": "story",
+      "id": "base-data-basetable--default",
+      "name": "Default",
+      "title": "Base/Data/BaseTable",
+      "importPath": "./src/components/base/__stories__/BaseTable.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-data-basetable--with-sort": {
+      "type": "story",
+      "id": "base-data-basetable--with-sort",
+      "name": "With Sort",
+      "title": "Base/Data/BaseTable",
+      "importPath": "./src/components/base/__stories__/BaseTable.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-data-basetable--with-selection": {
+      "type": "story",
+      "id": "base-data-basetable--with-selection",
+      "name": "With Selection",
+      "title": "Base/Data/BaseTable",
+      "importPath": "./src/components/base/__stories__/BaseTable.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-data-basetable--with-actions": {
+      "type": "story",
+      "id": "base-data-basetable--with-actions",
+      "name": "With Actions",
+      "title": "Base/Data/BaseTable",
+      "importPath": "./src/components/base/__stories__/BaseTable.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-data-basetable--striped": {
+      "type": "story",
+      "id": "base-data-basetable--striped",
+      "name": "Striped",
+      "title": "Base/Data/BaseTable",
+      "importPath": "./src/components/base/__stories__/BaseTable.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-data-basetable--compact": {
+      "type": "story",
+      "id": "base-data-basetable--compact",
+      "name": "Compact",
+      "title": "Base/Data/BaseTable",
+      "importPath": "./src/components/base/__stories__/BaseTable.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-data-basetable--empty": {
+      "type": "story",
+      "id": "base-data-basetable--empty",
+      "name": "Empty",
+      "title": "Base/Data/BaseTable",
+      "importPath": "./src/components/base/__stories__/BaseTable.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-data-basetable--loading": {
+      "type": "story",
+      "id": "base-data-basetable--loading",
+      "name": "Loading",
+      "title": "Base/Data/BaseTable",
+      "importPath": "./src/components/base/__stories__/BaseTable.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-layout-container--docs": {
+      "id": "base-layout-container--docs",
+      "title": "Base/Layout/Container",
+      "name": "Docs",
+      "importPath": "./src/components/base/__stories__/Container.stories.tsx",
+      "type": "docs",
+      "tags": ["dev", "test", "autodocs"],
+      "storiesImports": []
+    },
+    "base-layout-container--default": {
+      "type": "story",
+      "id": "base-layout-container--default",
+      "name": "Default",
+      "title": "Base/Layout/Container",
+      "importPath": "./src/components/base/__stories__/Container.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-layout-container--all-sizes": {
+      "type": "story",
+      "id": "base-layout-container--all-sizes",
+      "name": "All Sizes",
+      "title": "Base/Layout/Container",
+      "importPath": "./src/components/base/__stories__/Container.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-layout-container--no-padding": {
+      "type": "story",
+      "id": "base-layout-container--no-padding",
+      "name": "No Padding",
+      "title": "Base/Layout/Container",
+      "importPath": "./src/components/base/__stories__/Container.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-layout-flex--docs": {
+      "id": "base-layout-flex--docs",
+      "title": "Base/Layout/Flex",
+      "name": "Docs",
+      "importPath": "./src/components/base/__stories__/Flex.stories.tsx",
+      "type": "docs",
+      "tags": ["dev", "test", "autodocs"],
+      "storiesImports": []
+    },
+    "base-layout-flex--row": {
+      "type": "story",
+      "id": "base-layout-flex--row",
+      "name": "Row",
+      "title": "Base/Layout/Flex",
+      "importPath": "./src/components/base/__stories__/Flex.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-layout-flex--space-between": {
+      "type": "story",
+      "id": "base-layout-flex--space-between",
+      "name": "Space Between",
+      "title": "Base/Layout/Flex",
+      "importPath": "./src/components/base/__stories__/Flex.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-layout-flex--center-all": {
+      "type": "story",
+      "id": "base-layout-flex--center-all",
+      "name": "Center All",
+      "title": "Base/Layout/Flex",
+      "importPath": "./src/components/base/__stories__/Flex.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-layout-flex--wrapping": {
+      "type": "story",
+      "id": "base-layout-flex--wrapping",
+      "name": "Wrapping",
+      "title": "Base/Layout/Flex",
+      "importPath": "./src/components/base/__stories__/Flex.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-layout-flex--column": {
+      "type": "story",
+      "id": "base-layout-flex--column",
+      "name": "Column",
+      "title": "Base/Layout/Flex",
+      "importPath": "./src/components/base/__stories__/Flex.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-layout-grid--docs": {
+      "id": "base-layout-grid--docs",
+      "title": "Base/Layout/Grid",
+      "name": "Docs",
+      "importPath": "./src/components/base/__stories__/Grid.stories.tsx",
+      "type": "docs",
+      "tags": ["dev", "test", "autodocs"],
+      "storiesImports": []
+    },
+    "base-layout-grid--three-columns": {
+      "type": "story",
+      "id": "base-layout-grid--three-columns",
+      "name": "Three Columns",
+      "title": "Base/Layout/Grid",
+      "importPath": "./src/components/base/__stories__/Grid.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-layout-grid--responsive": {
+      "type": "story",
+      "id": "base-layout-grid--responsive",
+      "name": "Responsive",
+      "title": "Base/Layout/Grid",
+      "importPath": "./src/components/base/__stories__/Grid.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-layout-grid--two-columns": {
+      "type": "story",
+      "id": "base-layout-grid--two-columns",
+      "name": "Two Columns",
+      "title": "Base/Layout/Grid",
+      "importPath": "./src/components/base/__stories__/Grid.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-layout-grid--dashboard-layout": {
+      "type": "story",
+      "id": "base-layout-grid--dashboard-layout",
+      "name": "Dashboard Layout",
+      "title": "Base/Layout/Grid",
+      "importPath": "./src/components/base/__stories__/Grid.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-layout-stack--docs": {
+      "id": "base-layout-stack--docs",
+      "title": "Base/Layout/Stack",
+      "name": "Docs",
+      "importPath": "./src/components/base/__stories__/Stack.stories.tsx",
+      "type": "docs",
+      "tags": ["dev", "test", "autodocs"],
+      "storiesImports": []
+    },
+    "base-layout-stack--default": {
+      "type": "story",
+      "id": "base-layout-stack--default",
+      "name": "Default",
+      "title": "Base/Layout/Stack",
+      "importPath": "./src/components/base/__stories__/Stack.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-layout-stack--with-alignment": {
+      "type": "story",
+      "id": "base-layout-stack--with-alignment",
+      "name": "With Alignment",
+      "title": "Base/Layout/Stack",
+      "importPath": "./src/components/base/__stories__/Stack.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-layout-stack--gaps": {
+      "type": "story",
+      "id": "base-layout-stack--gaps",
+      "name": "Gaps",
+      "title": "Base/Layout/Stack",
+      "importPath": "./src/components/base/__stories__/Stack.stories.tsx",
+      "componentPath": "./src/components/base",
+      "tags": ["dev", "test", "autodocs"]
+    },
+    "base-feedback-toast--docs": {
+      "id": "base-feedback-toast--docs",
+      "title": "Base/Feedback/Toast",
+      "name": "Docs",
+      "importPath": "./src/components/base/__stories__/Toast.stories.tsx",
+      "type": "docs",
+      "tags": ["dev", "test", "autodocs"],
+      "storiesImports": []
+    },
+    "base-feedback-toast--all-variants": {
+      "type": "story",
+      "id": "base-feedback-toast--all-variants",
+      "name": "All Variants",
+      "title": "Base/Feedback/Toast",
+      "importPath": "./src/components/base/__stories__/Toast.stories.tsx",
+      "tags": ["dev", "test", "autodocs"]
+    }
+  }
+}

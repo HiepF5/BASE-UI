@@ -1,0 +1,154 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Documentation/Getting Started" />
+
+# Base UI – Component Library
+
+A production-grade React component library built with **TypeScript**, **Tailwind CSS**, **CVA** (class-variance-authority), and **CSS custom properties** for theming.
+
+---
+
+## Architecture Principles
+
+| Principle | Description |
+|-----------|-------------|
+| **Pure Presentational** | Components contain zero business logic — they only render UI from props |
+| **CVA-driven Variants** | All visual variations (size, variant, color) defined via `cva()` |
+| **Themed via CSS Variables** | Colors reference design tokens (`--color-primary`, `--color-bg`, etc.) |
+| **Headless Patterns** | Complex components (Table, Dropdown, Popover) expose render-props for full control |
+| **Accessible by Default** | ARIA attributes, keyboard navigation, focus traps built in |
+
+---
+
+## Design Tokens
+
+The system uses CSS custom properties defined in `:root` (see `index.css`):
+
+```css
+:root {
+  --color-primary: ...;
+  --color-bg: ...;
+  --color-bg-secondary: ...;
+  --color-text: ...;
+  --color-text-secondary: ...;
+  --color-border: ...;
+  /* ... etc */
+}
+```
+
+Tailwind classes map to these tokens: `bg-bg`, `text-text-secondary`, `border-border`, `bg-primary-500`, etc.
+
+---
+
+## Component Categories
+
+### Form Controls
+| Component | Description |
+|-----------|-------------|
+| `BaseInput` | Text input with label, hint, icons, error/success variants, 3 sizes |
+| `BaseSelect` | Native select dropdown with same variant/size system |
+| `BaseMultiSelect` | Tag-based multi-select with search, removable chips |
+| `BaseCheckbox` | Checkbox with label, description, indeterminate, 3 sizes |
+| `BaseRadioGroup` | Radio button group, horizontal/vertical, with descriptions |
+| `BaseDatePicker` | Date / datetime / time picker, native HTML5 |
+| `BaseSwitch` | Toggle switch with label & description |
+| `BaseForm` | Dynamic form generator from `ColumnConfig[]` (React Hook Form) |
+
+### Layout
+| Component | Description |
+|-----------|-------------|
+| `Stack` | Vertical flex container with configurable gap & alignment |
+| `Flex` | Horizontal flex row with gap, wrap, direction |
+| `Grid` | CSS Grid with responsive column counts |
+| `Container` | Max-width centered wrapper (sm / md / lg / xl / full) |
+
+### Feedback
+| Component | Description |
+|-----------|-------------|
+| `BaseSpinner` | Loading spinner with size & color variants |
+| `BaseAlert` | Inline alert banner (info / success / warning / danger / neutral) |
+| `BaseToast` / `ToastProvider` | Toast notification system with context API |
+| `BaseButton` | Button with variants, sizes, loading state, icons |
+
+### Data Display
+| Component | Description |
+|-----------|-------------|
+| `BaseTable` | Data table with sort, selection, pagination, custom cell renderers, striped/compact modes |
+| `BasePagination` | Standalone pagination with page numbers, size changer, total info |
+| `BaseFilterBar` | Search bar + advanced filter builder from column config |
+
+### Overlays
+| Component | Description |
+|-----------|-------------|
+| `BaseModal` | Centered modal dialog with backdrop, ESC close, focus trap, footer slot |
+| `BaseDrawer` | Slide-in panel (left/right/top/bottom) with CVA placement × size variants |
+| `BasePopover` | Floating anchored content, 8 placements, click-outside/ESC close |
+| `BaseDropdown` | Action menu with keyboard navigation, icons, dividers, danger items |
+
+---
+
+## Usage Pattern
+
+```tsx
+import { BaseButton, BaseInput, BaseModal } from '@/components/base';
+
+function MyForm() {
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <BaseInput label="Name" size="md" variant="default" />
+      <BaseButton variant="primary" size="md" onClick={() => setOpen(true)}>
+        Submit
+      </BaseButton>
+      <BaseModal open={open} onClose={() => setOpen(false)} title="Confirm">
+        <p>Are you sure?</p>
+      </BaseModal>
+    </>
+  );
+}
+```
+
+---
+
+## Utility: `cn()`
+
+All components use the `cn()` helper (clsx + tailwind-merge) for conditional class merging:
+
+```tsx
+import { cn } from '@/core/utils';
+
+cn('px-4 py-2', isActive && 'bg-primary-500', className);
+```
+
+---
+
+## Folder Structure
+
+```
+src/components/base/
+├── __stories__/        # Storybook stories (one per component)
+├── BaseButton.tsx
+├── BaseInput.tsx
+├── BaseSelect.tsx
+├── BaseMultiSelect.tsx
+├── BaseCheckbox.tsx
+├── BaseRadio.tsx        # BaseRadioGroup
+├── BaseDatePicker.tsx
+├── BaseSwitch.tsx
+├── BaseForm.tsx
+├── BaseTable.tsx
+├── BasePagination.tsx
+├── BaseFilterBar.tsx
+├── BaseModal.tsx
+├── BaseDrawer.tsx
+├── BasePopover.tsx
+├── BaseDropdown.tsx
+├── BaseSpinner.tsx
+├── BaseAlert.tsx
+├── BaseToast.tsx
+├── Stack.tsx
+├── Flex.tsx
+├── Grid.tsx
+├── Container.tsx
+└── index.ts             # Barrel exports
+```

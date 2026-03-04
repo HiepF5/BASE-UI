@@ -28,4 +28,9 @@ export {
   BaseAlert,
   ToastProvider,
   useToast,
+  // Data & Overlay (Week 3)
+  BasePagination,
+  BaseDrawer,
+  BasePopover,
+  BaseDropdown,
 } from './base';

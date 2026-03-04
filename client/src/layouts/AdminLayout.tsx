@@ -23,6 +23,7 @@ export function AdminLayout() {
     { to: '/ai', label: 'AI Builder', icon: '🤖' },
     { to: '/showcase/tokens', label: 'Tokens', icon: '🎨' },
     { to: '/showcase/components', label: 'Components', icon: '🧩' },
+    { to: '/showcase/data-overlay', label: 'Data & Overlay', icon: '📊' },
   ];
 
   return (
