@@ -17,6 +17,7 @@ query-engine/
 ## 3. FilterParser
 
 ### Input: FilterGroup AST
+
 ```json
 {
   "logic": "AND",
@@ -28,12 +29,14 @@ query-engine/
 ```
 
 ### Output: SQL WHERE clause + params
+
 ```sql
 WHERE ("status" = $1 AND "age" >= $2)
 -- params: ['active', 18]
 ```
 
 ### Recursive Parsing
+
 ```typescript
 function parseGroup(group: FilterGroup, startIndex: number): ParseResult {
   const parts: string[] = [];
@@ -66,11 +69,13 @@ function parseGroup(group: FilterGroup, startIndex: number): ParseResult {
 ### Input: `sort=name:asc,createdAt:desc`
 
 ### Output:
+
 ```sql
 ORDER BY "name" ASC, "created_at" DESC
 ```
 
 ### Validation
+
 - Column name MUST match `^[a-zA-Z_][a-zA-Z0-9_]*$`
 - Direction MUST be 'asc' or 'desc'
 - Reject tất cả invalid input
@@ -78,6 +83,7 @@ ORDER BY "name" ASC, "created_at" DESC
 ## 5. Search Parsing
 
 ### Strategy: ILIKE across text columns
+
 ```sql
 WHERE ("name" ILIKE $1 OR "email" ILIKE $1 OR "description" ILIKE $1)
 -- params: ['%keyword%']
@@ -92,11 +98,13 @@ WHERE ("name" ILIKE $1 OR "email" ILIKE $1 OR "description" ILIKE $1)
 ### Input: `include=author,comments.user`
 
 ### Strategy:
+
 1. Parse include paths
 2. Look up relation metadata từ schema
 3. Build JOIN hoặc separate query (strategy configurable)
 
 ### Separate Query Strategy (Default)
+
 ```sql
 -- Main query
 SELECT * FROM posts WHERE ...
@@ -110,6 +118,7 @@ SELECT * FROM users WHERE id IN ($1, $2, ...)
 ```
 
 ### JOIN Strategy
+
 ```sql
 SELECT p.*, u.username AS "author.username"
 FROM posts p
@@ -120,17 +129,20 @@ WHERE ...
 ## 7. Pagination
 
 ### Offset-based (default)
+
 ```sql
 SELECT * FROM table WHERE ... ORDER BY ... LIMIT $1 OFFSET $2
 -- LIMIT = limit, OFFSET = (page - 1) * limit
 ```
 
 ### Count query
+
 ```sql
 SELECT COUNT(*) FROM table WHERE ...
 ```
 
 ### Response format
+
 ```json
 {
   "data": [...],
@@ -142,18 +154,18 @@ SELECT COUNT(*) FROM table WHERE ...
 
 ## 8. SQL Dialect Differences
 
-| Feature | PostgreSQL | MySQL | Oracle |
-|---------|-----------|-------|--------|
-| Case-insensitive LIKE | `ILIKE` | `LIKE` (default CI) | `UPPER() LIKE UPPER()` |
-| Parameter placeholder | `$1, $2` | `?, ?` | `:1, :2` |
-| LIMIT/OFFSET | `LIMIT n OFFSET m` | `LIMIT m, n` | `OFFSET m ROWS FETCH NEXT n ROWS ONLY` |
-| Boolean | `true/false` | `1/0` | `1/0` |
-| JSON access | `->`, `->>` | `->`, `->>` | `JSON_VALUE()` |
-| String concat | `\|\|` | `CONCAT()` | `\|\|` |
+| Feature               | PostgreSQL         | MySQL               | Oracle                                 |
+| --------------------- | ------------------ | ------------------- | -------------------------------------- |
+| Case-insensitive LIKE | `ILIKE`            | `LIKE` (default CI) | `UPPER() LIKE UPPER()`                 |
+| Parameter placeholder | `$1, $2`           | `?, ?`              | `:1, :2`                               |
+| LIMIT/OFFSET          | `LIMIT n OFFSET m` | `LIMIT m, n`        | `OFFSET m ROWS FETCH NEXT n ROWS ONLY` |
+| Boolean               | `true/false`       | `1/0`               | `1/0`                                  |
+| JSON access           | `->`, `->>`        | `->`, `->>`         | `JSON_VALUE()`                         |
+| String concat         | `\|\|`             | `CONCAT()`          | `\|\|`                                 |
 
 ## 9. Performance Rules
 
-- KHÔNG SELECT * trên production — dùng projection khi có select param
+- KHÔNG SELECT \* trên production — dùng projection khi có select param
 - Thêm INDEX cho columns thường xuyên filter/sort
 - Giới hạn max `limit = 100` (configurable)
 - Cache schema metadata (5 phút)

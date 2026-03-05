@@ -1,12 +1,3 @@
-Rất chuẩn 🔥
-Giờ ta đi sâu vào **Build Base UI chuẩn metadata-driven**, để:
-
-* Không phải viết lại UI cho mỗi table
-* Mọi CRUD dùng chung 1 engine
-* Có thể scale thành low-code
-
----
-
 # 🎯 MỤC TIÊU BASE UI
 
 Bạn sẽ có:
@@ -17,12 +8,12 @@ Bạn sẽ có:
 
 Và toàn bộ:
 
-* Table
-* Form
-* Filter
-* Modal
-* Permission
-* Pagination
+- Table
+- Form
+- Filter
+- Modal
+- Permission
+- Pagination
 
 → tự render.
 
@@ -71,27 +62,27 @@ src/
 
 ```ts
 export interface EntityConfig {
-  name: string
-  label: string
-  primaryKey: string
+  name: string;
+  label: string;
+  primaryKey: string;
   permissions: {
-    create: boolean
-    update: boolean
-    delete: boolean
-  }
-  columns: ColumnConfig[]
+    create: boolean;
+    update: boolean;
+    delete: boolean;
+  };
+  columns: ColumnConfig[];
 }
 
 export interface ColumnConfig {
-  key: string
-  label: string
-  type: 'text' | 'number' | 'date' | 'select' | 'boolean'
-  required?: boolean
-  readonly?: boolean
-  hiddenInTable?: boolean
-  searchable?: boolean
-  sortable?: boolean
-  options?: { label: string; value: any }[]
+  key: string;
+  label: string;
+  type: 'text' | 'number' | 'date' | 'select' | 'boolean';
+  required?: boolean;
+  readonly?: boolean;
+  hiddenInTable?: boolean;
+  searchable?: boolean;
+  sortable?: boolean;
+  options?: { label: string; value: any }[];
 }
 ```
 
@@ -99,24 +90,28 @@ Ví dụ:
 
 ```ts
 export const userConfig: EntityConfig = {
-  name: "users",
-  label: "Users",
-  primaryKey: "id",
+  name: 'users',
+  label: 'Users',
+  primaryKey: 'id',
   permissions: {
     create: true,
     update: true,
-    delete: false
+    delete: false,
   },
   columns: [
-    { key: "id", label: "ID", type: "number", readonly: true },
-    { key: "email", label: "Email", type: "text", required: true, searchable: true },
-    { key: "role", label: "Role", type: "select", options: [
-        { label: "Admin", value: "admin" },
-        { label: "User", value: "user" }
-      ]
-    }
-  ]
-}
+    { key: 'id', label: 'ID', type: 'number', readonly: true },
+    { key: 'email', label: 'Email', type: 'text', required: true, searchable: true },
+    {
+      key: 'role',
+      label: 'Role',
+      type: 'select',
+      options: [
+        { label: 'Admin', value: 'admin' },
+        { label: 'User', value: 'user' },
+      ],
+    },
+  ],
+};
 ```
 
 ---
@@ -125,7 +120,7 @@ export const userConfig: EntityConfig = {
 
 ```tsx
 function DynamicCrudPage({ config }: { config: EntityConfig }) {
-  const { data, loading, create, update, remove } = useCrud(config.name)
+  const { data, loading, create, update, remove } = useCrud(config.name);
 
   return (
     <>
@@ -137,11 +132,9 @@ function DynamicCrudPage({ config }: { config: EntityConfig }) {
         onDelete={remove}
       />
 
-      {config.permissions.create && (
-        <DynamicForm config={config} onSubmit={create} />
-      )}
+      {config.permissions.create && <DynamicForm config={config} onSubmit={create} />}
     </>
-  )
+  );
 }
 ```
 
@@ -153,22 +146,20 @@ BaseTable không biết entity gì.
 
 ```tsx
 interface BaseTableProps {
-  columns: ColumnConfig[]
-  data: any[]
-  loading?: boolean
-  onEdit?: (row: any) => void
-  onDelete?: (row: any) => void
+  columns: ColumnConfig[];
+  data: any[];
+  loading?: boolean;
+  onEdit?: (row: any) => void;
+  onDelete?: (row: any) => void;
 }
 ```
 
 Dynamic render:
 
 ```tsx
-{columns
-  .filter(col => !col.hiddenInTable)
-  .map(col => (
-     <td>{row[col.key]}</td>
-))}
+{
+  columns.filter((col) => !col.hiddenInTable).map((col) => <td>{row[col.key]}</td>);
+}
 ```
 
 ---
@@ -177,24 +168,24 @@ Dynamic render:
 
 ```tsx
 function renderInput(column: ColumnConfig, value, onChange) {
-  switch(column.type) {
+  switch (column.type) {
     case 'text':
-      return <input value={value} onChange={onChange} />
+      return <input value={value} onChange={onChange} />;
 
     case 'number':
-      return <input type="number" value={value} onChange={onChange} />
+      return <input type="number" value={value} onChange={onChange} />;
 
     case 'select':
       return (
         <select value={value} onChange={onChange}>
-          {column.options?.map(opt => (
+          {column.options?.map((opt) => (
             <option value={opt.value}>{opt.label}</option>
           ))}
         </select>
-      )
+      );
 
     case 'boolean':
-      return <input type="checkbox" checked={value} onChange={onChange} />
+      return <input type="checkbox" checked={value} onChange={onChange} />;
   }
 }
 ```
@@ -207,22 +198,22 @@ function renderInput(column: ColumnConfig, value, onChange) {
 
 ```ts
 export function useCrud(entity: string) {
-  const [data, setData] = useState([])
-  const [loading, setLoading] = useState(false)
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   async function fetchData() {
-    setLoading(true)
-    const res = await api.get(`/crud/default/${entity}`)
-    setData(res.data)
-    setLoading(false)
+    setLoading(true);
+    const res = await api.get(`/crud/default/${entity}`);
+    setData(res.data);
+    setLoading(false);
   }
 
   async function create(payload) {
-    await api.post(`/crud/default/${entity}`, payload)
-    fetchData()
+    await api.post(`/crud/default/${entity}`, payload);
+    fetchData();
   }
 
-  return { data, loading, create, fetchData }
+  return { data, loading, create, fetchData };
 }
 ```
 
@@ -233,11 +224,7 @@ export function useCrud(entity: string) {
 Modal dùng chung:
 
 ```tsx
-<BaseModal
-  open={isOpen}
-  title="Edit User"
-  onClose={() => setOpen(false)}
->
+<BaseModal open={isOpen} title="Edit User" onClose={() => setOpen(false)}>
   <DynamicForm />
 </BaseModal>
 ```
@@ -250,9 +237,7 @@ Table nhận:
 
 ```ts
 {
-  page,
-  limit,
-  total
+  (page, limit, total);
 }
 ```
 
@@ -265,7 +250,7 @@ BaseTable render pagination chung.
 Không render button nếu:
 
 ```ts
-!config.permissions.delete
+!config.permissions.delete;
 ```
 
 ---
@@ -303,7 +288,7 @@ Tạo component:
 Dựa vào:
 
 ```ts
-searchable: true
+searchable: true;
 ```
 
 ---
@@ -319,41 +304,3 @@ BaseTable + BaseForm
     ↓
 BaseInputFactory
 ```
-
----
-
-# 🧠 Bạn đang xây dựng cái gì?
-
-Không phải admin template.
-
-Mà là:
-
-> UI Rendering Engine based on Metadata
-
-Giống cách:
-
-* Retool
-* Supabase Studio
-* Strapi Admin
-
-Hoạt động.
-
----
-
-# 📈 Nếu build tốt, bạn có thể thêm:
-
-* Drag-drop form builder
-* UI theme system
-* Plugin system
-* AI UI generator
-
----
-
-# 🎯 Tiếp theo nên đào sâu vào:
-
-1️⃣ Relation + Nested CRUD
-2️⃣ Filter + Query Builder UI
-3️⃣ State Management chuẩn production
-4️⃣ Design System (component library chuẩn hóa)
-
-Chọn 1 mình đi sâu đến mức enterprise cho bạn 🔥

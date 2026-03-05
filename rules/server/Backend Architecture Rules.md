@@ -28,28 +28,33 @@ server/
 ## 2. Nguyên tắc thiết kế
 
 ### 2.1 Clean Architecture
+
 - `core/` KHÔNG import từ `modules/`
 - Mỗi module PHẢI self-contained: `module.ts`, `controller.ts`, `service.ts`, DTOs
 - Cross-module communication qua **DI** (inject service), KHÔNG import trực tiếp
 
 ### 2.2 Multi-DB Adapter Pattern
+
 - Mọi database query đi qua `DatabaseAdapter` interface
 - Adapter factory resolve adapter từ connection config
 - KHÔNG viết raw SQL trực tiếp trong service — dùng adapter method
 - Thêm DB mới = thêm 1 adapter class, register vào factory
 
 ### 2.3 Generic CRUD
+
 - `CrudService` xử lý **mọi** entity/table qua metadata
 - Nhận `tableName` từ URL param, KHÔNG tạo service riêng per entity
 - Whitelist validation: chỉ cho phép table names có trong danh sách
 - Pagination, filter, sort, search, include — tất cả pass-through qua `QueryOptions`
 
 ### 2.4 Guards & Middleware
+
 - `JwtAuthGuard` → global guard (trừ public routes)
 - `RolesGuard` + `@Roles()` → RBAC per endpoint
 - `HttpExceptionFilter` → normalize error response format
 
 ### 2.5 AI Module
+
 - **Skill pattern**: Mỗi skill implement `AiSkill` interface với `canHandle()` + `execute()`
 - **Tool pattern**: Mỗi tool là injectable class, cung cấp file/git/exec/schema/test operations
 - **Orchestrator**: Nhận prompt → chọn skill phù hợp qua `canHandle()` → delegate
@@ -57,18 +62,20 @@ server/
 ## 3. Convention
 
 ### Naming
-| Item | Convention | Example |
-|------|-----------|---------|
-| Module | `PascalCase` + `.module.ts` | `auth.module.ts` |
-| Controller | `PascalCase` + `.controller.ts` | `crud.controller.ts` |
-| Service | `PascalCase` + `.service.ts` | `crud.service.ts` |
-| Guard | `PascalCase` + `.guard.ts` | `jwt-auth.guard.ts` |
-| Decorator | `camelCase` + `.decorator.ts` | `roles.decorator.ts` |
-| DTO | `PascalCase` + `.dto.ts` | `create-user.dto.ts` |
-| Skill | `kebab-case` + `.skill.ts` | `nest-codegen.skill.ts` |
-| Tool | `kebab-case` + `.tool.ts` | `file.tool.ts` |
+
+| Item       | Convention                      | Example                 |
+| ---------- | ------------------------------- | ----------------------- |
+| Module     | `PascalCase` + `.module.ts`     | `auth.module.ts`        |
+| Controller | `PascalCase` + `.controller.ts` | `crud.controller.ts`    |
+| Service    | `PascalCase` + `.service.ts`    | `crud.service.ts`       |
+| Guard      | `PascalCase` + `.guard.ts`      | `jwt-auth.guard.ts`     |
+| Decorator  | `camelCase` + `.decorator.ts`   | `roles.decorator.ts`    |
+| DTO        | `PascalCase` + `.dto.ts`        | `create-user.dto.ts`    |
+| Skill      | `kebab-case` + `.skill.ts`      | `nest-codegen.skill.ts` |
+| Tool       | `kebab-case` + `.tool.ts`       | `file.tool.ts`          |
 
 ### File structure mỗi module
+
 ```
 module-name/
 ├── module-name.module.ts       # NestJS module registration
@@ -81,6 +88,7 @@ module-name/
 ```
 
 ### API Response format
+
 ```json
 {
   "data": [],
@@ -91,6 +99,7 @@ module-name/
 ```
 
 Error:
+
 ```json
 {
   "statusCode": 400,

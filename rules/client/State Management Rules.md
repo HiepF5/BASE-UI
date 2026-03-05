@@ -1,20 +1,3 @@
-Rất chuẩn 🔥
-Khi bạn build:
-
-* Dynamic CRUD
-* Relation + Nested CRUD
-* Query Builder
-* Multi DB
-
-👉 Nếu **state management không chuẩn**, project sẽ rất nhanh “toang”.
-
-Giờ mình thiết kế cho bạn một **State Management chuẩn production** cho:
-
-* ⚙ NestJS backend
-* ⚛ Vite + React frontend
-* Dynamic metadata system
-* Query builder + relation
-
 ---
 
 # I. Triết lý state chuẩn production
@@ -57,15 +40,15 @@ npm install @tanstack/react-query
 ## Setup
 
 ```tsx
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient();
 
 root.render(
   <QueryClientProvider client={queryClient}>
     <App />
-  </QueryClientProvider>
-)
+  </QueryClientProvider>,
+);
 ```
 
 ---
@@ -75,23 +58,23 @@ root.render(
 ```tsx
 const useTableData = (module, filter, pagination) => {
   return useQuery({
-    queryKey: ["table", module, filter, pagination],
+    queryKey: ['table', module, filter, pagination],
     queryFn: () =>
       api.post(`/data/${module}/search`, {
         filter,
-        pagination
+        pagination,
       }),
-    keepPreviousData: true
-  })
-}
+    keepPreviousData: true,
+  });
+};
 ```
 
 Lợi ích:
 
-* Cache
-* Auto refetch
-* Background update
-* Loading state chuẩn
+- Cache
+- Auto refetch
+- Background update
+- Loading state chuẩn
 
 ---
 
@@ -106,19 +89,19 @@ npm install zustand
 ## Ví dụ: Modal Store
 
 ```tsx
-import { create } from "zustand"
+import { create } from 'zustand';
 
 export const useUIStore = create((set) => ({
   modals: {},
   openModal: (key) =>
     set((state) => ({
-      modals: { ...state.modals, [key]: true }
+      modals: { ...state.modals, [key]: true },
     })),
   closeModal: (key) =>
     set((state) => ({
-      modals: { ...state.modals, [key]: false }
-    }))
-}))
+      modals: { ...state.modals, [key]: false },
+    })),
+}));
 ```
 
 ---
@@ -137,8 +120,8 @@ npm install react-hook-form
 
 ```tsx
 const { control, handleSubmit } = useForm({
-  defaultValues: initialData
-})
+  defaultValues: initialData,
+});
 ```
 
 Relation nested:
@@ -146,8 +129,8 @@ Relation nested:
 ```tsx
 const { fields, append, remove } = useFieldArray({
   control,
-  name: "items"
-})
+  name: 'items',
+});
 ```
 
 👉 Phù hợp hoàn hảo với Nested CRUD.
@@ -161,8 +144,8 @@ export const useAppStore = create((set) => ({
   user: null,
   metadata: {},
   setUser: (user) => set({ user }),
-  setMetadata: (metadata) => set({ metadata })
-}))
+  setMetadata: (metadata) => set({ metadata }),
+}));
 ```
 
 ---
@@ -202,9 +185,9 @@ Ví dụ:
 const mutation = useMutation({
   mutationFn: updateOrder,
   onSuccess: () => {
-    queryClient.invalidateQueries(["table", "order"])
-  }
-})
+    queryClient.invalidateQueries(['table', 'order']);
+  },
+});
 ```
 
 ---
@@ -213,17 +196,17 @@ const mutation = useMutation({
 
 Query Builder nên:
 
-* Lưu local state trong component
-* Sync lên URL
+- Lưu local state trong component
+- Sync lên URL
 
 Ví dụ:
 
 ```tsx
 useEffect(() => {
-  const params = new URLSearchParams()
-  params.set("filter", JSON.stringify(filter))
-  navigate(`?${params.toString()}`)
-}, [filter])
+  const params = new URLSearchParams();
+  params.set('filter', JSON.stringify(filter));
+  navigate(`?${params.toString()}`);
+}, [filter]);
 ```
 
 ---
@@ -241,11 +224,11 @@ useEffect(() => {
 
 Bạn có thể thêm:
 
-* Optimistic update
-* Websocket sync
-* Multi-tab sync
-* Persist store (localStorage)
-* Offline mode
+- Optimistic update
+- Websocket sync
+- Multi-tab sync
+- Persist store (localStorage)
+- Offline mode
 
 ---
 
@@ -257,15 +240,3 @@ Zustand     → UI + Global
 RHF         → Form
 QueryBuilder → local + URL
 ```
-
-👉 Đây là architecture đang dùng ở các hệ thống admin lớn.
-
----
-
-Nếu bạn muốn, tôi có thể:
-
-1. Thiết kế full production architecture cho project của bạn
-2. Viết cho bạn skeleton folder chuẩn
-3. Hoặc build cho bạn 1 bản base admin core
-
-Bạn muốn đi theo hướng nào tiếp theo? 🚀

@@ -57,23 +57,27 @@ export class HttpExceptionFilter implements ExceptionFilter {
 
 ```typescript
 // Global ValidationPipe
-app.useGlobalPipes(new ValidationPipe({
-  whitelist: true,
-  transform: true,
-  forbidNonWhitelisted: true,
-  exceptionFactory: (errors) => new BadRequestException({
-    message: 'Validation failed',
-    errors: errors.map(e => ({
-      field: e.property,
-      message: Object.values(e.constraints ?? {}).join(', '),
-    })),
+app.useGlobalPipes(
+  new ValidationPipe({
+    whitelist: true,
+    transform: true,
+    forbidNonWhitelisted: true,
+    exceptionFactory: (errors) =>
+      new BadRequestException({
+        message: 'Validation failed',
+        errors: errors.map((e) => ({
+          field: e.property,
+          message: Object.values(e.constraints ?? {}).join(', '),
+        })),
+      }),
   }),
-}));
+);
 ```
 
 ## 5. Service-level Error Handling
 
 ### Pattern: Throw specific HttpException
+
 ```typescript
 // ✅ GOOD — rõ ràng, đúng status code
 async findOne(table: string, id: string) {
@@ -98,6 +102,7 @@ async create(table: string, data: any) {
 ```
 
 ### Anti-patterns
+
 ```typescript
 // ❌ BAD — catch-all return null
 async findOne(table: string, id: string) {
@@ -118,19 +123,20 @@ async create(table: string, data: any) {
 
 ## 6. Database-specific Error Codes
 
-| DB | Error | Meaning | HTTP Code |
-|----|-------|---------|-----------|
-| PostgreSQL | `23505` | Unique violation | 409 Conflict |
+| DB         | Error   | Meaning               | HTTP Code       |
+| ---------- | ------- | --------------------- | --------------- |
+| PostgreSQL | `23505` | Unique violation      | 409 Conflict    |
 | PostgreSQL | `23503` | Foreign key violation | 400 Bad Request |
-| PostgreSQL | `23502` | Not null violation | 400 Bad Request |
-| PostgreSQL | `42P01` | Table not found | 404 Not Found |
-| MySQL | `1062` | Duplicate entry | 409 Conflict |
-| MySQL | `1452` | FK constraint fail | 400 Bad Request |
-| MySQL | `1146` | Table doesn't exist | 404 Not Found |
+| PostgreSQL | `23502` | Not null violation    | 400 Bad Request |
+| PostgreSQL | `42P01` | Table not found       | 404 Not Found   |
+| MySQL      | `1062`  | Duplicate entry       | 409 Conflict    |
+| MySQL      | `1452`  | FK constraint fail    | 400 Bad Request |
+| MySQL      | `1146`  | Table doesn't exist   | 404 Not Found   |
 
 ## 7. Client-side Error Handling
 
 ### ApiClient interceptor
+
 ```typescript
 // Normalize error for frontend consumption
 private normalizeError(err: any) {
@@ -146,6 +152,7 @@ private normalizeError(err: any) {
 ```
 
 ### Toast display
+
 ```typescript
 // useCrud hook
 onError: (err: any) => toast.error(err.message ?? 'Lỗi không xác định'),
@@ -159,6 +166,7 @@ onError: (err: any) => toast.error(err.message ?? 'Lỗi không xác định'),
 - **Error**: 5xx errors, unhandled exceptions
 
 ### Audit Log
+
 ```typescript
 // AuditInterceptor — log mọi mutation operation
 @Injectable()
