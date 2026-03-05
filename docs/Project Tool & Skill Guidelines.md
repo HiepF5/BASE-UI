@@ -155,4 +155,3 @@ Tập tài liệu này tổng hợp phong cách của **Claude-like AI**, **Reac
 - **DevOps skills**:
   - Dùng: `FileTool` (Dockerfile, CI).
   - Tuyệt đối không chạy lệnh phá hủy môi trường qua `ExecTool` trừ khi confirm.
-

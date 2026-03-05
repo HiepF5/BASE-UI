@@ -7,7 +7,6 @@ import { SchemaModule } from './modules/schema/schema.module';
 import { CrudModule } from './modules/crud/crud.module';
 import { AuditModule } from './modules/audit/audit.module';
 import { ConnectionsModule } from './modules/connections/connections.module';
-import { AiModule } from './modules/ai/ai.module';
 
 @Module({
   imports: [
@@ -19,7 +18,6 @@ import { AiModule } from './modules/ai/ai.module';
     CrudModule,
     AuditModule,
     ConnectionsModule,
-    AiModule,
   ],
 })
 export class AppModule {}
