@@ -1,10 +1,27 @@
-export { DynamicCrudPage } from './DynamicCrudPage';
-export type { DynamicCrudPageProps } from './DynamicCrudPage';
-export { DynamicListView } from './DynamicListView';
-export type { DynamicListViewProps } from './DynamicListView';
-export { DynamicCreateModal } from './DynamicCreateModal';
-export type { DynamicCreateModalProps } from './DynamicCreateModal';
-export { DynamicEditModal } from './DynamicEditModal';
-export type { DynamicEditModalProps } from './DynamicEditModal';
-export { DeleteConfirmDialog } from './DeleteConfirmDialog';
-export type { DeleteConfirmDialogProps } from './DeleteConfirmDialog';
+// ============================================================
+// dynamic-crud module
+// Metadata-driven CRUD operations for any entity
+// ============================================================
+
+// ─── Pages ────────────────────────────────────────────────
+export { DynamicCrudPage } from './pages';
+
+// ─── Components ───────────────────────────────────────────
+export {
+  DynamicListView,
+  DynamicCreateModal,
+  DynamicEditModal,
+  DeleteConfirmDialog,
+} from './components';
+
+// ─── Hooks ────────────────────────────────────────────────
+export { useDynamicCrud } from './hooks/useDynamicCrud';
+
+// ─── Types ────────────────────────────────────────────────
+export type {
+  DynamicListViewProps,
+  DynamicCreateModalProps,
+  DynamicEditModalProps,
+  DeleteConfirmDialogProps,
+  DynamicCrudPageProps,
+} from './types/dynamic-crud.types';

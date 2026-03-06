@@ -1,0 +1,1 @@
+export { DynamicCrudPage } from './DynamicCrudPage';

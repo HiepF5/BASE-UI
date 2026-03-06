@@ -115,3 +115,47 @@ frontend/src/
    ```
 4. Thêm nav item trong `AdminLayout.tsx`
 5. (Optional) Thêm entity config trong `entities.config.ts`
+
+## 6. Nguyên tắc Responsive
+
+Hệ thống UI phải hỗ trợ hiển thị tốt trên các kích thước màn hình khác nhau.
+
+### 6.1 Mobile
+
+- Áp dụng cho màn hình **≤ 768px**
+- Layout **1 cột**
+- Menu chuyển thành **Drawer / Bottom Navigation**
+- Ưu tiên **touch-friendly component**
+
+### 6.2 Tablet
+
+- Áp dụng cho màn hình **769px – 1024px**
+- Layout **2 cột**
+- Sidebar có thể **collapse**
+- Giữ trải nghiệm gần giống desktop nhưng tối ưu khoảng cách
+
+### 6.3 Laptop / Desktop
+
+- Áp dụng cho màn hình **≥ 1025px**
+- Layout **multi-column**
+- Hiển thị đầy đủ **sidebar + content + panel**
+- Tối ưu cho **productivity workflow**
+
+### 6.4 Breakpoints chuẩn
+
+| Device           | Width          |
+| ---------------- | -------------- |
+| Mobile           | ≤ 768px        |
+| Tablet           | 769px – 1024px |
+| Laptop / Desktop | ≥ 1025px       |
+
+---
+
+Nếu bạn đang **build Base UI platform**, tôi khuyên nên thêm **1 rule quan trọng mà nhiều team thiếu**:
+
+### 6.5 Responsive Rule
+
+- **Mobile-first design**
+- Không hardcode width
+- Dùng **flex / grid**
+- Component phải **responsive independent**

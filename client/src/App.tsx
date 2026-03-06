@@ -1,78 +1,90 @@
 import React, { Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { PrivateRoute } from './components/auth/PrivateRoute';
+import { PrivateRoute } from './modules/auth';
 
 // Lazy-loaded pages
 const AdminLayout = lazy(() =>
   import('./layouts/AdminLayout').then((m) => ({ default: m.AdminLayout })),
 );
 const DashboardPage = lazy(() =>
-  import('./modules/dashboard/DashboardPage').then((m) => ({ default: m.DashboardPage })),
+  import('./modules/dashboard').then((m) => ({ default: m.DashboardPage })),
 );
 const DynamicCrudPage = lazy(() =>
-  import('./modules/dynamic-crud/DynamicCrudPage').then((m) => ({ default: m.DynamicCrudPage })),
+  import('./modules/dynamic-crud').then((m) => ({ default: m.DynamicCrudPage })),
 );
-const LoginPage = lazy(() =>
-  import('./modules/auth/LoginPage').then((m) => ({ default: m.LoginPage })),
-);
+const LoginPage = lazy(() => import('./modules/auth').then((m) => ({ default: m.LoginPage })));
 const TokenShowcasePage = lazy(() =>
-  import('./modules/showcase/TokenShowcasePage').then((m) => ({ default: m.TokenShowcasePage })),
+  import('./modules/showcase').then((m) => ({ default: m.TokenShowcasePage })),
 );
 const ComponentShowcasePage = lazy(() =>
-  import('./modules/showcase/ComponentShowcasePage').then((m) => ({
+  import('./modules/showcase').then((m) => ({
     default: m.ComponentShowcasePage,
   })),
 );
 const DataOverlayShowcasePage = lazy(() =>
-  import('./modules/showcase/DataOverlayShowcasePage').then((m) => ({
+  import('./modules/showcase').then((m) => ({
     default: m.DataOverlayShowcasePage,
   })),
 );
 const MetadataShowcasePage = lazy(() =>
-  import('./modules/showcase/MetadataShowcasePage').then((m) => ({
+  import('./modules/showcase').then((m) => ({
     default: m.MetadataShowcasePage,
   })),
 );
 const CrudShowcasePage = lazy(() =>
-  import('./modules/showcase/CrudShowcasePage').then((m) => ({
+  import('./modules/showcase').then((m) => ({
     default: m.CrudShowcasePage,
   })),
 );
 const StateShowcasePage = lazy(() =>
-  import('./modules/showcase/StateShowcasePage').then((m) => ({
+  import('./modules/showcase').then((m) => ({
     default: m.StateShowcasePage,
   })),
 );
 const RelationShowcasePage = lazy(() =>
-  import('./modules/showcase/RelationShowcasePage').then((m) => ({
+  import('./modules/showcase').then((m) => ({
     default: m.RelationShowcasePage,
   })),
 );
-const QueryBuilderShowcasePage = lazy(() => import('./modules/showcase/QueryBuilderShowcasePage'));
+const QueryBuilderShowcasePage = lazy(() =>
+  import('./modules/showcase').then((m) => ({ default: m.QueryBuilderShowcasePage })),
+);
 const GenericListShowcasePage = lazy(() =>
-  import('./modules/showcase/GenericListShowcasePage').then((m) => ({
+  import('./modules/showcase').then((m) => ({
     default: m.GenericListShowcasePage,
   })),
 );
 const GenericFormShowcasePage = lazy(() =>
-  import('./modules/showcase/GenericFormShowcasePage').then((m) => ({
+  import('./modules/showcase').then((m) => ({
     default: m.GenericFormShowcasePage,
   })),
 );
-const ExampleAppPage = lazy(() => import('./modules/example-app/ExampleAppPage'));
+const ExampleAppPage = lazy(() =>
+  import('./modules/example-app').then((m) => ({ default: m.ExampleAppPage })),
+);
 const BieuLaiSuatPage = lazy(() =>
-  import('./modules/showcase/BieuLaiSuatPage').then((m) => ({ default: m.BieuLaiSuatPage })),
+  import('./modules/showcase').then((m) => ({ default: m.BieuLaiSuatPage })),
 );
 const RelationNestedCrudPage = lazy(() =>
-  import('./modules/showcase/RelationNestedCrudPage').then((m) => ({
+  import('./modules/showcase').then((m) => ({
     default: m.RelationNestedCrudPage,
   })),
 );
-const SettingsPage = lazy(() => import('./modules/showcase/SettingsPage'));
-const ConfigPreviewPage = lazy(() => import('./modules/showcase/ConfigPreviewPage'));
-const CommandPalettePage = lazy(() => import('./modules/showcase/CommandPalettePage'));
-const ActivityLogPage = lazy(() => import('./modules/showcase/ActivityLogPage'));
-const ScreenPermissionPage = lazy(() => import('./modules/showcase/ScreenPermissionPage'));
+const SettingsPage = lazy(() =>
+  import('./modules/showcase').then((m) => ({ default: m.SettingsPage })),
+);
+const ConfigPreviewPage = lazy(() =>
+  import('./modules/showcase').then((m) => ({ default: m.ConfigPreviewPage })),
+);
+const CommandPalettePage = lazy(() =>
+  import('./modules/showcase').then((m) => ({ default: m.CommandPalettePage })),
+);
+const ActivityLogPage = lazy(() =>
+  import('./modules/showcase').then((m) => ({ default: m.ActivityLogPage })),
+);
+const ScreenPermissionPage = lazy(() =>
+  import('./modules/showcase').then((m) => ({ default: m.ScreenPermissionPage })),
+);
 
 function PageLoader() {
   return (
